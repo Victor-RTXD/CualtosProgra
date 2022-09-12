@@ -13,6 +13,8 @@ public class CuentaBancaria {
         this.nip = 0;
         this.numeroCuenta = 0;
     } */
+
+    //inicio getters and setters
     public int getSaldo() {
         return saldo;
     }
@@ -54,14 +56,18 @@ public class CuentaBancaria {
         this.numeroCuenta = numeroCuenta;
     }
 
-    public void depositar(int valor) {
+    /*public void depositar(int valor) {
 
     }
 
     public void retirar(int valor) {
 
-    }
+    } */
 
+    /**
+     * Descricion: esta funcion imprime todos los atributos del metodo constructor
+     * (saldo, nombre, nip, numero de cuenta)
+     */
     public void printData() {
         System.out.println("saldo: " + this.saldo + "nombre: " + this.nombre + "nip: " + this.nip + "numero de cuenta: " + this.numeroCuenta);
     }
