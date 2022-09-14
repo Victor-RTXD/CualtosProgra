@@ -1,5 +1,7 @@
 package practica3;
 
+import java.util.Scanner;
+
 /*Crear clase para manejar una cuenta bancaria */
 public class CuentaBancaria {
     private int saldo;
@@ -7,12 +9,7 @@ public class CuentaBancaria {
     private int nip;
     private int numeroCuenta;
 
-    /*public cuentaBancaria() {
-        this.saldo = 0;
-        this.nombre = "";
-        this.nip = 0;
-        this.numeroCuenta = 0;
-    } */
+    public Scanner sc = new Scanner(System.in);
 
     //inicio getters and setters
     public int getSaldo() {
@@ -49,6 +46,13 @@ public class CuentaBancaria {
 
     //fin getters y setters
 
+    /*public cuentaBancaria() {
+        this.saldo = 0;
+        this.nombre = "";
+        this.nip = 0;
+        this.numeroCuenta = 0;
+    } */
+
     public CuentaBancaria(int saldo, String nombre, int nip, int numeroCuenta) {
         this.saldo = saldo;
         this.nombre = nombre;
@@ -56,19 +60,62 @@ public class CuentaBancaria {
         this.numeroCuenta = numeroCuenta;
     }
 
-    /*public void depositar(int valor) {
-
-    }
-
-    public void retirar(int valor) {
-
-    } */
-
     /**
      * Descricion: esta funcion imprime todos los atributos del metodo constructor
      * (saldo, nombre, nip, numero de cuenta)
      */
     public void printData() {
-        System.out.println("saldo: " + this.saldo + "nombre: " + this.nombre + "nip: " + this.nip + "numero de cuenta: " + this.numeroCuenta);
+        System.out.println("saldo: " + this.saldo + " nombre: " + this.nombre + " nip: " + this.nip + " numero de cuenta: " + this.numeroCuenta);
     }
+
+    public void crearCuenta() {
+        System.out.println("ingrese nombre: ");
+        this.nombre = sc.next();
+        System.out.println("ingrese num de cuenta: ");
+        this.numeroCuenta = sc.nextInt();
+        System.out.println("ingrese nip: ");
+        this.nip = sc.nextInt();
+        System.out.println("ingrese saldo: ");
+        this.saldo = sc.nextInt();
+    }
+
+    public boolean autentificacion() {
+        int cuentaComparador, nipComparador;
+        System.out.println("teclea numero de cuenta: ");
+        cuentaComparador = sc.nextInt();
+        System.out.println("teclea nip: ");
+        nipComparador = sc.nextInt();
+
+        if(cuentaComparador == this.numeroCuenta && nipComparador == this.nip) {
+            return true;
+        } else {
+            System.out.println("Contraseña o numero de cuenta incorrecto");
+            return false;
+        }
+    }
+
+    public void depsoitar() {
+
+    }
+    
+    /**
+     * Descripcion: ingresar autentificacion, validar datos, ingresar catnidad, validar si existe saldo, descontar saldo 
+     * @param null
+     */
+    public void retirar() {
+        int cantidad;
+
+        if(autentificacion() == true) {
+            System.out.println("ingresa cantidad a retirar: ");
+            cantidad = sc.nextInt();
+
+            if(this.saldo >= 500 && cantidad <= 8000) {
+                this.saldo = this.saldo - cantidad;
+                System.out.println("ahora tu saldo es: " + this.saldo);
+            } else {
+                System.out.println("No se puede retirar");
+            }
+        } 
+    }
+    
 }
