@@ -95,8 +95,12 @@ public class CuentaBancaria {
         }
     }
 
+    /**
+     * Descripcion: Usa el atributo this.saldo para ingresar saldo y sumarlo al de la cuenta
+     */
     public void depsoitar() {
-
+        System.out.println("ingresa la cantidad: ");
+        this.saldo += sc.nextInt();
     }
     
     /**
@@ -106,7 +110,6 @@ public class CuentaBancaria {
     public void retirar() {
         int cantidad;
 
-        if(autentificacion() == true) {
             System.out.println("ingresa cantidad a retirar: ");
             cantidad = sc.nextInt();
 
@@ -116,12 +119,6 @@ public class CuentaBancaria {
             } else {
                 System.out.println("No se puede retirar");
             }
-        } 
     }
 
 }
-/*
- * curso de maestra
- * POO
- * POO2022
- */
