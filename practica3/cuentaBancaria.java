@@ -46,13 +46,6 @@ public class CuentaBancaria {
 
     //fin getters y setters
 
-    /*public cuentaBancaria() {
-        this.saldo = 0;
-        this.nombre = "";
-        this.nip = 0;
-        this.numeroCuenta = 0;
-    } */
-
     public CuentaBancaria(int saldo, String nombre, int nip, int numeroCuenta) {
         this.saldo = saldo;
         this.nombre = nombre;
@@ -68,6 +61,10 @@ public class CuentaBancaria {
         System.out.println("saldo: " + this.saldo + " nombre: " + this.nombre + " nip: " + this.nip + " numero de cuenta: " + this.numeroCuenta);
     }
 
+    /**
+     * Descricpion: funcion para ingresarle datos a atributos ya existentes 
+     * @param nombre numeroCuenta nip saldo
+     */
     public void crearCuenta() {
         System.out.println("ingrese nombre: ");
         this.nombre = sc.next();
@@ -79,6 +76,10 @@ public class CuentaBancaria {
         this.saldo = sc.nextInt();
     }
 
+    /**
+     * Descripción: es una funcion booleana que compara el nip del usuario con el que ingresa
+     * @return true or false
+     */
     public boolean autentificacion() {
         int cuentaComparador, nipComparador;
         System.out.println("teclea numero de cuenta: ");
@@ -117,5 +118,10 @@ public class CuentaBancaria {
             }
         } 
     }
-    
+
 }
+/*
+ * curso de maestra
+ * POO
+ * POO2022
+ */
