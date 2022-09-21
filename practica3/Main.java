@@ -14,9 +14,6 @@ public class Main {
             System.out.println("2 iniciar secion ");
             System.out.println("3 salir");
             opciones = sc.nextInt();
-            /*BBVA.crearCuenta();
-            BBVA.printData();
-            BBVA.retirar();*/
 
             switch(opciones) {
                 case 1: 
