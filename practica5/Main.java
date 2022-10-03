@@ -3,7 +3,10 @@ package practica5;
 import java.util.Scanner;
 
 /*Implemente mediante los métodos de la clase String, una aplicación que cuente el número de vocales hay en una frase dada por el usuario.
-Para ello lo pueden implementar en la parte del main del programa. */
+Para ello lo pueden implementar en la parte del main del programa. 
+
+Victor Eduardo Macias Macias
+*/
 
 public class Main {
     public static void main(String[] args) {

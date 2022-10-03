@@ -80,14 +80,8 @@ public class CuentaBancaria {
      * Descripción: es una funcion booleana que compara el nip del usuario con el que ingresa
      * @return true or false
      */
-    public boolean autentificacion() {
-        int cuentaComparador, nipComparador;
-        System.out.println("teclea numero de cuenta: ");
-        cuentaComparador = sc.nextInt();
-        System.out.println("teclea nip: ");
-        nipComparador = sc.nextInt();
-
-        if(cuentaComparador == this.numeroCuenta && nipComparador == this.nip) {
+    public boolean autentificacion(int cuentaComparador, int nipComparador) {
+        if (cuentaComparador == this.numeroCuenta && nipComparador == this.nip) {
             return true;
         } else {
             System.out.println("Contraseña o numero de cuenta incorrecto");
