@@ -17,6 +17,7 @@ public class Main {
             opciones = sc.nextInt();
 
             switch(opciones) {
+                //creacion de cuenta, limite 10 cuentas
                 case 1: {
                     if(indice < bbva.length) {
                         bbva[indice] = new CuentaBancaria(0, "", 0, 0); 
@@ -25,6 +26,7 @@ public class Main {
                     }
                 }break;
                 case 2: {
+                    //case de comprobacion de cuenta y nip
                     short i = 0;
                     short aux = 0;
                     int cuentaComparador, nipComparador;
