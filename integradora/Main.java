@@ -14,6 +14,7 @@ public class Main {
         int indice2 = 0;
         int indice3 = 0;
 
+        //El programa funcionara con un do while como la actividad pasada con 3 casos
         do {
             System.out.println("Selecciona la opcion requerida: ");
             System.out.println("1: Dar de alta ");
@@ -24,7 +25,7 @@ public class Main {
 
             switch (respuesta) {
                 case 1:
-                //aqui hace falta verificar que funciona e ingresarle a los otros puestos, ademas de ver si jala la opcion dal alta
+                //aqui se declararan cada instancia de cada clase
                     System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, otro: salir");
                     respuesta = sc.nextInt();
 
@@ -53,7 +54,7 @@ public class Main {
                     }
                 break;
                 case 2: {
-                //aqui hace falta meter un while para elegir el alumno correcto
+                //aqui se verifica el codigo del personal y se muestran los datos, funciona con un varios ifs y un while
                     System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, 0: salir");
                     respuesta = sc.nextInt();
                     int i = 0;
@@ -76,10 +77,10 @@ public class Main {
                                 i++;
                             }
                         }
-
-                        if (bandera2 == true)
+                        if (bandera2 == true) {
                             estudiantes[aux].mostrarDatos();
-                        
+                        }
+
                     } else if (respuesta == 2) {
                         while(i < indice2) {
                             if(maestros[i].autentificacion(codigoComparador) == true) {
@@ -92,10 +93,10 @@ public class Main {
                                 i++;
                             }
                         }
-
-                        if (bandera2 == true) 
+                        if (bandera2 == true) {
                             maestros[aux].mostrarDatos();
-                            
+                        }
+
                     } else if (respuesta == 3) {
                         while(i < indice3) {
                             if(administradores[i].autentificacion(codigoComparador) == true) {
@@ -108,12 +109,13 @@ public class Main {
                                 i++;
                             }
                         }
-
-                        if (bandera2 == true) 
+                        if (bandera2 == true) {
                             administradores[aux].mostrarDatos();
+                        }
                     }
                 }break;
                 case 0:
+                    //en este caso se sale del pograma y hace que el do while del programa acabe
                     System.out.println("Gracias");
                 break;
                 default:
