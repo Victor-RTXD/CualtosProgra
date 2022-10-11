@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Administrador extends Persona{
     String area;
     String tarea;
+    int horas;
     Scanner sc = new Scanner(System.in);
 
     public Administrador(String nombre, String nacimiento, String rfc, int codigo, String area, String ingreso, String tarea) {
@@ -14,9 +15,9 @@ public class Administrador extends Persona{
     }
 
     public void administrar() {
-        int horas;
+        System.out.println("administrara por: ");
         horas = sc.nextInt();
-        System.out.println("administrando por: " + horas);
+        
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Administrador extends Persona{
 
     @Override
     public void mostrarDatos() {
-        System.out.println("Nombre: " + nombre + ", RFC: " + rfc + ", codigo: " + codigo + ", ingreso: " + ingreso + ", nacimiento: " + nacimiento + ", area: " + area + ", tarea: " + tarea);
+        System.out.println("Nombre: " + nombre + ", RFC: " + rfc + ", codigo: " + codigo + ", ingreso: " + ingreso + ", nacimiento: " + nacimiento + ", area: " + area + ", tarea: " + tarea + ", administra por: " + horas + " horas");
     }
     
 }

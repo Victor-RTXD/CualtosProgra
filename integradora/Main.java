@@ -32,6 +32,7 @@ public class Main {
                         if(indice1 < estudiantes.length) {
                             estudiantes[indice1] = new Estudiante("","","",0,"",""); 
                             estudiantes[indice1].altaPersona();
+                            estudiantes[indice1].estudiar();
                             indice1++;
                         }
 
@@ -39,12 +40,14 @@ public class Main {
                         if(indice2 < maestros.length) {
                             maestros[indice2] = new Maestro(null, null, null, indice3, null, null, null);
                             maestros[indice2].altaPersona();
+                            maestros[indice2].enseñar();
                             indice2++;
                         }
                     } else if (respuesta == 3) {
                         if(indice3 < administradores.length) {
                             administradores[indice3] = new Administrador(null, null, null, indice3, null, null, null);
                             administradores[indice3].altaPersona();
+                            administradores[indice3].administrar();
                             indice3++;
                         }
                     }

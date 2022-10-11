@@ -17,7 +17,6 @@ public class Maestro extends Persona {
     public void enseñar() {
         System.out.println("ingrese horas a enseñar: ");
         this.horas = sc.nextInt();
-        System.out.println("horas enseñando: " + horas);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class Maestro extends Persona {
 
     @Override
     public void mostrarDatos() {
-        System.out.println("Nombre: " + nombre + " RFC: " + rfc + " codigo: " + codigo + " ingreso: " + ingreso + " nacimiento: " + nacimiento + " departamento: " + departamento + " materia a impartir: " + materiaImpartir);
+        System.out.println("Nombre: " + nombre + ", RFC: " + rfc + ", codigo: " + codigo + ", ingreso: " + ingreso + ", nacimiento: " + nacimiento + ", departamento: " + departamento + ", materia a impartir: " + materiaImpartir + ", trabaja por: " + horas + " horas");
     }
 }
     

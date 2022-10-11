@@ -15,7 +15,6 @@ public class Estudiante extends Persona {
     public void estudiar() {
         System.out.println("horas estudiar: ");
         this.horas = sc.nextInt();
-        System.out.println("estudiando por: " + horas);
     }
 
     @Override
@@ -36,6 +35,6 @@ public class Estudiante extends Persona {
 
     @Override
     public void mostrarDatos() {
-        System.out.println("Nombre: " + nombre + ", RFC: " + rfc + ", codigo: " + codigo + ", ingreso: " + ingreso + ", nacimiento: " + nacimiento + ", carrera: " + carrera);
+        System.out.println("Nombre: " + nombre + ", RFC: " + rfc + ", codigo: " + codigo + ", ingreso: " + ingreso + ", nacimiento: " + nacimiento + ", carrera: " + carrera + ", estudia: " + horas);
     }
 }
