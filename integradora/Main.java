@@ -34,27 +34,80 @@ public class Main {
                         }
 
                     } else if (respuesta == 2) {
-                        System.out.println("");
+                        if(indice < maestros.length) {
+                            maestros[indice] = new Maestro(null, null, null, indice, null, null, null); 
+                            maestros[indice].altaPersona();
+                            indice++;
+                        }
                     } else if (respuesta == 3) {
-                        System.out.println("");
+                        if(indice < administradores.length) {
+                            administradores[indice] = new Administrador(null, null, null, indice, null, null, null); 
+                            administradores[indice].altaPersona();
+                            indice++;
+                        }
                     }
                 break;
-                case 2:
+                case 2: {
                 //aqui hace falta meter un while para elegir el alumno correcto
-                    System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, otro: salir");
+                    System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, 0: salir");
                     respuesta = sc.nextInt();
-                    short i = 0;
-                    short aux = 0;
+                    int i = 0;
+                    int aux = 0;
                     boolean bandera2 = true;
+                    int codigoComparador = 0;
 
-                    if (respuesta == 1) {
-                        estudiantes[i].mostrarDatos();
+                    System.out.println("Ingresa el codigo ");
+                    codigoComparador = sc.nextInt();
+
+                    if(respuesta == 1) {
+                        while(i < indice) {
+                            if(estudiantes[i].autentificacion(codigoComparador) == true) {
+                                System.out.println("Bienvenido");
+                                bandera2 = true;
+                                aux = i;
+                                i = indice;
+                            } else {
+                                bandera2 = false;
+                                i++;
+                            }
+                        }
+
+                        if (bandera2 == true)
+                            estudiantes[aux].mostrarDatos();
+                        
                     } else if (respuesta == 2) {
-                        maestros[i].mostrarDatos();
+                        while(i < indice) {
+                            if(maestros[i].autentificacion(codigoComparador) == true) {
+                                System.out.println("Bienvenido");
+                                bandera2 = true;
+                                aux = i;
+                                i = indice;
+                            } else {
+                                bandera2 = false;
+                                i++;
+                            }
+                        }
+
+                        if (bandera2 == true) 
+                            maestros[aux].mostrarDatos();
+                            
                     } else if (respuesta == 3) {
-                        administradores[i].mostrarDatos();
+                        while(i < indice) {
+                            if(administradores[i].autentificacion(codigoComparador) == true) {
+                                System.out.println("Bienvenido");
+                                bandera2 = true;
+                                aux = i;
+                                i = indice;
+                            } else {
+                                bandera2 = false;
+                                i++;
+                            }
+                        }
+
+                        if (bandera2 == true) 
+                            administradores[aux].mostrarDatos();
                     }
-                break;
+                }break;
                 case 0:
                     System.out.println("Gracias");
                 break;

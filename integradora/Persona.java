@@ -1,8 +1,6 @@
 package integradora;
 
-import java.util.Scanner;
-
-public class Persona {
+public abstract class Persona {
     public String nacimiento;
     public String rfc;
     public String nombre;
@@ -17,23 +15,16 @@ public class Persona {
         this.ingreso = ingreso;
     }
 
-    public void altaPersona() {
-        Scanner sc = new Scanner(System.in);
+    public abstract void altaPersona();
 
-        System.out.println("ingrese nombre: ");
-        this.nombre = sc.next();
-        System.out.println("ingrese RFC: ");
-        this.rfc = sc.next();
-        System.out.println("ingrese codigo: ");
-        this.codigo = sc.nextInt();
-        System.out.println("ingrese saldo: ");
-        this.ingreso = sc.next();
-        System.out.println("ingrese nacimiento: ");
-        this.nacimiento = sc.next();
-        
-    }
+    public abstract void mostrarDatos();
 
-    public void mostrarDatos() {
-
+    public boolean autentificacion(int codigoComparador) {
+        if (codigoComparador == this.codigo) {
+            return true;
+        } else {
+            System.out.println("codigo incorrecto");
+            return false;
+        }
     }
 }
