@@ -29,6 +29,7 @@ public class Main {
                     System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, otro: salir");
                     respuesta = sc.nextInt();
 
+                    //instancia estudiante
                     if (respuesta == 1) {
                         if(indice1 < estudiantes.length) {
                             estudiantes[indice1] = new Estudiante("","","",0,"",""); 
@@ -37,6 +38,7 @@ public class Main {
                             indice1++;
                         }
 
+                    //instancia maestro    
                     } else if (respuesta == 2) {
                         if(indice2 < maestros.length) {
                             maestros[indice2] = new Maestro(null, null, null, indice3, null, null, null);
@@ -44,6 +46,8 @@ public class Main {
                             maestros[indice2].enseñar();
                             indice2++;
                         }
+
+                    //instancia admin     
                     } else if (respuesta == 3) {
                         if(indice3 < administradores.length) {
                             administradores[indice3] = new Administrador(null, null, null, indice3, null, null, null);
@@ -65,6 +69,7 @@ public class Main {
                     System.out.println("Ingresa el codigo ");
                     codigoComparador = sc.nextInt();
 
+                    //verifica que sea el mismo codigo, si es el mismo, muestra los datos, si no, revisa el siguiente y así con las demás opciones
                     if(respuesta == 1) {
                         while(i < indice1) {
                             if(estudiantes[i].autentificacion(codigoComparador) == true) {
