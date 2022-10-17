@@ -26,7 +26,7 @@ public class Main {
             switch (respuesta) {
                 case 1:
                 //aqui se declararan cada instancia de cada clase
-                    System.out.println("1: Estudaintes, 2: Maestros, 3: Admins, otro: salir");
+                    System.out.println("1: Estudiantes, 2: Maestros, 3: Admins, otro: salir");
                     respuesta = sc.nextInt();
 
                     if (respuesta == 1) {
