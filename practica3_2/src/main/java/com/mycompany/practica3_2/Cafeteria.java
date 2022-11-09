@@ -1,13 +1,35 @@
 package com.mycompany.practica3_2;
 
+import javax.swing.table.DefaultTableModel;
+
 public class Cafeteria extends javax.swing.JFrame {
+    DefaultTableModel modelo;
     int total;
     int costoPorProducto;
     int extras1, extras2, extras3;
     int mesa = 10;
+
+    void restablecer() {
+        bchai.setVisible(true);
+        bfrape.setVisible(true);
+        bcapuchino.setVisible(true); 
+        bamericano.setVisible(true);
+        cbChispas.setSelected(false);
+        cbCremaExtra.setSelected(false);
+        cbGalletas.setSelected(false);
+        
+        }
     
     public Cafeteria() {
         initComponents();
+
+        modelo = new DefaultTableModel();
+        modelo.addColumn("N. mesa");
+        modelo.addColumn("Producto");
+        modelo.addColumn("C/s azucar");
+        modelo.addColumn("Total topic");
+        modelo.addColumn("Subtotal");
+        this.tabla.setModel(modelo);
     }
 
     /**
@@ -300,15 +322,10 @@ public class Cafeteria extends javax.swing.JFrame {
         bcapuchino.setVisible(false);
         bfrape.setVisible(false);
         total += costoPorProducto;
-        labTotal.setText("$" + String.valueOf(total));
     }//GEN-LAST:event_bamericanoActionPerformed
 
     private void brestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brestablecerActionPerformed
-        bchai.setVisible(true);
-        bcapuchino.setVisible(true);
-        bfrape.setVisible(true);
-        bamericano.setVisible(true);
-        cbChispas.setSelected(false);
+        restablecer();
     }//GEN-LAST:event_brestablecerActionPerformed
 
     private void rbAzucarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAzucarActionPerformed
@@ -320,28 +337,24 @@ public class Cafeteria extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCremaExtraActionPerformed
 
     private void bAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarActionPerformed
-        int Ttopin = 0;
-        
-        if (cbCremaExtra.isSelected()) {
-            Ttopin += 10;
-        }
-        
-        if (cbGalletas.isSelected()) {
-            Ttopin += 15;
-        }
-        
-        if (cbChispas.isSelected()) {
-            Ttopin += 5;
-        }
-        
-        total += Ttopin;
+        int Ttopin=0;
+
+        if (cbCremaExtra.isSelected())
+            Ttopin=Ttopin+10;
+        if (cbGalletas.isSelected())
+             Ttopin=Ttopin+15;
+        if (cbChispas.isSelected())
+             Ttopin=Ttopin+5;
+
+        total = total + Ttopin;
         labTotal.setText("$" + String.valueOf(total));
-        
-        //desmarcar los extras
+
         cbChispas.setSelected(false);
         cbGalletas.setSelected(false);
         cbCremaExtra.setSelected(false);
-    }//GEN-LAST:event_bAgregarActionPerformed
+
+        restablecer();
+     }
 
     /**
      * @param args the command line arguments
