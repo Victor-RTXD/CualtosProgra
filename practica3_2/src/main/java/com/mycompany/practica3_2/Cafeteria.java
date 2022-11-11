@@ -1,13 +1,73 @@
 package com.mycompany.practica3_2;
 
+import javax.swing.table.DefaultTableModel;
+
 public class Cafeteria extends javax.swing.JFrame {
-    int total;
+    DefaultTableModel modelo;
+    int total[] = {0,0,0,0,0,0,0,0,0,0};
     int costoPorProducto;
-    int extras1, extras2, extras3;
-    int mesa = 10;
+    int Ttopin=0;
+    String mesa;
+    int auxMesa;
+    String[] info = new String[5];
+
+    /**
+     * Descripcion: restablece todos los valores
+     * have visible los cafes, quita los extras y el azucar
+     */
+    void restablecer() {
+        bchai.setVisible(true);
+        bfrape.setVisible(true);
+        bcapuchino.setVisible(true); 
+        bamericano.setVisible(true);
+        cbChispas.setSelected(false);
+        cbCremaExtra.setSelected(false);
+        cbGalletas.setSelected(false);
+        azucar.clearSelection();
+        info[2] = "";
+        }
+
+        /**
+         * Descripcion: sirve para ponerle precio a cada cafe, ponerle nombre y desactivar todos los cafes si uno es seleccionado
+         * @param costo, 
+         * @param americano
+         * @param chai
+         * @param capuchino
+         * @param frape
+         * @param producto
+         */
+    void funcionParaCafe (int costo, boolean americano , boolean chai, boolean capuchino, boolean frape, String producto) {
+        Ttopin = costo;
+        costoPorProducto = costo;
+        bamericano.setVisible(americano);
+        bchai.setVisible(chai);
+        bcapuchino.setVisible(capuchino);
+        bfrape.setVisible(frape);
+        info[1] = producto; 
+    }
+
+    /**
+     * Descripcion: sirve como auxiliar de otras funciones donde 
+     * se hace uso de la seleccion de mesas por ejemplo:
+     * eliminarActionPerformed()
+     * bAgregarActionPerformed()
+     * bTotalActionPerformed()
+     */
+    void funcionEscogerMesa() {
+        mesa = cbNumMesa.getSelectedItem().toString();
+        auxMesa = Integer.parseInt(mesa) - 1;
+    }
     
     public Cafeteria() {
         initComponents();
+
+        modelo = new DefaultTableModel();
+        modelo.addColumn("N. mesa");
+        modelo.addColumn("Producto");
+        modelo.addColumn("C/s azucar");
+        modelo.addColumn("Total topic");
+        modelo.addColumn("Subtotal");
+        this.tabla.setModel(modelo);
     }
 
     /**
@@ -19,6 +79,7 @@ public class Cafeteria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        azucar = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         bamericano = new javax.swing.JButton();
@@ -41,14 +102,15 @@ public class Cafeteria extends javax.swing.JFrame {
         brestablecer = new javax.swing.JButton();
         labTotal = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        extraultimo = new javax.swing.JLabel();
+        ultimoTotal = new javax.swing.JLabel();
+        eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Cafeteria los engineers");
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(100, 70, 23));
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         bamericano.setText("American coffee");
@@ -59,10 +121,25 @@ public class Cafeteria extends javax.swing.JFrame {
         });
 
         bcapuchino.setText("Capuchino");
+        bcapuchino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcapuchinoActionPerformed(evt);
+            }
+        });
 
         bfrape.setText("Frape");
+        bfrape.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bfrapeActionPerformed(evt);
+            }
+        });
 
         bchai.setText("Chai");
+        bchai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bchaiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,10 +172,12 @@ public class Cafeteria extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        rbSinAzucar.setForeground(new java.awt.Color(51, 51, 51));
+        azucar.add(rbSinAzucar);
+        rbSinAzucar.setForeground(new java.awt.Color(0, 0, 0));
         rbSinAzucar.setText("Sin azucar");
 
-        rbAzucar.setForeground(new java.awt.Color(51, 51, 51));
+        azucar.add(rbAzucar);
+        rbAzucar.setForeground(new java.awt.Color(0, 0, 0));
         rbAzucar.setText("Azucar");
         rbAzucar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +208,7 @@ public class Cafeteria extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(102, 102, 0));
+        jPanel3.setBackground(new java.awt.Color(58, 93, 136));
         jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         cbCremaExtra.setText("Crema extra");
@@ -168,6 +247,11 @@ public class Cafeteria extends javax.swing.JFrame {
         );
 
         bTotal.setText("Calcular total");
+        bTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTotalActionPerformed(evt);
+            }
+        });
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,6 +273,11 @@ public class Cafeteria extends javax.swing.JFrame {
         labMesa.setText("Mesa");
 
         cbNumMesa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cbNumMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNumMesaActionPerformed(evt);
+            }
+        });
 
         brestablecer.setText("Restablecer");
         brestablecer.addActionListener(new java.awt.event.ActionListener() {
@@ -201,158 +290,205 @@ public class Cafeteria extends javax.swing.JFrame {
 
         jLabel2.setText("Subtotal");
 
-        jLabel3.setText("Total de la mesa");
+        extraultimo.setText("Total de la mesa");
 
-        jLabel4.setText("0");
+        ultimoTotal.setText("0");
+        ultimoTotal.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        eliminar.setText("Eliminar cuenta de mesa");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(131, 131, 131)
-                                    .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(38, 38, 38)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(brestablecer)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(labTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(244, 244, 244)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(labMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(241, 241, 241)
-                                    .addComponent(bTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(bAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(brestablecer)
+                        .addGap(27, 27, 27)
+                        .addComponent(bTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(eliminar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(121, Short.MAX_VALUE))
+                        .addComponent(labTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(extraultimo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ultimoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(235, 235, 235))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
+                                .addGap(12, 12, 12)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labMesa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bTotal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bAgregar)
-                    .addComponent(brestablecer)
-                    .addComponent(labTotal)
-                    .addComponent(jLabel2))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))))
-                .addGap(88, 88, 88))
+                            .addComponent(labMesa)
+                            .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bTotal)
+                            .addComponent(brestablecer)
+                            .addComponent(bAgregar)
+                            .addComponent(eliminar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(extraultimo)
+                                .addComponent(ultimoTotal))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labTotal)
+                                .addComponent(jLabel2)))))
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bamericanoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bamericanoActionPerformed
-        costoPorProducto = 15;
-        bchai.setVisible(false);
-        bcapuchino.setVisible(false);
-        bfrape.setVisible(false);
-        total += costoPorProducto;
-        labTotal.setText("$" + String.valueOf(total));
-    }//GEN-LAST:event_bamericanoActionPerformed
+    private void bamericanoActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        funcionParaCafe(15, true, false, false, false, "Cafe americano");
+    }
 
     private void brestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brestablecerActionPerformed
-        bchai.setVisible(true);
-        bcapuchino.setVisible(true);
-        bfrape.setVisible(true);
-        bamericano.setVisible(true);
-        cbChispas.setSelected(false);
+        restablecer();
     }//GEN-LAST:event_brestablecerActionPerformed
 
     private void rbAzucarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAzucarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_rbAzucarActionPerformed
 
     private void cbCremaExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCremaExtraActionPerformed
         
     }//GEN-LAST:event_cbCremaExtraActionPerformed
 
-    private void bAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarActionPerformed
-        int Ttopin = 0;
-        
+    /**
+     * Descripcion: sirve para poner la cantidad a pagar de cualquier mesa a $0
+     */
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        funcionEscogerMesa();
+        total[auxMesa] = 0;
+        ultimoTotal.setText("$" + String.valueOf(total[auxMesa]));
+        extraultimo.setText("Total de mesa: " + mesa);
+        labTotal.setText("$0");
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void cbNumMesaActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void bcapuchinoActionPerformed(java.awt.event.ActionEvent evt) {
+        funcionParaCafe(15, false, false, true, false, "Capuchino");
+    }
+
+    private void bchaiActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        funcionParaCafe(15, false, false, true, false, "Chai");
+    }
+
+    private void bfrapeActionPerformed(java.awt.event.ActionEvent evt) {
+        funcionParaCafe(15, false, false, false, true, "Frape");
+    }
+
+    /**
+     * Descripcion: aqui se la mayoria de la logica del programa
+     * aqui se llena la info de la tabla, se pone los precios y convierten a string,
+     * se ve el total y despues de todo se restablece todo para la siguente orden
+     */
+    private void bAgregarActionPerformed(java.awt.event.ActionEvent evt) {  
+        funcionEscogerMesa();
+
+        info[0] = mesa;
+
         if (cbCremaExtra.isSelected()) {
             Ttopin += 10;
         }
-        
+            
         if (cbGalletas.isSelected()) {
             Ttopin += 15;
         }
-        
+             
         if (cbChispas.isSelected()) {
             Ttopin += 5;
         }
-        
-        total += Ttopin;
-        labTotal.setText("$" + String.valueOf(total));
-        
-        //desmarcar los extras
-        cbChispas.setSelected(false);
-        cbGalletas.setSelected(false);
-        cbCremaExtra.setSelected(false);
-    }//GEN-LAST:event_bAgregarActionPerformed
+
+        if (rbAzucar.isSelected()) {
+            info[2] = "si";
+        }
+
+        if (rbSinAzucar.isSelected()) {
+            info[2] = "no";
+        }
+
+        total[auxMesa] += Ttopin;
+        info[3] = String.valueOf(Ttopin);
+        info[4] = String.valueOf(total[auxMesa]);
+        labTotal.setText("$" + String.valueOf(total[auxMesa]));
+        Ttopin = 0;
+
+        modelo.addRow(info);
+        restablecer();
+    }
+
+    /**
+     * Descripcion: sirve para ver el total de la mesa afuera de la tabla
+     * @param evt
+     */
+    private void bTotalActionPerformed(java.awt.event.ActionEvent evt) {     
+        funcionEscogerMesa();
+        ultimoTotal.setText("$" + String.valueOf(total[auxMesa]));
+        extraultimo.setText("Total de mesa: " + mesa);
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         new Cafeteria();
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -380,6 +516,7 @@ public class Cafeteria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup azucar;
     private javax.swing.JButton bAgregar;
     private javax.swing.JButton bTotal;
     private javax.swing.JButton bamericano;
@@ -391,10 +528,10 @@ public class Cafeteria extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbCremaExtra;
     private javax.swing.JCheckBox cbGalletas;
     private javax.swing.JComboBox<String> cbNumMesa;
+    private javax.swing.JButton eliminar;
+    private javax.swing.JLabel extraultimo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -404,5 +541,6 @@ public class Cafeteria extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbAzucar;
     private javax.swing.JRadioButton rbSinAzucar;
     private javax.swing.JTable tabla;
+    private javax.swing.JLabel ultimoTotal;
     // End of variables declaration//GEN-END:variables
 }
