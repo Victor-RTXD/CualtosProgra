@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch Cafeteria",
+            "request": "launch",
+            "mainClass": "com.mycompany.practica3_2.Cafeteria",
+            "projectName": "practica3_2"
+        },
+        {
+            "type": "java",
+            "name": "Launch main",
+            "request": "launch",
+            "mainClass": "adiosventana.main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "integradora.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main(1)",
+            "request": "launch",
+            "mainClass": "practica2_2.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch practicaVentanas",
+            "request": "launch",
+            "mainClass": "practica2ventanas.practicaVentanas",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main(2)",
+            "request": "launch",
+            "mainClass": "practica3.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Cafeteria(1)",
+            "request": "launch",
+            "mainClass": "practica3_2.src.main.java.com.mycompany.practica3_2.Cafeteria",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main(3)",
+            "request": "launch",
+            "mainClass": "practica4.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main(4)",
+            "request": "launch",
+            "mainClass": "practica5.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main(5)",
+            "request": "launch",
+            "mainClass": "practica6.Main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch main(1)",
+            "request": "launch",
+            "mainClass": "tabla.main",
+            "projectName": "progra cualtos_a2bde11e"
+        },
+        {
+            "type": "java",
+            "name": "Launch main(2)",
+            "request": "launch",
+            "mainClass": "ventanahola.main",
+            "projectName": "progra cualtos_a2bde11e"
+        }
+    ]
+}
