@@ -4,13 +4,18 @@ import javax.swing.table.DefaultTableModel;
 
 public class Cafeteria extends javax.swing.JFrame {
     DefaultTableModel modelo;
-    int total = 0;
+    int total[] = {0,0,0,0,0,0,0,0,0,0};
     int costoPorProducto;
     int Ttopin=0;
     String mesa;
+    int auxMesa;
     String[] info = new String[5];
 
-    void restablecer () {
+    /**
+     * Descripcion: restablece todos los valores
+     * have visible los cafes, quita los extras y el azucar
+     */
+    void restablecer() {
         bchai.setVisible(true);
         bfrape.setVisible(true);
         bcapuchino.setVisible(true); 
@@ -18,9 +23,19 @@ public class Cafeteria extends javax.swing.JFrame {
         cbChispas.setSelected(false);
         cbCremaExtra.setSelected(false);
         cbGalletas.setSelected(false);
-        
+        azucar.clearSelection();
+        info[2] = "";
         }
 
+        /**
+         * Descripcion: sirve para ponerle precio a cada cafe, ponerle nombre y desactivar todos los cafes si uno es seleccionado
+         * @param costo, 
+         * @param americano
+         * @param chai
+         * @param capuchino
+         * @param frape
+         * @param producto
+         */
     void funcionParaCafe (int costo, boolean americano , boolean chai, boolean capuchino, boolean frape, String producto) {
         Ttopin = costo;
         costoPorProducto = costo;
@@ -29,6 +44,18 @@ public class Cafeteria extends javax.swing.JFrame {
         bcapuchino.setVisible(capuchino);
         bfrape.setVisible(frape);
         info[1] = producto; 
+    }
+
+    /**
+     * Descripcion: sirve como auxiliar de otras funciones donde 
+     * se hace uso de la seleccion de mesas por ejemplo:
+     * eliminarActionPerformed()
+     * bAgregarActionPerformed()
+     * bTotalActionPerformed()
+     */
+    void funcionEscogerMesa() {
+        mesa = cbNumMesa.getSelectedItem().toString();
+        auxMesa = Integer.parseInt(mesa) - 1;
     }
     
     public Cafeteria() {
@@ -75,8 +102,9 @@ public class Cafeteria extends javax.swing.JFrame {
         brestablecer = new javax.swing.JButton();
         labTotal = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        extraultimo = new javax.swing.JLabel();
+        ultimoTotal = new javax.swing.JLabel();
+        eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -219,6 +247,11 @@ public class Cafeteria extends javax.swing.JFrame {
         );
 
         bTotal.setText("Calcular total");
+        bTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bTotalActionPerformed(evt);
+            }
+        });
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -257,92 +290,101 @@ public class Cafeteria extends javax.swing.JFrame {
 
         jLabel2.setText("Subtotal");
 
-        jLabel3.setText("Total de la mesa");
+        extraultimo.setText("Total de la mesa");
 
-        jLabel4.setText("$0");
+        ultimoTotal.setText("0");
+        ultimoTotal.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        eliminar.setText("Eliminar cuenta de mesa");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(131, 131, 131)
-                                .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(labMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(241, 241, 241)
-                                    .addComponent(bTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(bAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(brestablecer)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(122, 122, 122)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(brestablecer)
+                        .addGap(27, 27, 27)
+                        .addComponent(bTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(eliminar)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(extraultimo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ultimoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(235, 235, 235))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
+                                .addGap(12, 12, 12)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labMesa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labMesa)
+                            .addComponent(cbNumMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bTotal)
+                            .addComponent(brestablecer)
+                            .addComponent(bAgregar)
+                            .addComponent(eliminar)))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bTotal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bAgregar)
-                    .addComponent(brestablecer))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labTotal)
-                        .addComponent(jLabel2)))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(extraultimo)
+                                .addComponent(ultimoTotal))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labTotal)
+                                .addComponent(jLabel2)))))
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -364,6 +406,17 @@ public class Cafeteria extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cbCremaExtraActionPerformed
 
+    /**
+     * Descripcion: sirve para poner la cantidad a pagar de cualquier mesa a $0
+     */
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        funcionEscogerMesa();
+        total[auxMesa] = 0;
+        ultimoTotal.setText("$" + String.valueOf(total[auxMesa]));
+        extraultimo.setText("Total de mesa: " + mesa);
+        labTotal.setText("$0");
+    }//GEN-LAST:event_eliminarActionPerformed
+
     private void cbNumMesaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -372,17 +425,22 @@ public class Cafeteria extends javax.swing.JFrame {
         funcionParaCafe(15, false, false, true, false, "Capuchino");
     }
 
-    private void bchaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bchaiActionPerformed
+    private void bchaiActionPerformed(java.awt.event.ActionEvent evt) {                                      
         funcionParaCafe(15, false, false, true, false, "Chai");
-    }//GEN-LAST:event_bchaiActionPerformed
+    }
 
     private void bfrapeActionPerformed(java.awt.event.ActionEvent evt) {
         funcionParaCafe(15, false, false, false, true, "Frape");
     }
 
-    private void bAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        
-        mesa = cbNumMesa.getSelectedItem().toString();
+    /**
+     * Descripcion: aqui se la mayoria de la logica del programa
+     * aqui se llena la info de la tabla, se pone los precios y convierten a string,
+     * se ve el total y despues de todo se restablece todo para la siguente orden
+     */
+    private void bAgregarActionPerformed(java.awt.event.ActionEvent evt) {  
+        funcionEscogerMesa();
+
         info[0] = mesa;
 
         if (cbCremaExtra.isSelected()) {
@@ -405,19 +463,25 @@ public class Cafeteria extends javax.swing.JFrame {
             info[2] = "no";
         }
 
-        total += Ttopin;
+        total[auxMesa] += Ttopin;
         info[3] = String.valueOf(Ttopin);
-        info[4] = String.valueOf(total);
-        labTotal.setText("$" + String.valueOf(total));
+        info[4] = String.valueOf(total[auxMesa]);
+        labTotal.setText("$" + String.valueOf(total[auxMesa]));
         Ttopin = 0;
-
-        cbChispas.setSelected(false);
-        cbGalletas.setSelected(false);
-        cbCremaExtra.setSelected(false);
 
         modelo.addRow(info);
         restablecer();
-     }
+    }
+
+    /**
+     * Descripcion: sirve para ver el total de la mesa afuera de la tabla
+     * @param evt
+     */
+    private void bTotalActionPerformed(java.awt.event.ActionEvent evt) {     
+        funcionEscogerMesa();
+        ultimoTotal.setText("$" + String.valueOf(total[auxMesa]));
+        extraultimo.setText("Total de mesa: " + mesa);
+    }
 
     /**
      * @param args the command line arguments
@@ -464,10 +528,10 @@ public class Cafeteria extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbCremaExtra;
     private javax.swing.JCheckBox cbGalletas;
     private javax.swing.JComboBox<String> cbNumMesa;
+    private javax.swing.JButton eliminar;
+    private javax.swing.JLabel extraultimo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -477,5 +541,6 @@ public class Cafeteria extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbAzucar;
     private javax.swing.JRadioButton rbSinAzucar;
     private javax.swing.JTable tabla;
+    private javax.swing.JLabel ultimoTotal;
     // End of variables declaration//GEN-END:variables
 }
