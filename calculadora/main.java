@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int i;
+        short i;
 
         System.out.println("Selecciona la opcion deseada");
         do {
@@ -14,11 +14,12 @@ public class Main {
             System.out.println("3: Circuitos");
             System.out.println("0: Salir");
 
-            i = sc.nextInt();
+            i = sc.nextShort();
 
             switch (i) {
                 case 1:
-                    System.out.println("funciona");
+                CargaElectrica ce = new CargaElectrica();
+                ce.leyCoulomb();
                 break;
                 case 2:
                     System.out.println();

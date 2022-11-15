@@ -1,7 +1,6 @@
 package calculadora;
 
 import java.util.Scanner;
-import java.math.*;
 
 public class Circuitos {
     Scanner sc = new Scanner(System.in);
@@ -10,7 +9,7 @@ public class Circuitos {
     double b = 0;
 
     public void dialogoOhm(String objetivo, String com1, String com11, String com2, String com22, String com3, String com33) {
-        System.out.println("saber" + objetivo + "con: \n");
+        System.out.println("saber " + objetivo + " con: \n");
                 System.out.println("1: " + com1+ " y " + com11);
                 System.out.println("2: " + com2 + " y " + com22);
                 System.out.println("3: " + com3+ " y " + com33);
@@ -35,15 +34,15 @@ public class Circuitos {
                     if (aux == 1) {
                         System.out.println("ingresa volts y luego corriente");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a * b));
+                        System.out.println("\n" + (a * b) + "w");
                     } else if (aux == 2) {
                         System.out.println("ingresa resistencia y luego correinte");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a * (b * b)));
+                        System.out.println("\n" + (a * (b * b)) + "w");
                     } else if (aux == 3) {
                         System.out.println("ingresa volts y luego resistencia");
                         elementosScanner(a, b);
-                        System.out.println("\n" + ((a * a) / b));
+                        System.out.println("\n" + ((a * a) / b) + "w");
                     }
                 break;
                 case 2:
@@ -52,15 +51,15 @@ public class Circuitos {
                     if (aux == 1) {
                         System.out.println("ingresa volts y luego resistencia");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a / b));
+                        System.out.println("\n" + (a / b) + "A");
                     } else if (aux == 2) {
                         System.out.println("ingresa potencia y luego voltaje");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a / b));
+                        System.out.println("\n" + (a / b) + "A");
                     } else if (aux == 3) {
                         System.out.println("ingresa potencia y luego resistencia");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (Math.sqrt((a / b))));
+                        System.out.println("\n" + (Math.sqrt((a / b))) + "A");
                     }
                 break;
                 case 3:
@@ -69,15 +68,15 @@ public class Circuitos {
                     if (aux == 1) {
                         System.out.println("ingresa potencia y luego resistencia");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (Math.sqrt((a * b))));
+                        System.out.println("\n" + (Math.sqrt((a * b))) + "v");
                     } else if (aux == 2) {
                         System.out.println("ingresa potencia y luego corriente");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a / b));
+                        System.out.println("\n" + (a / b) + "v");
                     } else if (aux == 3) {
                         System.out.println("ingresa resistencia y luego corriente");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a * b));
+                        System.out.println("\n" + (a * b) + "v");
                     }
                 break;
                 case 4:
@@ -86,15 +85,15 @@ public class Circuitos {
                     if (aux == 1) {
                         System.out.println("ingresa potencia y luego corriente");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a / (b * b)));
+                        System.out.println("\n" + (a / (b * b)) + "Ω");
                     } else if (aux == 2) {
                         System.out.println("ingresa volts y luego potencia");
                         elementosScanner(a, b);
-                        System.out.println("\n" + ((a * a) / b));
+                        System.out.println("\n" + ((a * a) / b) + "Ω");
                     } else if (aux == 3) {
                         System.out.println("ingresa volts y luego corriente");
                         elementosScanner(a, b);
-                        System.out.println("\n" + (a / b));
+                        System.out.println("\n" + (a / b) + "Ω");
                     }
                 break;
             }
