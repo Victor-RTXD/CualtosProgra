@@ -22,7 +22,8 @@ public class Main {
                 ce.leyCoulomb();
                 break;
                 case 2:
-                    System.out.println();
+                CampoElectrico caele = new CampoElectrico();
+                caele.campoElectrico();
                 break;
                 case 3:
                     Circuitos circuitos = new Circuitos();
