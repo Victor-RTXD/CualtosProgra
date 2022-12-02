@@ -12,6 +12,7 @@ public class Main {
             System.out.println("1: Carga Eléctrica ");
             System.out.println("2: Campo electrico");
             System.out.println("3: Circuitos");
+            System.out.println("4: Paralelos");
             System.out.println("0: Salir");
 
             i = sc.nextShort();
@@ -28,6 +29,10 @@ public class Main {
                 case 3:
                     Circuitos circuitos = new Circuitos();
                     circuitos.leyOhm();
+                break;
+                case 4:
+                    CircuitosParalelos paralelos = new CircuitosParalelos();
+                    paralelos.circuitosParalelos();
                 break;
                 default:
                     System.out.println();
