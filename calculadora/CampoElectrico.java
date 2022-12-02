@@ -24,20 +24,8 @@ public class CampoElectrico {
 
     void campoElectrico() {
         do {
-            System.out.println("¿cuantos puntos se usaran?, (min 1 y max 5 \n oprime 0 para salir");
-            i = sc.nextShort();
-
-            switch(i) {
-            case 1:
-                System.out.println(caluclo());
-            break;
-            case 2:
-                
-            break;
-            default:
-
-            break;
-            }
+            System.out.println("oprime 0 para salir");
+            System.out.println(caluclo());
         } while (i != 0);
     }
 }
