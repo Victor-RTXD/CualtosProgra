@@ -1,13 +1,28 @@
 package act1;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("working on it \n");
+        int tCodigo, tCalificacion;
+        String tMateria;
 
+        Scanner sc = new Scanner(System.in);
         Clase cualtos[]= new Clase[10];
 
-        cualtos[0] = new Clase(100, 2121, "software Engineer");
+        for (int i = 0; i < cualtos.length; i++) {
+            System.out.println("ingresa la calificacion: ");
+            tCalificacion = sc.nextInt();
+            System.out.println("ingresa el codigo: ");
+            tCodigo = sc.nextInt();
+            System.out.println("ingresa la materia: ");
+            tMateria = sc.next();
 
-        System.out.println("materia: " + cualtos[0].materia + "\n" + "calificacion: " + cualtos[0].calificacion +  "\n " + "codigo: " + cualtos[0].codigo);
+            cualtos[i] = new Clase(tCalificacion, tCodigo, tMateria);
+        }
+        
+        for (int i = 0; i < cualtos.length; i++) {
+            System.out.println("materia: " + cualtos[i].materia + "\n" + "calificacion: " + cualtos[i].calificacion +  "\n " + "codigo: " + cualtos[i].codigo);
+        }
     }
 }
