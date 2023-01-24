@@ -1,10 +1,10 @@
-package queue;
+package act1;
 
 public class Queue {
     int front = -1;
     int rear = -1;
     int item;
-    int size = 5;
+    int size = 2;
     Integer queue[] = new Integer[size];
 
     //metodos
@@ -24,6 +24,7 @@ public class Queue {
         System.out.println("sobrecarga");
         else {
             System.out.println("se eliminara: " + queue[front]);
+            queue[front] = null;
             if (front == rear)
                 front = rear = -1;
             else
