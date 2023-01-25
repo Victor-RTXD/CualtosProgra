@@ -1,8 +1,6 @@
 package act1;
-import java.util.Scanner;
 
 public class Clase {
-    Scanner sc = new Scanner(System.in);
     int codigo;
     String materia;
     int calificacion;
