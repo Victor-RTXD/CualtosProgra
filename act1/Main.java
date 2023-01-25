@@ -9,7 +9,7 @@ public class Main {
         String tMateria;
         Scanner sc = new Scanner(System.in);
         Clase cualtos[]= new Clase[2];
-
+        
         for (int i = 0; i < cualtos.length; i++) {
             System.out.println("ingresa la calificacion: ");
             tCalificacion = sc.nextInt();
