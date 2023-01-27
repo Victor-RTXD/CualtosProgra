@@ -24,7 +24,7 @@ public class Practica2Colas {
         }
     }
     
-    void mostrar(int frente, int fin) {
+    void mostrar(int fin) {
         if (fin != 0) {
             for (int i = 0; i < fin; i++) {
                 System.out.println("id " + cola[i].id + " contraseña: " + cola[i].contraseña);
@@ -57,9 +57,9 @@ public class Practica2Colas {
 
         colas.insertar(Final, MAX);
         Final++;
-        colas.mostrar(Frente, Final);
+        colas.mostrar(Final);
         colas.eliminar(Frente, Final);
         Frente++;
-        colas.mostrar(Frente, Final);
+        colas.mostrar(Final);
     }
 }
