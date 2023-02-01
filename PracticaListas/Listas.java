@@ -42,3 +42,12 @@ public class Listas {
         }
     }
 }
+
+/*
+ * TAREA
+ * 1 entregar cola circular array
+ * 2 hacer funcion borrar de listas raras
+ * 3 en cuaderno mostrar la estructura del proyecto final del anuario :(((((((((((((((((
+ * primera pantalla para precentar el programa
+ * segunda patalla para mostrar imagen de las personas del grupo con botones de avanzar y retroceder
+ */
