@@ -30,4 +30,15 @@ public class Listas {
             contador++;
         }
     }
+
+    static void mostrarLista() {
+        Nodo chalan = inicio;
+
+        if (chalan != null) {
+            while (chalan != null) {
+                System.out.println("valor " + chalan.getValor());
+                chalan = chalan.getSiguiente();
+            }
+        }
+    }
 }
