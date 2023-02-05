@@ -1,21 +1,10 @@
 package PracticaListas;
 
-/*
-    documentacion rara de la maestra
- * 1 insertar nodo actual
- * 2 agregar valor
- * 3 inicio = acutal
- * 4 fin = actual
- * 5 si no
- * 6 fin.siguiente = actual
- * fin = actual
- */
-
 public class Listas {
     static Nodo actual = null, inicio = null, fin = null;
     static int contador = 0;
 
-    static void instertarCola(int x) {
+     void instertarCola(int x) {
         actual = new Nodo(x,null);
 
         if (fin != null) {
@@ -41,13 +30,35 @@ public class Listas {
             }
         }
     }
-}
 
-/*
- * TAREA
- * 1 entregar cola circular array
- * 2 hacer funcion borrar de listas raras
- * 3 en cuaderno mostrar la estructura del proyecto final del anuario :(((((((((((((((((
- * primera pantalla para precentar el programa
- * segunda patalla para mostrar imagen de las personas del grupo con botones de avanzar y retroceder
- */
+    static void eliminar(int x) {
+        // Nodo para recorrer la lista
+        Nodo anterior = null, actual = inicio;
+    
+        // Recorrer la lista hasta encontrar el elemento x o llegar al final de la lista
+        while (actual != null && actual.getValor() != x) {
+            anterior = actual;
+            actual = actual.getSiguiente();
+        }
+    
+        // Si se encontró el elemento x
+        if (actual != null) {
+            // Si es el primer elemento de la lista
+            if (anterior == null) {
+                inicio = actual.getSiguiente();
+            } else {
+                // Enlazar el nodo anterior con el siguiente después del nodo actual (eliminando así al nodo actual)
+                anterior.setSiguiente(actual.getSiguiente());
+            }
+            // Decrementar el contador de elementos en la lista
+            contador--;
+            System.out.println("Se eliminó el elemento " + x);
+        } else {
+            System.out.println("No se encontró el elemento " + x);
+        }
+    }
+    
+    public static void main(String[] args) {
+        
+    }
+}
