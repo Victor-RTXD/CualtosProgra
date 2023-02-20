@@ -1,9 +1,9 @@
 package practica5;
 
 public class Nodo {
-    private String codigo;
+   private String codigo;
    private String rutaImagen;
-    private Nodo siguiente;
+   private Nodo siguiente;
     
     public Nodo(String codigo, String rutaImagen, Nodo siguiente){
         this.codigo = codigo;
@@ -34,6 +34,4 @@ public class Nodo {
     public void setSiguiente(Nodo siguiente) {
         this.siguiente = siguiente;
     }
-    
-    
 }

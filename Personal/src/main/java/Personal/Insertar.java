@@ -15,7 +15,7 @@ public class Insertar extends javax.swing.JFrame {
     LinkedList<String> codigos = new LinkedList<String>();
     static JFileChooser explorador = new JFileChooser();
     static String dirtmp;
-    static int contador = 0;
+    static int contador = 0, contador2 = 0;
     
     public Insertar() {
         initComponents();
@@ -40,6 +40,7 @@ public class Insertar extends javax.swing.JFrame {
         btMostrar = new javax.swing.JButton();
         labCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        btBorrarCodigo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,11 +102,22 @@ public class Insertar extends javax.swing.JFrame {
 
         labCodigo.setText("Codigo");
 
+        btBorrarCodigo.setText("borrar por codigo");
+        btBorrarCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBorrarCodigoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labCodigo)
                 .addGap(39, 39, 39)
@@ -115,20 +127,18 @@ public class Insertar extends javax.swing.JFrame {
                     .addComponent(btInsertar)
                     .addComponent(btBorrarFinal))
                 .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btBorrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btDerecha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btMostrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btIzquierda)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btBorrarCodigo)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btBorrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btDerecha))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btMostrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btIzquierda))))
                 .addGap(18, 18, 18))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,7 +155,9 @@ public class Insertar extends javax.swing.JFrame {
                     .addComponent(btMostrar)
                     .addComponent(btBorrarFinal)
                     .addComponent(btIzquierda))
-                .addGap(120, 120, 120)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btBorrarCodigo)
+                .addGap(85, 85, 85)
                 .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
@@ -178,10 +190,10 @@ public class Insertar extends javax.swing.JFrame {
 
     private void btIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIzquierdaActionPerformed
         if (contador < 1) {
-            btIzquierda.setEnabled(false);
-            System.out.println("no hay mas fotos");
+            contador = codigos.size();
+            labImagen.setIcon(lista.getLast());
+            txtCodigo.setText(codigos.getLast());
         } else {
-        btIzquierda.setEnabled(true);
         contador--;
         labImagen.setIcon(lista.get(contador));
         txtCodigo.setText(codigos.get(contador));
@@ -189,15 +201,14 @@ public class Insertar extends javax.swing.JFrame {
     }//GEN-LAST:event_btIzquierdaActionPerformed
 
     private void btDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDerechaActionPerformed
-        if (lista.get(contador) != lista.getLast()) {
+        if (contador < codigos.size()-1) {
             contador++;
             txtCodigo.setText(codigos.get(contador));
             labImagen.setIcon(lista.get(contador));
         } else {
-            System.out.println("llegaste al limite");
-        }
-        if (contador >= 1) {
-            btIzquierda.setEnabled(true);
+            contador = 0;
+            labImagen.setIcon(lista.getFirst());
+            txtCodigo.setText(codigos.getFirst());
         }
     }//GEN-LAST:event_btDerechaActionPerformed
 
@@ -213,6 +224,35 @@ public class Insertar extends javax.swing.JFrame {
         codigos.removeLast();
         labImagen.setIcon(null);
     }//GEN-LAST:event_btBorrarFinalActionPerformed
+
+    private void btBorrarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarCodigoActionPerformed
+        String s = JOptionPane.showInputDialog("ingresa el codigo para borrar");
+        System.out.print(s);
+        if(s == "s")
+            System.out.println("no existe");
+        if (s == "1") {
+            System.out.println("no existe");
+            lista.remove(contador2);
+                codigos.remove(contador2);
+                labImagen.setIcon(null);
+                labImagen.setText("");
+        }
+        while (!codigos.get(contador2).equals(s)) {
+            if (contador2 == lista.size()-1) {
+                System.out.println("no existe");
+                break;
+            } else if (codigos.get(contador2).equals(s)) {
+                lista.remove(contador2);
+                codigos.remove(contador2);
+                labImagen.setIcon(null);
+                labImagen.setText("");
+                break;
+            } else {
+                contador2++;
+            }
+        }
+        
+    }//GEN-LAST:event_btBorrarCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,6 +291,7 @@ public class Insertar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBorrar;
+    private javax.swing.JButton btBorrarCodigo;
     private javax.swing.JButton btBorrarFinal;
     private javax.swing.JButton btDerecha;
     private javax.swing.JButton btInsertar;

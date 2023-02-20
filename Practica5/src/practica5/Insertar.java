@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Insertar extends javax.swing.JFrame {
     static JFileChooser explorador = new JFileChooser();
-    static Nodo actual=null, cabeza = null, nuevo = null;
+    static Nodo auxiliar=null, cabeza = null, nuevo = null;
     static String dirtmp;
     static int contador = 0;
     /*
@@ -18,15 +18,33 @@ public class Insertar extends javax.swing.JFrame {
      static void insertarPila(String codigo, String rutaImagen, Nodo siguiente) {
         nuevo = new Nodo(codigo,rutaImagen,siguiente);
         if (cabeza == null) {
-             cabeza = actual;
+             cabeza = nuevo;
         } else
-            actual.setSiguiente(cabeza);
+            nuevo.setSiguiente(cabeza);
             //actual.siguiente = cabeza;
             //actual.setSiguiente(nuevo);
-            cabeza = actual;
+            cabeza = nuevo;
     }
      
-     void insertarFoto() {
+    static void mostrar() {
+        if (cabeza != null) {
+            nuevo = cabeza;
+            while (nuevo != null) {
+                System.out.println(nuevo.getCodigo());
+                nuevo.getRutaImagen();
+                //nuevo.setSiguiente(cabeza);
+                nuevo = nuevo.getSiguiente();
+            }
+        } else {
+            System.out.println("la lista esta vacia");
+        }
+    }
+    
+    static void borrar() {
+        
+    }
+     
+    void insertarFoto(String dirImg) {
          try{
              explorador.addChoosableFileFilter(new FileNameExtensionFilter("imagenes", "jpg", "png", "jpeg", "gif"));
              explorador.showOpenDialog(null); //ventana de dialogo esta inici????
@@ -34,16 +52,21 @@ public class Insertar extends javax.swing.JFrame {
              auxFile = explorador.getSelectedFile();
              dirtmp = auxFile.getAbsolutePath();
              //visualizar imagen en el label
-             ImageIcon foto;
-             foto = new ImageIcon(dirtmp);
-             Icon icono;
-             icono = new ImageIcon(foto.getImage().getScaledInstance(foto.getIconWidth(), foto.getIconHeight(), Image.SCALE_DEFAULT));
-             
-             labImagen.setIcon(icono);
+             mostrarImagen(dirtmp);
+             mostrar();
+             contador++;
          } catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "error al abrir el archivo", "advertencia", JOptionPane.WARNING_MESSAGE);
-            
          }
+    }
+     
+    void mostrarImagen(String dirImg) {
+        ImageIcon foto;
+       foto = new ImageIcon(dirImg);
+       Icon icono;
+       icono = new ImageIcon(foto.getImage().getScaledInstance(480,320, Image.SCALE_DEFAULT));
+       labImagen.setText(" ");
+       labImagen.setIcon(icono);
     }
     
     public Insertar() {
@@ -62,6 +85,11 @@ public class Insertar extends javax.swing.JFrame {
         labCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btInsertarImagen = new javax.swing.JButton();
+        btBorrarFinal = new javax.swing.JButton();
+        btBorrarXP = new javax.swing.JButton();
+        btMostrarConsola = new javax.swing.JButton();
+        btIzquierda = new javax.swing.JButton();
+        imagen = new javax.swing.JPanel();
         labImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,52 +103,157 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
+        btBorrarFinal.setText("borrar al final");
+        btBorrarFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBorrarFinalActionPerformed(evt);
+            }
+        });
+
+        btBorrarXP.setText("borrar x posicion");
+        btBorrarXP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBorrarXPActionPerformed(evt);
+            }
+        });
+
+        btMostrarConsola.setText("mostrar en consola");
+
+        btIzquierda.setText("<--");
+        btIzquierda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btIzquierdaActionPerformed(evt);
+            }
+        });
+
         labImagen.setText("Sin imagen");
         labImagen.setMaximumSize(new java.awt.Dimension(1, 1));
         labImagen.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        javax.swing.GroupLayout imagenLayout = new javax.swing.GroupLayout(imagen);
+        imagen.setLayout(imagenLayout);
+        imagenLayout.setHorizontalGroup(
+            imagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(imagenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        imagenLayout.setVerticalGroup(
+            imagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(imagenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(labCodigo)
-                        .addGap(84, 84, 84)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(btInsertarImagen))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(labImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(485, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btInsertarImagen)
+                                .addGap(72, 72, 72)
+                                .addComponent(btBorrarFinal)
+                                .addGap(71, 71, 71)
+                                .addComponent(btBorrarXP)
+                                .addGap(73, 73, 73)
+                                .addComponent(btMostrarConsola))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labCodigo)
+                                .addGap(84, 84, 84)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 161, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btIzquierda)
+                        .addContainerGap(150, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labCodigo)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btInsertarImagen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(388, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btInsertarImagen)
+                            .addComponent(btBorrarFinal)
+                            .addComponent(btBorrarXP)
+                            .addComponent(btMostrarConsola)
+                            .addComponent(btIzquierda)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labCodigo)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(217, 217, 217)
+                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(379, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btInsertarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInsertarImagenActionPerformed
-        insertarFoto();
+        insertarFoto(dirtmp);//insertarFoto()
         insertarPila(txtCodigo.getText(), dirtmp, null);
-        //mostrar
-        
+        //mostrarImagen(dirtmp)
+        auxiliar = cabeza;
+        txtCodigo.setText("");
     }//GEN-LAST:event_btInsertarImagenActionPerformed
+
+    private void btBorrarXPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarXPActionPerformed
+     if (cabeza == null) {
+           System.out.print("pila vacia");
+       } else {
+        if (auxiliar.getSiguiente() == null) {
+            auxiliar.setCodigo(cabeza.getCodigo());
+            auxiliar.setRutaImagen(cabeza.getRutaImagen());
+            auxiliar.getSiguiente();
+            mostrarImagen(cabeza.getRutaImagen());
+            contador--;
+        } else {
+            auxiliar.setCodigo(auxiliar.getSiguiente().getCodigo());
+            auxiliar.setRutaImagen(auxiliar.getSiguiente().getRutaImagen());
+            auxiliar.getSiguiente();
+            mostrarImagen(auxiliar.getRutaImagen());
+            contador--;
+        }
+       }
+    }//GEN-LAST:event_btBorrarXPActionPerformed
+
+    private void btIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIzquierdaActionPerformed
+        if (auxiliar == null) {
+            auxiliar = cabeza;
+            txtCodigo.setText(auxiliar.getCodigo());
+            mostrarImagen(auxiliar.getRutaImagen());
+        } else {
+            auxiliar = auxiliar.getSiguiente();
+            txtCodigo.setText(auxiliar.getCodigo());
+            mostrarImagen(auxiliar.getRutaImagen());
+        }
+    }//GEN-LAST:event_btIzquierdaActionPerformed
+
+    private void btBorrarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarFinalActionPerformed
+       if (cabeza == null) {
+           System.out.println("vacio");
+       } else {
+           auxiliar = cabeza;
+           System.out.println("se borrara: " + auxiliar.getCodigo());
+           cabeza.getSiguiente();
+           auxiliar.setCodigo(auxiliar.getSiguiente().getCodigo());
+           auxiliar.setRutaImagen(auxiliar.getSiguiente().getRutaImagen());
+           auxiliar.getSiguiente();
+           mostrarImagen(auxiliar.getRutaImagen());
+       }
+    }//GEN-LAST:event_btBorrarFinalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,7 +292,12 @@ public class Insertar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBorrarFinal;
+    private javax.swing.JButton btBorrarXP;
     private javax.swing.JButton btInsertarImagen;
+    private javax.swing.JButton btIzquierda;
+    private javax.swing.JButton btMostrarConsola;
+    private javax.swing.JPanel imagen;
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;
     private javax.swing.JTextField txtCodigo;
