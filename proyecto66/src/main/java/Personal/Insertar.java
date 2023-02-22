@@ -41,6 +41,7 @@ public class Insertar extends javax.swing.JFrame {
         labCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btBorrarCodigo = new javax.swing.JButton();
+        btBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,6 +116,13 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
+        btBuscar.setText("buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -145,6 +153,10 @@ public class Insertar extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(btIzquierda))))
                 .addGap(18, 18, 18))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btBuscar)
+                .addGap(126, 126, 126))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +175,9 @@ public class Insertar extends javax.swing.JFrame {
                     .addComponent(btIzquierda))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btBorrarCodigo)
-                .addGap(85, 85, 85)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btBuscar)
+                .addGap(50, 50, 50)
                 .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
@@ -187,7 +201,6 @@ public class Insertar extends javax.swing.JFrame {
             labImagen.setIcon(icono);
             lista.add(foto);
             codigos.add(txtCodigo.getText());
-            System.out.println(lista.getFirst());
             contador++;
             txtCodigo.setText("");
          } catch(Exception ex) {
@@ -252,6 +265,26 @@ public class Insertar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+        if(lista.isEmpty() == true) {
+            System.out.println("vacio");
+        } else {
+                System.out.println("codigo " + codigos.get(contador));
+                System.out.println("ruta imagen  " + lista.get(contador));
+                
+                if(contador > 0 && lista.get(contador-1) != null){
+                    System.out.println("nodo anterior: " + lista.get(contador-1));
+                } else {
+                    System.out.println("nodo anterior: no hay nada");
+                }
+                if(contador < lista.size()-1 && lista.get(contador+1) != null) {
+                    System.out.println("nodo siguiente: " + lista.get(contador+1));
+                } else {
+                    System.out.println("nodo siguiente: no hay nada");
+                }   
+        }
+    }//GEN-LAST:event_btBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,6 +324,7 @@ public class Insertar extends javax.swing.JFrame {
     private javax.swing.JButton btBorrar;
     private javax.swing.JButton btBorrarCodigo;
     private javax.swing.JButton btBorrarFinal;
+    private javax.swing.JButton btBuscar;
     private javax.swing.JButton btDerecha;
     private javax.swing.JButton btInsertar;
     private javax.swing.JButton btIzquierda;

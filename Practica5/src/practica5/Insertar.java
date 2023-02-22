@@ -39,10 +39,6 @@ public class Insertar extends javax.swing.JFrame {
             System.out.println("la lista esta vacia");
         }
     }
-    
-    static void borrar() {
-        
-    }
      
     void insertarFoto(String dirImg) {
          try{
