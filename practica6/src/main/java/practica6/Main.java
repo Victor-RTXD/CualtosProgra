@@ -1,7 +1,7 @@
 package practica6;
 
 public class Main extends javax.swing.JFrame {
-    
+    static Main nuevo = null, inicio = null, fin = null, auxiliar = null;//debe ser main
     
     
     public Main() {

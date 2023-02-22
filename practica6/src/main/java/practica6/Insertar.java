@@ -7,11 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import static practica6.Nodo.codigo;
-import static practica6.Nodo.rutaImagen;
 
 public class Insertar extends javax.swing.JFrame {
-    static Nodo nuevo = null, inicio = null, fin = null, auxiliar = null;
+    String rutaImagen, code;
+    
     
     public Insertar() {
         initComponents();
@@ -95,7 +94,7 @@ public class Insertar extends javax.swing.JFrame {
     }//GEN-LAST:event_btInsertarActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        insertarNodo(codigo, rutaImagen);
+        insertarNodo(, rutaImagen);
         mostrarImagen(rutaImagen);
         mostrar();
     }//GEN-LAST:event_btBuscarActionPerformed
@@ -157,7 +156,7 @@ public class Insertar extends javax.swing.JFrame {
     
     void mostrarImagen(String ruta_imagen){
     try{
-    if(fin==null){
+    if(Main.fin==null){
       imagen.setText("pila vacia");
       imagen.setIcon(null);
     }else
@@ -183,20 +182,39 @@ public class Insertar extends javax.swing.JFrame {
     }
     
     void insertarNodo(String codigo, String rutaImagen) {
-        nuevo = new Nodo(codigo, rutaImagen, null, fin);
+        nuevo = new Nodo(codigo, rutaImagen, null, null);
         
         if (vacio() != vacio()) {
-            nuevo.setAnterior(fin);
-            fin.setSiguiente(nuevo);
-            fin = nuevo;
+            Main.nuevo.setAnterior(Main.fin);
+            Main.nuevo.setSiguiente(Main.inicio);
+            Main.fin.setSiguiente(Main.nuevo);
+            Main.inicio.setAnterior(Main.nuevo);
+            Main.fin = Main.nuevo;
         } else {
-            inicio = nuevo;
-            fin = nuevo;
+            Main.nuevo.setAnterior(Main.nuevo);
+            Main.nuevo.setSiguiente(Main.nuevo);
+            Main.inicio = Main.nuevo;
+            Main.fin = Main.nuevo;
         }
     }
     
+    void mostrarX() {
+        Nodo auxiliar = Main.inicio;
+       if (Main.inicio == null) {
+           System.out.println("no hay nada");
+       } else {
+           do {
+               System.out.println("codigo " + auxiliar.getCodigo());
+               System.out.println("codigo " + auxiliar.getRutaImagen());
+               System.out.println("anterior" + auxiliar.getAnterior());
+               System.out.println("siguiente" + auxiliar.getSiguiente());
+               auxiliar = auxiliar.getSiguiente();
+           } while(auxiliar != Main.inicio);
+       }
+    }
+    
     void mostrar() {
-        Nodo auxiliar = inicio;
+        Nodo auxiliar = Main.inicio;
         
         if(vacio() != vacio()) {
             while(auxiliar != null) {

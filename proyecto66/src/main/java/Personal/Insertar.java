@@ -221,7 +221,7 @@ public class Insertar extends javax.swing.JFrame {
     }//GEN-LAST:event_btIzquierdaActionPerformed
 
     private void btDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDerechaActionPerformed
-        if (contador < codigos.size()-1) {
+        /*if (contador < codigos.size()-1) {
             contador++;
             txtCodigo.setText(codigos.get(contador));
             labImagen.setIcon(lista.get(contador));
@@ -230,6 +230,7 @@ public class Insertar extends javax.swing.JFrame {
             labImagen.setIcon(lista.getFirst());
             txtCodigo.setText(codigos.getFirst());
         }
+        */
     }//GEN-LAST:event_btDerechaActionPerformed
 
     private void btBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarActionPerformed

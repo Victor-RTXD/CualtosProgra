@@ -1,10 +1,10 @@
 package practica6;
 
 public class Nodo {
-    static public String codigo;
-    static public String rutaImagen;
-    static public Nodo siguiente;
-    static public Nodo anterior;
+    static private String codigo;
+    static private String rutaImagen;
+    static private Nodo siguiente;
+    static private Nodo anterior;
     
     public Nodo(String codigo, String rutaImagen, Nodo siguiente, Nodo anterior) {
         this.codigo = codigo;
