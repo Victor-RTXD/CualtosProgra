@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Insertar extends javax.swing.JFrame {
     static JFileChooser explorador = new JFileChooser();
-    static Nodo auxiliar=null, cabeza = null, nuevo = null;
+    static Nodo auxiliar=null, cabeza = null, nuevo = null, inicio = null;
     static String dirtmp;
     static int contador = 0;
     /*
@@ -18,11 +18,15 @@ public class Insertar extends javax.swing.JFrame {
      static void insertarPila(String codigo, String rutaImagen, Nodo siguiente) {
         nuevo = new Nodo(codigo,rutaImagen,siguiente);
         if (cabeza == null) {
-             cabeza = nuevo;
+            nuevo.setAnterior(nuevo);
+            nuevo.setSiguiente(nuevo);
+            inicio = nuevo;
+            cabeza = nuevo;
         } else
-            nuevo.setSiguiente(cabeza);
-            //actual.siguiente = cabeza;
-            //actual.setSiguiente(nuevo);
+            nuevo.setAnterior(cabeza);
+            nuevo.setSiguiente(inicio);
+            cabeza.setSiguiente(nuevo);
+            inicio.setAnterior(nuevo);
             cabeza = nuevo;
     }
      
@@ -33,7 +37,7 @@ public class Insertar extends javax.swing.JFrame {
                 System.out.println(nuevo.getCodigo());
                 nuevo.getRutaImagen();
                 //nuevo.setSiguiente(cabeza);
-                nuevo = nuevo.getSiguiente();
+                nuevo = nuevo.getAnterior();
             }
         } else {
             System.out.println("la lista esta vacia");
@@ -42,12 +46,14 @@ public class Insertar extends javax.swing.JFrame {
      
     void insertarFoto(String dirImg) {
          try{
+             /*
              explorador.addChoosableFileFilter(new FileNameExtensionFilter("imagenes", "jpg", "png", "jpeg", "gif"));
              explorador.showOpenDialog(null); //ventana de dialogo esta inici????
              File auxFile;
              auxFile = explorador.getSelectedFile();
              dirtmp = auxFile.getAbsolutePath();
              //visualizar imagen en el label
+             */
              mostrarImagen(dirtmp);
              mostrar();
              contador++;
@@ -82,12 +88,10 @@ public class Insertar extends javax.swing.JFrame {
         labCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         btInsertarImagen = new javax.swing.JButton();
-        btBorrarFinal = new javax.swing.JButton();
-        btBorrarXP = new javax.swing.JButton();
-        btMostrarConsola = new javax.swing.JButton();
         btIzquierda = new javax.swing.JButton();
         imagen = new javax.swing.JPanel();
         labImagen = new javax.swing.JLabel();
+        btBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,22 +103,6 @@ public class Insertar extends javax.swing.JFrame {
                 btInsertarImagenActionPerformed(evt);
             }
         });
-
-        btBorrarFinal.setText("borrar al final");
-        btBorrarFinal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBorrarFinalActionPerformed(evt);
-            }
-        });
-
-        btBorrarXP.setText("borrar x posicion");
-        btBorrarXP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBorrarXPActionPerformed(evt);
-            }
-        });
-
-        btMostrarConsola.setText("mostrar en consola");
 
         btIzquierda.setText("<--");
         btIzquierda.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +132,13 @@ public class Insertar extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
+        btBuscar.setText("buscar");
+        btBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,47 +146,36 @@ public class Insertar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btInsertarImagen)
+                        .addGap(34, 34, 34)
+                        .addComponent(btBuscar)
+                        .addGap(60, 60, 60)
+                        .addComponent(btIzquierda))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btInsertarImagen)
-                                .addGap(72, 72, 72)
-                                .addComponent(btBorrarFinal)
-                                .addGap(71, 71, 71)
-                                .addComponent(btBorrarXP)
-                                .addGap(73, 73, 73)
-                                .addComponent(btMostrarConsola))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labCodigo)
-                                .addGap(84, 84, 84)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 161, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(btIzquierda)
-                        .addContainerGap(150, Short.MAX_VALUE))))
+                        .addComponent(labCodigo)
+                        .addGap(84, 84, 84)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(401, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btInsertarImagen)
-                            .addComponent(btBorrarFinal)
-                            .addComponent(btBorrarXP)
-                            .addComponent(btMostrarConsola)
-                            .addComponent(btIzquierda)))
+                            .addComponent(btIzquierda)
+                            .addComponent(btBuscar))
+                        .addGap(217, 217, 217)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labCodigo)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(217, 217, 217)
-                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(379, Short.MAX_VALUE))
         );
 
@@ -199,32 +183,22 @@ public class Insertar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btInsertarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInsertarImagenActionPerformed
-        insertarFoto(dirtmp);//insertarFoto()
-        insertarPila(txtCodigo.getText(), dirtmp, null);
-        //mostrarImagen(dirtmp)
+        //insertarFoto(dirtmp);//insertarFoto()
+        mostrarImagen(dirtmp);
         auxiliar = cabeza;
         txtCodigo.setText("");
-    }//GEN-LAST:event_btInsertarImagenActionPerformed
-
-    private void btBorrarXPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarXPActionPerformed
-     if (cabeza == null) {
-           System.out.print("pila vacia");
+        
+        if (inicio == null) {
+           System.out.println("no hay nada");
        } else {
-        if (auxiliar.getSiguiente() == null) {
-            auxiliar.setCodigo(cabeza.getCodigo());
-            auxiliar.setRutaImagen(cabeza.getRutaImagen());
-            auxiliar.getSiguiente();
-            mostrarImagen(cabeza.getRutaImagen());
-            contador--;
-        } else {
-            auxiliar.setCodigo(auxiliar.getSiguiente().getCodigo());
-            auxiliar.setRutaImagen(auxiliar.getSiguiente().getRutaImagen());
-            auxiliar.getSiguiente();
-            mostrarImagen(auxiliar.getRutaImagen());
-            contador--;
-        }
+               System.out.println("codigo  " + auxiliar.getCodigo());
+               System.out.println("codigo  " + auxiliar.getRutaImagen());
+               System.out.println("acual  " + auxiliar);
+               System.out.println("anterior  " + auxiliar.getAnterior());
+               System.out.println("siguiente  " + auxiliar.getSiguiente());
+               auxiliar = auxiliar.getSiguiente();
        }
-    }//GEN-LAST:event_btBorrarXPActionPerformed
+    }//GEN-LAST:event_btInsertarImagenActionPerformed
 
     private void btIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIzquierdaActionPerformed
         if (auxiliar == null) {
@@ -232,25 +206,20 @@ public class Insertar extends javax.swing.JFrame {
             txtCodigo.setText(auxiliar.getCodigo());
             mostrarImagen(auxiliar.getRutaImagen());
         } else {
-            auxiliar = auxiliar.getSiguiente();
+            auxiliar = auxiliar.getAnterior();
             txtCodigo.setText(auxiliar.getCodigo());
             mostrarImagen(auxiliar.getRutaImagen());
         }
     }//GEN-LAST:event_btIzquierdaActionPerformed
 
-    private void btBorrarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarFinalActionPerformed
-       if (cabeza == null) {
-           System.out.println("vacio");
-       } else {
-           auxiliar = cabeza;
-           System.out.println("se borrara: " + auxiliar.getCodigo());
-           cabeza.getSiguiente();
-           auxiliar.setCodigo(auxiliar.getSiguiente().getCodigo());
-           auxiliar.setRutaImagen(auxiliar.getSiguiente().getRutaImagen());
-           auxiliar.getSiguiente();
-           mostrarImagen(auxiliar.getRutaImagen());
-       }
-    }//GEN-LAST:event_btBorrarFinalActionPerformed
+    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
+         explorador.addChoosableFileFilter(new FileNameExtensionFilter("imagenes", "jpg", "png", "jpeg", "gif"));
+             explorador.showOpenDialog(null); //ventana de dialogo esta inici????
+             File auxFile;
+             auxFile = explorador.getSelectedFile();
+             dirtmp = auxFile.getAbsolutePath();
+        insertarPila(txtCodigo.getText(), dirtmp, null);
+    }//GEN-LAST:event_btBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,11 +258,9 @@ public class Insertar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBorrarFinal;
-    private javax.swing.JButton btBorrarXP;
+    private javax.swing.JButton btBuscar;
     private javax.swing.JButton btInsertarImagen;
     private javax.swing.JButton btIzquierda;
-    private javax.swing.JButton btMostrarConsola;
     private javax.swing.JPanel imagen;
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;

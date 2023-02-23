@@ -32,16 +32,11 @@ public class Insertar extends javax.swing.JFrame {
 
         btInsertar = new javax.swing.JButton();
         imagen = new javax.swing.JPanel();
-        labImagen = new javax.swing.JLabel();
-        btDerecha = new javax.swing.JButton();
         btIzquierda = new javax.swing.JButton();
-        btBorrarFinal = new javax.swing.JButton();
-        btBorrar = new javax.swing.JButton();
-        btMostrar = new javax.swing.JButton();
         labCodigo = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        btBorrarCodigo = new javax.swing.JButton();
         btBuscar = new javax.swing.JButton();
+        labImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,31 +47,16 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
-        labImagen.setText("Sin imagen");
-
         javax.swing.GroupLayout imagenLayout = new javax.swing.GroupLayout(imagen);
         imagen.setLayout(imagenLayout);
         imagenLayout.setHorizontalGroup(
             imagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(imagenLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(labImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 519, Short.MAX_VALUE)
         );
         imagenLayout.setVerticalGroup(
             imagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(imagenLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(labImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 451, Short.MAX_VALUE)
         );
-
-        btDerecha.setText("-->");
-        btDerecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDerechaActionPerformed(evt);
-            }
-        });
 
         btIzquierda.setText("<--");
         btIzquierda.addActionListener(new java.awt.event.ActionListener() {
@@ -85,34 +65,11 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
-        btBorrarFinal.setText("borrar final");
-        btBorrarFinal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBorrarFinalActionPerformed(evt);
-            }
-        });
-
-        btBorrar.setText("borrar actual");
-        btBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBorrarActionPerformed(evt);
-            }
-        });
-
-        btMostrar.setText("mostrar en consola");
-
         labCodigo.setText("Codigo");
 
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoActionPerformed(evt);
-            }
-        });
-
-        btBorrarCodigo.setText("borrar por codigo");
-        btBorrarCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBorrarCodigoActionPerformed(evt);
             }
         });
 
@@ -123,63 +80,57 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
+        labImagen.setText("Sin imagen");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labCodigo)
                 .addGap(40, 40, 40)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btInsertar)
-                    .addComponent(btBorrarFinal))
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btBorrarCodigo)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btBorrar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btDerecha))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btMostrar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btIzquierda))))
-                .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btBuscar)
-                .addGap(126, 126, 126))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btInsertar)
+                            .addComponent(btBuscar))
+                        .addGap(303, 303, 303))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(btIzquierda)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(247, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btBorrar)
-                    .addComponent(btInsertar)
-                    .addComponent(btDerecha))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labCodigo)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btMostrar)
-                    .addComponent(btBorrarFinal)
-                    .addComponent(btIzquierda))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btBorrarCodigo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btBuscar)
-                .addGap(50, 50, 50)
+                .addComponent(btInsertar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labCodigo)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btIzquierda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btBuscar)))
+                .addGap(87, 87, 87)
+                .addComponent(labImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,48 +170,6 @@ public class Insertar extends javax.swing.JFrame {
         txtCodigo.setText(codigos.get(contador));
         }
     }//GEN-LAST:event_btIzquierdaActionPerformed
-
-    private void btDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDerechaActionPerformed
-        /*if (contador < codigos.size()-1) {
-            contador++;
-            txtCodigo.setText(codigos.get(contador));
-            labImagen.setIcon(lista.get(contador));
-        } else {
-            contador = 0;
-            labImagen.setIcon(lista.getFirst());
-            txtCodigo.setText(codigos.getFirst());
-        }
-        */
-    }//GEN-LAST:event_btDerechaActionPerformed
-
-    private void btBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarActionPerformed
-        lista.remove(contador);
-        codigos.remove(contador);
-        labImagen.setIcon(null);
-        labImagen.setText("");
-    }//GEN-LAST:event_btBorrarActionPerformed
-
-    private void btBorrarFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarFinalActionPerformed
-        lista.removeLast();
-        codigos.removeLast();
-        labImagen.setIcon(null);
-    }//GEN-LAST:event_btBorrarFinalActionPerformed
-
-    private void btBorrarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarCodigoActionPerformed
-        String dato = JOptionPane.showInputDialog(null, "ingresa el dato que quieras borrar:", "mensaje", JOptionPane.PLAIN_MESSAGE);
-        boolean contiene = codigos.contains(dato);
-        if (contiene == true) {
-            codigos.indexOf(dato);
-            lista.indexOf(dato);
-            System.out.println(codigos.indexOf(dato));
-            System.out.println(lista.indexOf(dato));
-            lista.remove(codigos.indexOf(dato));
-            codigos.remove(codigos.indexOf(dato));
-            JOptionPane.showMessageDialog(null, "Se borro con exito", "Borrado", JOptionPane.INFORMATION_MESSAGE);
-            labImagen.setIcon(null);
-            labImagen.setText("");
-        }
-    }//GEN-LAST:event_btBorrarCodigoActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
@@ -322,14 +231,9 @@ public class Insertar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBorrar;
-    private javax.swing.JButton btBorrarCodigo;
-    private javax.swing.JButton btBorrarFinal;
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btDerecha;
     private javax.swing.JButton btInsertar;
     private javax.swing.JButton btIzquierda;
-    private javax.swing.JButton btMostrar;
     private javax.swing.JPanel imagen;
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;

@@ -3,14 +3,19 @@ inventario["manzana"] = 5
 inventario["leche"] = 3
 print(inventario)
 
-def votaciones(name):
-    if votacion.get(name):
+#encontrar duplicados
+def check_voter(name):
+    if voted.get(name):
         print("kick them out")
     else:
+        voted[name] = True
         print("let them vote")
-        votacion[name] = True
 
-votacion = {}
-votacion["pepe"] = False
-votaciones(votacion["pepe"])
-votaciones(votacion["pepe"])
+voted = {}
+check_voter("roy")
+check_voter("roy")
+check_voter("pepe")
+
+#lista telefonica
+phone = {}
+phone["victor"] = 65656565
