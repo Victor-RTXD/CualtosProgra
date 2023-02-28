@@ -8,7 +8,7 @@ public class Queue {
 
     public class Persona {
         String id;
-        String contraseña;
+        //String contraseña;
     }
     Persona queue[] = new Persona[5];
 
@@ -24,9 +24,9 @@ public class Queue {
            queue[rear] = new Persona();
            System.out.println("dame tu id ");
            queue[rear].id = sc.nextLine();
-           System.out.println("dame tu contraseña ");
+           //System.out.println("dame tu contraseña ");
 
-           queue[rear].contraseña = sc.nextLine();
+           //queue[rear].contraseña = sc.nextLine();
         }
     }
 
@@ -35,7 +35,7 @@ public class Queue {
         System.out.println("sobrecarga");
         else {
             System.out.println("se eliminara: " + queue[front].id);
-            queue[front].contraseña = "";
+            //queue[front].contraseña = "";
             queue[front].id = "";
             if (front == rear)
                 front = rear = -1;
@@ -46,7 +46,7 @@ public class Queue {
 
     void print(short contador) {
         for (int i = 0; i <= contador; i++) {
-            System.out.println("contraseña: " + queue[i].contraseña + " id:  " +  queue[i].id);
+            System.out.println(queue[i].id);
         }
     }
 }

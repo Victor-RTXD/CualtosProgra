@@ -8,18 +8,23 @@ class Main {
         short i = 0, contador = 0;
         Scanner sc = new Scanner(System.in);
 
-        
+
         do {
             System.out.println("\n1: insertar elementos max 5\n2: eliminar elemento\n3: mostrar elementos\n 0: salir");
             i = sc.nextShort();
             if (i == 1) {
-                cola.enQueue();
+                if (contador < 5) {
+                    cola.enQueue();
+                    contador++;
+                } else {
+                    System.out.println("se pasa");
+                }
             } else if (i == 2) {
                 cola.deQueue();
+                contador--;
             } else if (i == 3) {
-                cola.print(contador);
                 if (contador <= 5) {
-                    contador++;
+                    cola.print(contador);
                 }
             }
         } while (i != 0);
