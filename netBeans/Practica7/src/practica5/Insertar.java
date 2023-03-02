@@ -11,7 +11,8 @@ public class Insertar extends javax.swing.JFrame {
     static String dirtmp;
     static int contador = 0;
     int aux = 0;
-    ArregloObjetos array[] = new ArregloObjetos[10];
+    //ArregloObjetos array[] = new ArregloObjetos[10];
+    ArregloObjetos array[];
     /*
     actual sirve para instanciar objetos nuevos y reservar memoria
     fin recibe la direccion nuevos de actual 
@@ -264,6 +265,7 @@ public class Insertar extends javax.swing.JFrame {
 
     void burbuja() {
         auxiliar = inicio;
+        array = new ArregloObjetos[contador];
         
         if (inicio == null) {
            System.out.println("no hay nada");
