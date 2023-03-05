@@ -1,17 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 /**
  *
- * @author DELL
+ * @author Luis Ángel de la Torre Gómez
  */
+import java.awt.Image;
+import java.io.File;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 public class frmIngresar extends javax.swing.JFrame {
 
     /**
      * Creates new form frmIngresar
      */
+    Nodo auxiliar = Principal.inicio;
+    static JFileChooser explorador = new JFileChooser();
+    String dirtmp = "";
     public frmIngresar() {
         initComponents();
     }
@@ -34,9 +37,10 @@ public class frmIngresar extends javax.swing.JFrame {
         txtFrase = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         btnBuscarFoto = new javax.swing.JButton();
-        btnGuardar1 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txtEdad1 = new javax.swing.JTextField();
+        txtEdad = new javax.swing.JTextField();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -74,34 +78,44 @@ public class frmIngresar extends javax.swing.JFrame {
             }
         });
 
-        btnGuardar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnGuardar1.setText("Guardar");
-        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardar1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Código:");
 
-        txtEdad1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtEdad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 102));
+        btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegresar.setText("<");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
+                        .addComponent(btnRegresar)
+                        .addGap(93, 93, 93)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
                         .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFrase, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                            .addComponent(txtFrase, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,7 +127,7 @@ public class frmIngresar extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -123,28 +137,33 @@ public class frmIngresar extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(34, 34, 34)
-                    .addComponent(btnGuardar1)
-                    .addContainerGap(499, Short.MAX_VALUE)))
+                    .addComponent(btnGuardar)
+                    .addContainerGap(432, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,7 +174,7 @@ public class frmIngresar extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(437, Short.MAX_VALUE)
-                    .addComponent(btnGuardar1)
+                    .addComponent(btnGuardar)
                     .addGap(48, 48, 48)))
         );
 
@@ -163,12 +182,66 @@ public class frmIngresar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarFotoActionPerformed
-        // TODO add your handling code here:
+        insertarFoto();//El usuario inserta la foto
+        Mostrar_imagen(dirtmp);//Muestra la imagen en el lbl
+        lblFoto.setText("");
     }//GEN-LAST:event_btnBuscarFotoActionPerformed
 
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(txtCodigo.getText().equals("") || txtNombre.equals("") || txtEdad.equals("") || txtFrase.equals("") || dirtmp == "")
+        {
+            JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacío. Vuelva a ingresar de nuevo.");
+            //Borra campos de textos e reinicializa
+                txtCodigo.setText("");
+                txtNombre.setText("");
+                txtEdad.setText("");
+                txtFrase.setText("");
+                lblFoto.setIcon(null);
+                lblFoto.setText("Sin foto");
+        }else
+        {
+            try
+            {
+                int x = Integer.parseInt(txtEdad.getText()); //Comprueba que haya insertado un numero
+                //Inserta el nodo
+                insertar(txtNombre.getText(),dirtmp,txtEdad.getText(),txtFrase.getText(),null,null,Integer.parseInt(txtCodigo.getText()));
+                JOptionPane.showMessageDialog(null, "Los datos se han guardado con exito");
+                Principal.contador++;
+                //Borra campos de textos e reinicializa
+                txtCodigo.setText("");
+                txtNombre.setText("");
+                txtEdad.setText("");
+                txtFrase.setText("");
+                lblFoto.setIcon(null);
+                lblFoto.setText("Sin foto");
+               // Principal rtn = new Principal();
+               // rtn.setVisible(true);
+               // this.setVisible(false);
+            }catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, "ERROR. Debe ingresar valores numericos en Codigo y/o edad");
+            }
+            
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEdadActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        Principal rtn = new Principal();
+        rtn.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,7 +280,8 @@ public class frmIngresar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarFoto;
-    private javax.swing.JButton btnGuardar1;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -215,8 +289,85 @@ public class frmIngresar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtEdad1;
+    private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtFrase;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+    
+/**
+ * Funciona para insertar un nuevo nodo a la lista
+ * Se ingresan todos los atributos del nodo
+ * @param nombre 
+ * @param rutaImagen
+ * @param edad
+ * @param frase
+ * @param anterior
+ * @param siguiente
+ * @param codigo 
+ */
+    public void insertar(String nombre, String rutaImagen, String edad, String frase, Nodo anterior, Nodo siguiente, int codigo) {
+        Nodo nuevo = new Nodo( nombre,  rutaImagen,  edad,  frase,  anterior,  siguiente, codigo);
+        if (Principal.fin == null) {
+            nuevo.setAnterior(nuevo);
+            nuevo.setSiguiente(nuevo);
+            Principal.inicio = nuevo;
+            Principal.fin = nuevo;
+        } else {
+            nuevo.setAnterior(Principal.fin);
+            nuevo.setSiguiente(Principal.inicio);
+            Principal.fin.setSiguiente(nuevo);
+            Principal.inicio.setAnterior(nuevo);
+            Principal.fin = nuevo;
+        }
+    }
+    /**
+     * Captura la ruta de una imagen y la guarda en la variable dirtmp
+     */
+    void insertarFoto()
+        {
+        try{
+            explorador.addChoosableFileFilter(
+            new FileNameExtensionFilter
+                ("Imágenes","jpg","png","jpeg","gif"));
+            explorador.showOpenDialog(null);//ventana de diálogo esta inicializada en null
+            File auxFile;
+            auxFile = explorador.getSelectedFile();
+            dirtmp = auxFile.getAbsolutePath();
+
+        }catch(Exception ex)
+        {
+                JOptionPane.showMessageDialog(null,
+                "Error al abrir el archivo","Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+        }
+
+        }
+    
+    void Mostrar_imagen(String ruta_imagen)
+    {
+        try{
+            if(Principal.fin==null){
+                lblFoto.setText("Lista vacia");
+                lblFoto.setIcon(null);
+                }else
+                {    
+                ImageIcon foto;
+                foto = new ImageIcon(ruta_imagen);
+                Icon icono;
+                icono = new ImageIcon(foto.getImage()
+                .getScaledInstance(lblFoto.getWidth(),lblFoto.getHeight()
+                ,Image.SCALE_DEFAULT));//adapatación al tamaño de la etiqueta
+                lblFoto.setIcon(icono);
+                }
+            }catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null,
+                "Error al abrir el archivo","Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+            }
+    }
+        
 }
+
+
+    

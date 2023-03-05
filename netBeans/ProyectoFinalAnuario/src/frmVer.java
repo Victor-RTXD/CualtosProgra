@@ -3,6 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import java.awt.Image;
+import java.io.File;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 /**
  *
  * @author DELL
@@ -12,9 +18,34 @@ public class frmVer extends javax.swing.JFrame {
     /**
      * Creates new form frmVer
      */
+    
+    Nodo aux = Principal.inicio;
+    static JFileChooser explorador = new JFileChooser();
+    
+    
     public frmVer() {
         initComponents();
+        if (aux != null) 
+        {
+            visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
+            aux = aux.getSiguiente();
+            if (aux != null) 
+            {   
+              visualizarNodo(lblCodigo2,lblNombre2,lblEdad2,lblFrase2,lblFoto2);
+              aux = aux.getSiguiente();  
+            }
+            if (aux != null) 
+            {
+              visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3);
+              aux = aux.getSiguiente();  
+            }
+            if (aux != null) 
+            {
+              visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
+            }
+        }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -25,7 +56,7 @@ public class frmVer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFoto = new javax.swing.JLabel();
+        lblFoto2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -44,7 +75,7 @@ public class frmVer extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        lblFoto5 = new javax.swing.JLabel();
+        lblFoto1 = new javax.swing.JLabel();
         lblEdad1 = new javax.swing.JLabel();
         lblFrase1 = new javax.swing.JLabel();
         lblNombre2 = new javax.swing.JLabel();
@@ -66,13 +97,13 @@ public class frmVer extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         lblCodigo4 = new javax.swing.JLabel();
 
-        lblFoto.setBackground(new java.awt.Color(255, 255, 255));
-        lblFoto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFoto.setText("Sin foto");
-        lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        lblFoto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblFoto.setOpaque(true);
+        lblFoto2.setBackground(new java.awt.Color(255, 255, 255));
+        lblFoto2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFoto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto2.setText("Sin foto");
+        lblFoto2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFoto2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblFoto2.setOpaque(true);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
@@ -105,6 +136,11 @@ public class frmVer extends javax.swing.JFrame {
 
         btnAnterio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAnterio.setText("<");
+        btnAnterio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnterioActionPerformed(evt);
+            }
+        });
 
         lblNombre1.setBackground(new java.awt.Color(255, 255, 255));
         lblNombre1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -148,13 +184,13 @@ public class frmVer extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setText("Frase:");
 
-        lblFoto5.setBackground(new java.awt.Color(255, 255, 255));
-        lblFoto5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblFoto5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFoto5.setText("Sin foto");
-        lblFoto5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        lblFoto5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblFoto5.setOpaque(true);
+        lblFoto1.setBackground(new java.awt.Color(255, 255, 255));
+        lblFoto1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFoto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto1.setText("Sin foto");
+        lblFoto1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFoto1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblFoto1.setOpaque(true);
 
         lblEdad1.setBackground(new java.awt.Color(255, 255, 255));
         lblEdad1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -248,6 +284,7 @@ public class frmVer extends javax.swing.JFrame {
         lblNombre3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblNombre3.setOpaque(true);
 
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 102));
         btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnRegresar.setText("<");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -308,7 +345,7 @@ public class frmVer extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -352,7 +389,7 @@ public class frmVer extends javax.swing.JFrame {
                         .addGap(386, 386, 386)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFoto5, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -395,13 +432,11 @@ public class frmVer extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addGap(18, 18, 18)))
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
-                        .addComponent(lblFoto5, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblFoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -446,7 +481,7 @@ public class frmVer extends javax.swing.JFrame {
                             .addComponent(lblFrase3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFoto4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -500,12 +535,18 @@ public class frmVer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
+        RecDerecha();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        Principal rtn = new Principal();
+        rtn.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAnterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnterioActionPerformed
+        RecIzquierda();
+    }//GEN-LAST:event_btnAnterioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -541,6 +582,8 @@ public class frmVer extends javax.swing.JFrame {
             }
         });
     }
+    
+     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterio;
@@ -571,10 +614,10 @@ public class frmVer extends javax.swing.JFrame {
     private javax.swing.JLabel lblEdad2;
     private javax.swing.JLabel lblEdad3;
     private javax.swing.JLabel lblEdad4;
-    private javax.swing.JLabel lblFoto;
+    private javax.swing.JLabel lblFoto1;
+    private javax.swing.JLabel lblFoto2;
     private javax.swing.JLabel lblFoto3;
     private javax.swing.JLabel lblFoto4;
-    private javax.swing.JLabel lblFoto5;
     private javax.swing.JLabel lblFrase1;
     private javax.swing.JLabel lblFrase2;
     private javax.swing.JLabel lblFrase3;
@@ -584,4 +627,137 @@ public class frmVer extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre3;
     private javax.swing.JLabel lblNombre4;
     // End of variables declaration//GEN-END:variables
+    /**
+     * 
+     * @param ruta_imagen Ruta de la imagen guardada
+     * @param lbl Nombre de la etiqueta
+     */
+    void Mostrar_imagen(String ruta_imagen, JLabel lbl){
+        try{
+            if(Principal.fin==null){
+                lbl.setText("Lista vacia");
+                lbl.setIcon(null);
+                }else{    
+                ImageIcon foto;
+                foto = new ImageIcon(ruta_imagen);
+                Icon icono;
+                icono = new ImageIcon(foto.getImage()
+                .getScaledInstance(lbl.getWidth(),lbl.getHeight()
+                ,Image.SCALE_DEFAULT));//adapatación al tamaño de la etiqueta
+                lbl.setIcon(icono);
+                }
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null,
+                "Error al abrir el archivo","Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+            }
+    }
+    /**
+     * 
+     * @param codigo Ingresa el nombre del la etiqueta de codigo
+     * @param nombre Inngresa el nombre de la etiqueta para nombre
+     * @param edad Ingresa el nombre de la etiqueta para edad
+     * @param frase Inngresa el nombre de la etiqueta para frase
+     * @param foto  Ingresa el nombre de la etiqueta para foto
+     * 
+     * Toma la informacion actual de auxiliar y lo ingresa a las etiquetas
+     */
+    void visualizarNodo(JLabel codigo,JLabel nombre, JLabel edad,JLabel frase,JLabel foto)
+    {
+        codigo.setText(String.valueOf(aux.getCodigo()));
+        nombre.setText(aux.getNombre());
+        edad.setText(aux.getEdad());
+        frase.setText(aux.getFrase());
+        Mostrar_imagen(aux.getRutaImagen(),foto);
+        foto.setText("");
+    }
+    
+    
+    void RecDerecha()
+    {
+        if(aux.getSiguiente()==null){
+            JOptionPane.showMessageDialog(null,"No hay más alumnos registrados");
+           this.btnSiguiente.setVisible(false);
+        }else
+        {
+           /*Nota: 
+            * El visualizarNodo trabaja con la posicion actual de auxiliar
+            * Habra movimientos constantes de auxiliar
+            */ 
+            
+           //Ingresa la informacion del nodo 4 en el espacio 2
+           visualizarNodo(lblCodigo2,lblNombre2,lblEdad2,lblFrase2,lblFoto2);
+           aux = aux.getAnterior(); //auxiliar toma la informacion del nodo 3
+           //Ingresa la informacion del nodo 3 en el espacio 1
+           visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
+           
+           // Ahora nodo toma la informacion del nodo 5
+           aux = aux.getSiguiente().getSiguiente();
+           //Ingresa la informacion del nodo 5 en el espacio 3
+           visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3);
+            if (aux.getSiguiente() == null) //Revisa que haya informacion en el nodo 6
+            { //Si no hay informacion, deja todo vacio
+                lblCodigo4.setText("NR");
+                lblNombre4.setText("NR");
+                lblEdad4.setText("NR");
+                lblFrase4.setText("NR");
+                lblFoto4.setIcon(null);
+                lblFoto4.setText("Sin foto");
+                this.btnSiguiente.setVisible(false);
+            }else
+            {
+                aux=aux.getSiguiente();//se queda con la informacion del nodo 6
+                visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
+            }
+        }              
+    }
+    void RecIzquierda()
+    {
+        
+            aux = aux.getAnterior().getAnterior();
+            visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
+            aux = aux.getAnterior();
+            visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3);
+            aux = aux.getAnterior();
+            visualizarNodo(lblCodigo2,lblNombre1,lblEdad2,lblFrase2,lblFoto2);
+            aux = aux.getAnterior();
+            visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
+            this.btnSiguiente.setVisible(true);
+    }
+    /*
+    public void getVistaFoto1(){
+        //lblCodigo1.setText();
+        lblNombre1.setText(aux.getNombre());
+        lblEdad1.setText(aux.getEdad());
+        lblFrase1.setText(aux.getFrase());
+        Mostrar_imagen(aux.getRutaImagen());
+        lblFoto5.setText("");
+    }
+    
+    public void getVistaFoto2(){
+        aux = aux.getSiguiente();
+        lblNombre1.setText(aux.getNombre());
+        lblEdad1.setText(aux.getEdad());
+        lblFrase1.setText(aux.getFrase());
+        Mostrar_imagen(aux.getRutaImagen());
+        lblFoto5.setText("");
+    }
+    
+    public void getVistaFoto3(){
+        aux = aux.getSiguiente();
+        lblNombre2.setText(aux.getNombre());
+        lblEdad2.setText(aux.getEdad());
+        lblFrase2.setText(aux.getFrase());
+        Mostrar_imagen(aux.getRutaImagen());
+        lblFoto5.setText("");
+    }
+    
+    public void getVistaFoto4(){
+        siguiente = aux.getSiguiente();
+        lblNombre1.setText(siguiente.getNombre());
+        lblEdad1.setText(siguiente.getEdad());
+        lblFrase1.setText(siguiente.getFrase());
+        Mostrar_imagen(siguiente.getRutaImagen());
+        lblFoto3.setText("");
+    }*/
 }

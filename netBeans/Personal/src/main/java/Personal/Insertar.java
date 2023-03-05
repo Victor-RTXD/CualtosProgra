@@ -99,6 +99,11 @@ public class Insertar extends javax.swing.JFrame {
         });
 
         btMostrar.setText("mostrar en consola");
+        btMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMostrarActionPerformed(evt);
+            }
+        });
 
         labCodigo.setText("Codigo");
 
@@ -232,11 +237,13 @@ public class Insertar extends javax.swing.JFrame {
         labImagen.setIcon(null);
     }//GEN-LAST:event_btBorrarFinalActionPerformed
 
+    
+    
     private void btBorrarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarCodigoActionPerformed
         String dato = JOptionPane.showInputDialog(null, "ingresa el dato que quieras borrar:", "mensaje", JOptionPane.PLAIN_MESSAGE);
         boolean contiene = codigos.contains(dato);
         if (contiene == true) {
-            codigos.indexOf(dato);
+            /*codigos.indexOf(dato);
             lista.indexOf(dato);
             System.out.println(codigos.indexOf(dato));
             System.out.println(lista.indexOf(dato));
@@ -245,12 +252,19 @@ public class Insertar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Se borro con exito", "Borrado", JOptionPane.INFORMATION_MESSAGE);
             labImagen.setIcon(null);
             labImagen.setText("");
+            */
+            
+            
         }
     }//GEN-LAST:event_btBorrarCodigoActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void btMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMostrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btMostrarActionPerformed
 
     /**
      * @param args the command line arguments
