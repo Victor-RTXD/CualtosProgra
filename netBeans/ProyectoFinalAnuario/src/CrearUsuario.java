@@ -12,6 +12,7 @@ public class CrearUsuario extends javax.swing.JFrame {
 
     String contra, usuario;
     User nuevo = new User(contra, usuario);
+    boolean interruptor = true;
     
     public void Usuario(String x, String y){
         
@@ -71,6 +72,7 @@ public class CrearUsuario extends javax.swing.JFrame {
 
         jLabel3.setText("Contraseña:");
 
+        btnCrearUsuario.setMnemonic('c');
         btnCrearUsuario.setText("Crear");
         btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +80,13 @@ public class CrearUsuario extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setMnemonic('i');
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,10 +103,9 @@ public class CrearUsuario extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(btnCrearUsuario))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtContra)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                        .addComponent(txtUsuario)))
+                    .addComponent(txtContra, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(87, 87, 87))
         );
         layout.setVerticalGroup(
@@ -136,16 +143,27 @@ public class CrearUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        if(txtUsuario.getText() != "" || txtContra.getText() != ""){
-            
+        if(txtUsuario.getText().equals("")|| txtContra.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor ingresa datos");
+        }else{
             Principal rtn = new Principal();
             rtn.setVisible(true);
             this.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "Por favor ingresa datos");
-            
+            interruptor = false;
         }
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(txtUsuario.getText().equals("Admin1") && txtContra.getText().equals("contrasena")){
+            Principal rtn = new Principal();
+            rtn.setVisible(true);
+            this.setVisible(false);
+        }else if(txtUsuario.getText().equals("") || txtContra.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Debe de rellenar ambos campos");
+        }else{
+            JOptionPane.showMessageDialog(null, "Los datos ingresados son incorrectos", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

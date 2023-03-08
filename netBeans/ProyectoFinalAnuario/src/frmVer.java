@@ -25,25 +25,28 @@ public class frmVer extends javax.swing.JFrame {
     
     public frmVer() {
         initComponents();
-        if (aux != null) 
+        if (aux != null) //Primer nodo
         {
             visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
             aux = aux.getSiguiente();
-            if (aux != null) 
+            if (aux != null) // Segundo nodo
             {   
               visualizarNodo(lblCodigo2,lblNombre2,lblEdad2,lblFrase2,lblFoto2);
               aux = aux.getSiguiente();  
             }
-            if (aux != null) 
+            if (aux != null) // Tercer nodo
             {
               visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3);
               aux = aux.getSiguiente();  
             }
-            if (aux != null) 
+            if (aux != null) //Cuarto nodo (aqui se queda)
             {
               visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
             }
         }
+
+        
+        
     }
     
 
@@ -127,6 +130,7 @@ public class frmVer extends javax.swing.JFrame {
         jLabel8.setText("Frase:");
 
         btnSiguiente.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSiguiente.setMnemonic('s');
         btnSiguiente.setText(">");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +139,7 @@ public class frmVer extends javax.swing.JFrame {
         });
 
         btnAnterio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAnterio.setMnemonic('r');
         btnAnterio.setText("<");
         btnAnterio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,6 +291,7 @@ public class frmVer extends javax.swing.JFrame {
 
         btnRegresar.setBackground(new java.awt.Color(255, 255, 102));
         btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegresar.setMnemonic('e');
         btnRegresar.setText("<");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -539,6 +545,13 @@ public class frmVer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        /*
+        if(vr.getUser() == ("Admin1") || vr.getPassword() ==("contrasena")){
+            Principal rtn = new Principal();
+            rtn.setVisible(true);
+            this.setVisible(false);
+        }else
+        */
         Principal rtn = new Principal();
         rtn.setVisible(true);
         this.setVisible(false);
@@ -713,16 +726,20 @@ public class frmVer extends javax.swing.JFrame {
     }
     void RecIzquierda()
     {
-        
-            aux = aux.getAnterior().getAnterior();
-            visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
-            aux = aux.getAnterior();
-            visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3);
-            aux = aux.getAnterior();
-            visualizarNodo(lblCodigo2,lblNombre1,lblEdad2,lblFrase2,lblFoto2);
-            aux = aux.getAnterior();
-            visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
+            // ** Espacio 4 **
+            aux = aux.getAnterior().getAnterior(); //Se dirige hasta el segundo nodo
+            visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4); //Lo visualiza en el nodo 4
+            // ** Espacio 3 **
+            aux = aux.getAnterior(); // Se dirige al primer nodo
+            visualizarNodo(lblCodigo3,lblNombre3,lblEdad3,lblFrase3,lblFoto3); //Lo visualiza en el nodo 3
+            // ** Espacio 2 **
+            aux = aux.getAnterior(); // Obtiene el que esta detras del primer nodo
+            visualizarNodo(lblCodigo2,lblNombre1,lblEdad2,lblFrase2,lblFoto2); // Lo visualiza en el espacio 2
+            // ** Espacio 1 **
+            aux = aux.getAnterior(); // Obtiene una posicion una mas atras
+            visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1); // Lo visualiza en el espacio 1
             this.btnSiguiente.setVisible(true);
+            aux = aux.getSiguiente().getSiguiente().getSiguiente(); // Regresa a su posicion inicial
     }
     /*
     public void getVistaFoto1(){

@@ -1,3 +1,4 @@
+
 import javax.swing.JOptionPane;
 
 /**
@@ -32,12 +33,24 @@ import javax.swing.JOptionPane;
  * Funcionalidad de visualizar creada
  * Se agregaron correciones en las interfaces
  * Se crearon algunos parches en el programa
- * correccion variable i en funcion borrar
+ * 
+ * Anuario 1.1111
+ * Se arreglo la función de borrado
+ * 
+ * Anuario 1.12
+ * Se creo la verificación para la que ningun campo se quede vacío a la hora de ingresar o crear un usuario
+ * Se agrego un administrador - El administrador es - Usuario : Admin1  Contraseña: contrasena
+ * 
+ * Anuario 1.13 (Luis Ángel de la Torre Gómez)
+ * Funcion de borrar corregida y funcional
+ * Parche en en FrmVer
+ * Agregado mnemonic a los botones
  * 
  * Trabajo faltante:
  * Que se guarden contrasenas y usuarios
- * Que se verifiquen que si se ingreso la contrasena y/o usuario
- * Hacer funcionar la clase frmBorrar
+ * Bloquear el boton regresar si se ingresa como usuario
+ * Resolver que deje de decir que los datos ingresados son incorrectos a pesar de que ingresaste correctamente
+ * los datos del administrador
  * Mejorar los visuales de la clase Principal - Opcional
  * 
  */
@@ -47,11 +60,22 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
+    CrearUsuario xd = new CrearUsuario();
+    
     static Nodo fin, inicio;
     public static int contador = 0;
     public Principal() {
+        
+        boolean inter = xd.interruptor;
+        
         initComponents();
         btnReturn.setVisible(false);
+        
+        if(inter = false){
+            btnIngr.setVisible(false);
+            btnBorrar.setVisible(false);
+        }
+        
     }
 
     /**

@@ -41,11 +41,9 @@
                       <EmptySpace pref="77" max="32767" attributes="0"/>
                       <Component id="btnCrearUsuario" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtContra" max="32767" attributes="0"/>
-                      <Component id="jLabel1" pref="221" max="32767" attributes="0"/>
-                      <Component id="txtUsuario" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="txtContra" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jLabel1" alignment="0" pref="221" max="32767" attributes="0"/>
+                  <Component id="txtUsuario" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
           </Group>
@@ -114,6 +112,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCrearUsuario">
       <Properties>
+        <Property name="mnemonic" type="int" value="99"/>
         <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
       <Events>
@@ -122,8 +121,12 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
+        <Property name="mnemonic" type="int" value="105"/>
         <Property name="text" type="java.lang.String" value="Ingresar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

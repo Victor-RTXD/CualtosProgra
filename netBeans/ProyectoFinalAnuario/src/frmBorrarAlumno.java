@@ -41,9 +41,8 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnBorrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnBorrar.setMnemonic('b');
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,6 +56,7 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
         lblFoto.setBackground(new java.awt.Color(255, 255, 255));
         lblFoto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto.setText("Sin foto");
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblFoto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblFoto.setOpaque(true);
@@ -204,6 +204,7 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
         }else
         {
         eliminar(Principal.contador);
+        JOptionPane.showMessageDialog(null, "Dato eliminado con éxito.");
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -331,25 +332,32 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
                     }
                     i++;
             }
-
-            if (datoEncontrado==true && Principal.contador == 1) {
-                JOptionPane.showMessageDialog(null, "Minimo una imagen");
-            }
-            else if (datoEncontrado==true)
+            if (datoEncontrado==true)
             {
-                lblNombre.setText(" ");
+                if (aux == Principal.inicio) {
+                    Principal.inicio = aux.getSiguiente();
+                }
+                else{
+                    aux.getAnterior().setSiguiente(aux.getSiguiente());
+                    if(aux.getSiguiente() != null)
+                    {
+                        aux.getSiguiente().setAnterior(aux.getAnterior());
+                    }
+                }
+                aux = null;
+                lblNombre.setText("");
                 lblEdad.setText("");
                 lblFrase.setText("");
                 lblFoto.setIcon(null);
                 lblFoto.setText("Sin foto");
                 txtCodigo.setText("");
+                /*
                 aux.setCodigo(aux.getSiguiente().getCodigo());
                 aux.setNombre(aux.getSiguiente().getNombre());
                 aux.setFrase(aux.getSiguiente().getFrase());
                 aux.setRutaImagen(aux.getSiguiente().getRutaImagen());
                 aux.setEdad(aux.getSiguiente().getEdad());
-                contador--;
-                JOptionPane.showMessageDialog(null, "Dato eliminado con éxito.");
+                */
             }else
             {
                 JOptionPane.showMessageDialog(null,"El codigo no existe. Prueba con otro nuevo");

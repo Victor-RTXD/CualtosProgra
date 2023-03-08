@@ -260,9 +260,48 @@ public class Insertar extends javax.swing.JFrame {
     }//GEN-LAST:event_btRegresarActionPerformed
 
     private void btListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaActionPerformed
-        burbuja();
+        //se debe ordenar con shell y bubble
+        short option = 0;
+        
+        //burbuja();
+        
+        shell();
     }//GEN-LAST:event_btListaActionPerformed
 
+    void shell() {
+        auxiliar = inicio;
+        int size = contador;
+        array = new ArregloObjetos[contador];
+
+        if (inicio == null) {
+            System.out.println("no hay nada");
+        } else {
+             for(int i = 0; i < contador; i++ ) {
+             array[i] = new ArregloObjetos();
+             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
+             array[i].dirtmp = auxiliar.getRutaImagen();
+             System.out.println(array[i].codigos);
+             System.out.println(array[i].dirtmp);
+                
+             auxiliar = auxiliar.getSiguiente();
+             }
+        }
+
+        for (int gap = size/2; gap > 0; gap /= 2) {//ordenamiento shell
+            for (int i = gap; i < size; i += 1) {
+                int temp = array[i].codigos;
+                int j;
+                for (j = i; j >= gap && array[j - gap].codigos > temp; j -= gap)
+                array[j].codigos = array[j - gap].codigos;
+                array[j].codigos = temp;
+            }
+        }
+
+        for(int i = 0; i < contador ; i++) {
+            System.out.println("codigos: **** " + array[i].codigos);
+        }
+    }
+    
     void burbuja() {
         auxiliar = inicio;
         array = new ArregloObjetos[contador];
