@@ -12,7 +12,9 @@ public class Insertar extends javax.swing.JFrame {
     static int contador = 0;
     int aux = 0;
     //ArregloObjetos array[] = new ArregloObjetos[10];
-    ArregloObjetos array[];
+    static ArregloObjetos array[];
+    static boolean flag = false;
+    
     /*
     actual sirve para instanciar objetos nuevos y reservar memoria
     fin recibe la direccion nuevos de actual 
@@ -77,6 +79,7 @@ public class Insertar extends javax.swing.JFrame {
     
     public Insertar() {
         initComponents();
+        panel.setVisible(false);
     }
 
     /**
@@ -97,6 +100,9 @@ public class Insertar extends javax.swing.JFrame {
         btBuscar = new javax.swing.JButton();
         btRegresar = new javax.swing.JButton();
         btLista = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
+        shell = new javax.swing.JButton();
+        bubble = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,31 +164,64 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
+        shell.setText("shell");
+        shell.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shellActionPerformed(evt);
+            }
+        });
+
+        bubble.setText("bubble");
+        bubble.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bubbleActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(shell)
+                .addGap(48, 48, 48)
+                .addComponent(bubble)
+                .addGap(0, 50, Short.MAX_VALUE))
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(shell)
+                    .addComponent(bubble))
+                .addGap(35, 35, 35))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btInsertarImagen)
-                                .addGap(34, 34, 34)
-                                .addComponent(btBuscar)
-                                .addGap(60, 60, 60)
-                                .addComponent(btIzquierda)
-                                .addGap(94, 94, 94)
-                                .addComponent(btRegresar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labCodigo)
-                                .addGap(84, 84, 84)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(449, 449, 449)
-                        .addComponent(btLista)))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(labCodigo)
+                            .addGap(84, 84, 84)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btInsertarImagen)
+                            .addGap(34, 34, 34)
+                            .addComponent(btBuscar)
+                            .addGap(60, 60, 60)
+                            .addComponent(btIzquierda)
+                            .addGap(94, 94, 94)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btLista)
+                                .addComponent(btRegresar)))))
                 .addContainerGap(401, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -204,8 +243,10 @@ public class Insertar extends javax.swing.JFrame {
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btRegresar)
-                        .addGap(67, 67, 67)
-                        .addComponent(btLista)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btLista)
+                        .addGap(26, 26, 26)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(379, Short.MAX_VALUE))
         );
 
@@ -227,6 +268,7 @@ public class Insertar extends javax.swing.JFrame {
                System.out.println("anterior  " + auxiliar.getAnterior());
                System.out.println("siguiente  " + auxiliar.getSiguiente());
                auxiliar = auxiliar.getSiguiente();
+               flag = false;
        }
     }//GEN-LAST:event_btInsertarImagenActionPerformed
 
@@ -261,6 +303,7 @@ public class Insertar extends javax.swing.JFrame {
 
     private void btListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaActionPerformed
         //se debe ordenar con shell y bubble
+        /*
         String option = JOptionPane.showInputDialog(null, "1: shell sort o 2: bubble sort");
         int e = Integer.parseInt(option);
         if (e == 2) {
@@ -270,7 +313,19 @@ public class Insertar extends javax.swing.JFrame {
         } else {
             System.out.println("selecciona bien las opciones");
         }
+        */
+        panel.setVisible(true);
     }//GEN-LAST:event_btListaActionPerformed
+
+    private void shellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shellActionPerformed
+        shell();
+        flag = true;
+    }//GEN-LAST:event_shellActionPerformed
+
+    private void bubbleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bubbleActionPerformed
+        burbuja();
+        flag = true;
+    }//GEN-LAST:event_bubbleActionPerformed
 
     void shell() {
         auxiliar = inicio;
@@ -382,9 +437,12 @@ public class Insertar extends javax.swing.JFrame {
     private javax.swing.JButton btIzquierda;
     private javax.swing.JButton btLista;
     private javax.swing.JButton btRegresar;
+    private javax.swing.JButton bubble;
     private javax.swing.JPanel imagen;
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;
+    private javax.swing.JPanel panel;
+    private javax.swing.JButton shell;
     private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

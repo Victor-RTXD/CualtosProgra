@@ -19,14 +19,14 @@ import static practica5.Insertar.nuevo;
  * @author victo
  */
 public class View extends javax.swing.JFrame {
-
+    int derecha = 0, izquierda = 0;
     /**
      * Creates new form View
      */
     public View() {
         initComponents();
-        JCodigo.setText(inicio.getCodigo());
-        mostrarImagen(inicio.getRutaImagen());
+        JCodigo.setText(Integer.toString(Insertar.array[0].codigos));
+        mostrarImagen(Insertar.array[0].dirtmp);
     }
 
     /**
@@ -162,7 +162,7 @@ public class View extends javax.swing.JFrame {
     }
     
     private void btIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIzquierdaActionPerformed
-        if (auxiliar == null) {
+        /*if (auxiliar == null) {
                 auxiliar = cabeza;
                 JCodigo.setText(auxiliar.getCodigo());
                 mostrarImagen(auxiliar.getRutaImagen());
@@ -171,10 +171,21 @@ public class View extends javax.swing.JFrame {
                 JCodigo.setText(auxiliar.getCodigo());
                 mostrarImagen(auxiliar.getRutaImagen());
             }
+        */
+        if (izquierda < 0) {
+            izquierda = Insertar.array.length-1;
+            JCodigo.setText(Integer.toString(Insertar.array[izquierda].codigos));
+            mostrarImagen(Insertar.array[izquierda].dirtmp);
+            izquierda--;
+        } else {
+            JCodigo.setText(Integer.toString(Insertar.array[izquierda].codigos));
+            mostrarImagen(Insertar.array[izquierda].dirtmp);
+            izquierda--;
+        }
     }//GEN-LAST:event_btIzquierdaActionPerformed
 
     private void btDerechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDerechaActionPerformed
-            if (auxiliar == null) {
+            /*if (auxiliar == null) {
                 auxiliar = cabeza;
                 JCodigo.setText(auxiliar.getCodigo());
                 mostrarImagen(auxiliar.getRutaImagen());
@@ -183,6 +194,17 @@ public class View extends javax.swing.JFrame {
                 JCodigo.setText(auxiliar.getCodigo());
                 mostrarImagen(auxiliar.getRutaImagen());
             }
+        */
+        if (derecha > Insertar.array.length-1) {
+            derecha = 0;
+            JCodigo.setText(Integer.toString(Insertar.array[derecha].codigos));
+            mostrarImagen(Insertar.array[derecha].dirtmp);
+            derecha++;
+        } else {
+            JCodigo.setText(Integer.toString(Insertar.array[derecha].codigos));
+            mostrarImagen(Insertar.array[derecha].dirtmp);
+            derecha++;
+        }
     }//GEN-LAST:event_btDerechaActionPerformed
 
     private void btRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegresarActionPerformed

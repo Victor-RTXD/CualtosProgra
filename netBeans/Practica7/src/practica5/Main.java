@@ -5,6 +5,8 @@
  */
 package practica5;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 218573695
@@ -110,9 +112,13 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btBorrarActionPerformed
 
     private void btVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerActionPerformed
-        View ventana = new View();
-        ventana.setVisible(true);
-        this.setVisible(false);
+        if (Insertar.flag == false) {
+             JOptionPane.showMessageDialog(null, "ordena las fotos");
+        } else {
+            View ventana = new View();
+            ventana.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btVerActionPerformed
 
     /**
