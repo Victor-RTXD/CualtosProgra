@@ -261,11 +261,15 @@ public class Insertar extends javax.swing.JFrame {
 
     private void btListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaActionPerformed
         //se debe ordenar con shell y bubble
-        short option = 0;
-        
-        //burbuja();
-        
-        shell();
+        String option = JOptionPane.showInputDialog(null, "1: shell sort o 2: bubble sort");
+        int e = Integer.parseInt(option);
+        if (e == 2) {
+            burbuja();
+        } else if (e == 1) {
+            shell();
+        } else {
+            System.out.println("selecciona bien las opciones");
+        }
     }//GEN-LAST:event_btListaActionPerformed
 
     void shell() {
