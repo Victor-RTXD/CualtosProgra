@@ -103,6 +103,7 @@ public class Insertar extends javax.swing.JFrame {
         panel = new javax.swing.JPanel();
         shell = new javax.swing.JButton();
         bubble = new javax.swing.JButton();
+        quickSort = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,15 +179,24 @@ public class Insertar extends javax.swing.JFrame {
             }
         });
 
+        quickSort.setText("quick sort");
+        quickSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quickSortActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addComponent(shell)
-                .addGap(48, 48, 48)
+                .addGap(18, 18, 18)
                 .addComponent(bubble)
-                .addGap(0, 50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(quickSort)
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,7 +204,8 @@ public class Insertar extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(shell)
-                    .addComponent(bubble))
+                    .addComponent(bubble)
+                    .addComponent(quickSort))
                 .addGap(35, 35, 35))
         );
 
@@ -204,15 +215,15 @@ public class Insertar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(labCodigo)
-                            .addGap(84, 84, 84)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labCodigo)
+                        .addGap(84, 84, 84)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(btInsertarImagen)
                             .addGap(34, 34, 34)
                             .addComponent(btBuscar)
@@ -302,18 +313,6 @@ public class Insertar extends javax.swing.JFrame {
     }//GEN-LAST:event_btRegresarActionPerformed
 
     private void btListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaActionPerformed
-        //se debe ordenar con shell y bubble
-        /*
-        String option = JOptionPane.showInputDialog(null, "1: shell sort o 2: bubble sort");
-        int e = Integer.parseInt(option);
-        if (e == 2) {
-            burbuja();
-        } else if (e == 1) {
-            shell();
-        } else {
-            System.out.println("selecciona bien las opciones");
-        }
-        */
         panel.setVisible(true);
     }//GEN-LAST:event_btListaActionPerformed
 
@@ -327,6 +326,77 @@ public class Insertar extends javax.swing.JFrame {
         flag = true;
     }//GEN-LAST:event_bubbleActionPerformed
 
+    private void quickSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quickSortActionPerformed
+        quickSort(0, contador - 1);
+        flag = true;
+    }//GEN-LAST:event_quickSortActionPerformed
+
+    
+    static void  obtenerDatos() {
+        auxiliar = inicio;
+        int size = contador;
+        array = new ArregloObjetos[contador];
+        
+        if (inicio == null) {
+            System.out.println("Esta vacio");
+        } else {
+            for(int i = 0; i < contador; i++ ) {
+             array[i] = new ArregloObjetos();
+             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
+             array[i].dirtmp = auxiliar.getRutaImagen();
+             System.out.println(array[i].codigos);
+             System.out.println(array[i].dirtmp);
+                
+             auxiliar = auxiliar.getSiguiente();
+            }
+        }
+    }
+    
+     static void quickSort(int low, int high) {
+        auxiliar = inicio;
+        int size = contador;
+        array = new ArregloObjetos[contador];
+
+        if (inicio == null) {
+            System.out.println("no hay nada");
+        } else {
+             for(int i = 0; i < contador; i++ ) {
+             array[i] = new ArregloObjetos();
+             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
+             array[i].dirtmp = auxiliar.getRutaImagen();
+             System.out.println(array[i].codigos);
+             System.out.println(array[i].dirtmp);
+                
+             auxiliar = auxiliar.getSiguiente();
+             }
+        }
+        
+        if (low < high) {
+            int pivotIndex = partition(low, high);
+            quickSort(low, pivotIndex - 1);
+            quickSort(pivotIndex + 1, high);
+        }
+    }
+    
+    public static int partition(int low, int high) {
+        int pivot = array[high].codigos;
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (array[j].codigos <= pivot) {
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return i + 1;
+    }
+    
+    public static void swap( int i, int j) {
+        int temp = array[i].codigos;
+        array[i].codigos = array[j].codigos;
+        array[j].codigos = temp;
+    }
+    
     void shell() {
         auxiliar = inicio;
         int size = contador;
@@ -354,10 +424,6 @@ public class Insertar extends javax.swing.JFrame {
                 array[j].codigos = array[j - gap].codigos;
                 array[j].codigos = temp;
             }
-        }
-
-        for(int i = 0; i < contador ; i++) {
-            System.out.println("codigos: **** " + array[i].codigos);
         }
     }
     
@@ -389,9 +455,6 @@ public class Insertar extends javax.swing.JFrame {
                     }
                 }
             }
-        for(int i = 0; i < contador ; i++) {
-            System.out.println("codigos: **** " + array[i].codigos);
-        }
     }
     
     
@@ -442,6 +505,7 @@ public class Insertar extends javax.swing.JFrame {
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;
     private javax.swing.JPanel panel;
+    private javax.swing.JButton quickSort;
     private javax.swing.JButton shell;
     private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
