@@ -104,6 +104,8 @@ public class Insertar extends javax.swing.JFrame {
         shell = new javax.swing.JButton();
         bubble = new javax.swing.JButton();
         quickSort = new javax.swing.JButton();
+        btBusqueda = new javax.swing.JButton();
+        inputBusqueda = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,6 +211,19 @@ public class Insertar extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
+        btBusqueda.setText("busqueda");
+        btBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBusquedaActionPerformed(evt);
+            }
+        });
+
+        inputBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputBusquedaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,19 +236,24 @@ public class Insertar extends javax.swing.JFrame {
                         .addComponent(labCodigo)
                         .addGap(84, 84, 84)
                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(btInsertarImagen)
-                            .addGap(34, 34, 34)
-                            .addComponent(btBuscar)
-                            .addGap(60, 60, 60)
-                            .addComponent(btIzquierda)
-                            .addGap(94, 94, 94)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btLista)
-                                .addComponent(btRegresar)))))
-                .addContainerGap(401, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btInsertarImagen)
+                                .addGap(34, 34, 34)
+                                .addComponent(btBuscar)
+                                .addGap(60, 60, 60)
+                                .addComponent(btIzquierda)
+                                .addGap(94, 94, 94)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btLista)
+                                    .addComponent(btRegresar))))
+                        .addGap(151, 151, 151)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btBusqueda)
+                            .addComponent(inputBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,9 +273,13 @@ public class Insertar extends javax.swing.JFrame {
                             .addComponent(labCodigo)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btRegresar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btRegresar)
+                            .addComponent(inputBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(btLista)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btLista)
+                            .addComponent(btBusqueda))
                         .addGap(26, 26, 26)
                         .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(379, Short.MAX_VALUE))
@@ -281,6 +305,7 @@ public class Insertar extends javax.swing.JFrame {
                auxiliar = auxiliar.getSiguiente();
                flag = false;
        }
+       obtenerDatos();
     }//GEN-LAST:event_btInsertarImagenActionPerformed
 
     private void btIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIzquierdaActionPerformed
@@ -331,103 +356,48 @@ public class Insertar extends javax.swing.JFrame {
         flag = true;
     }//GEN-LAST:event_quickSortActionPerformed
 
+    private void btBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBusquedaActionPerformed
+        int index = binarySearch(Integer.parseInt(inputBusqueda.getText()));
+
+        // Si el número se encontró, mostramos su índice
+        if (index != -1) {
+            System.out.println("El número se encontró en el índice " + index);
+            ImageIcon foto;
+            foto = new ImageIcon(array[index].dirtmp);
+            Icon icono;
+            icono = new ImageIcon(foto.getImage().getScaledInstance(480,320, Image.SCALE_DEFAULT));
+            labImagen.setText(" ");
+            labImagen.setIcon(icono);
+        } else {
+            JOptionPane.showMessageDialog(null, "no se encontro");
+        }
+        inputBusqueda.setText("");
+        
+    }//GEN-LAST:event_btBusquedaActionPerformed
+
+    private void inputBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBusquedaActionPerformed
+        
+    }//GEN-LAST:event_inputBusquedaActionPerformed
+
+    public static int binarySearch(int item) {
+        int low = 0;
+        int high = array.length - 1;
+
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            if (array[middle].codigos == item) {
+                return middle;
+            } else if (array[middle].codigos < item) {
+                low = middle + 1;
+            } else {
+                high = middle - 1;
+            }
+        }
+        
+        return -1;
+    }
     
     static void  obtenerDatos() {
-        auxiliar = inicio;
-        int size = contador;
-        array = new ArregloObjetos[contador];
-        
-        if (inicio == null) {
-            System.out.println("Esta vacio");
-        } else {
-            for(int i = 0; i < contador; i++ ) {
-             array[i] = new ArregloObjetos();
-             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
-             array[i].dirtmp = auxiliar.getRutaImagen();
-             System.out.println(array[i].codigos);
-             System.out.println(array[i].dirtmp);
-                
-             auxiliar = auxiliar.getSiguiente();
-            }
-        }
-    }
-    
-     static void quickSort(int low, int high) {
-        auxiliar = inicio;
-        int size = contador;
-        array = new ArregloObjetos[contador];
-
-        if (inicio == null) {
-            System.out.println("no hay nada");
-        } else {
-             for(int i = 0; i < contador; i++ ) {
-             array[i] = new ArregloObjetos();
-             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
-             array[i].dirtmp = auxiliar.getRutaImagen();
-             System.out.println(array[i].codigos);
-             System.out.println(array[i].dirtmp);
-                
-             auxiliar = auxiliar.getSiguiente();
-             }
-        }
-        
-        if (low < high) {
-            int pivotIndex = partition(low, high);
-            quickSort(low, pivotIndex - 1);
-            quickSort(pivotIndex + 1, high);
-        }
-    }
-    
-    public static int partition(int low, int high) {
-        int pivot = array[high].codigos;
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (array[j].codigos <= pivot) {
-                i++;
-                swap(i, j);
-            }
-        }
-        swap(i + 1, high);
-        return i + 1;
-    }
-    
-    public static void swap( int i, int j) {
-        int temp = array[i].codigos;
-        array[i].codigos = array[j].codigos;
-        array[j].codigos = temp;
-    }
-    
-    void shell() {
-        auxiliar = inicio;
-        int size = contador;
-        array = new ArregloObjetos[contador];
-
-        if (inicio == null) {
-            System.out.println("no hay nada");
-        } else {
-             for(int i = 0; i < contador; i++ ) {
-             array[i] = new ArregloObjetos();
-             array[i].codigos = Integer.parseInt(auxiliar.getCodigo());
-             array[i].dirtmp = auxiliar.getRutaImagen();
-             System.out.println(array[i].codigos);
-             System.out.println(array[i].dirtmp);
-                
-             auxiliar = auxiliar.getSiguiente();
-             }
-        }
-
-        for (int gap = size/2; gap > 0; gap /= 2) {//ordenamiento shell
-            for (int i = gap; i < size; i += 1) {
-                int temp = array[i].codigos;
-                int j;
-                for (j = i; j >= gap && array[j - gap].codigos > temp; j -= gap)
-                array[j].codigos = array[j - gap].codigos;
-                array[j].codigos = temp;
-            }
-        }
-    }
-    
-    void burbuja() {
         auxiliar = inicio;
         array = new ArregloObjetos[contador];
         
@@ -444,7 +414,62 @@ public class Insertar extends javax.swing.JFrame {
             auxiliar = auxiliar.getSiguiente();
             }
        }
-        
+    }
+    
+     static void quickSort(int left, int right) {
+        int index = partition(left, right);
+	if (left < index - 1) {
+            // sort left
+            quickSort(left, index - 1);
+	}
+	if (index < right) {
+            // sort right
+            quickSort(index, right);
+	}
+    }
+    
+    private static int partition(int left, int right) {
+	int pivot = array[(left + right) / 2].codigos;
+	while (left <= right) {
+		// find element on left that should be on right
+		while (array[left].codigos < pivot) {
+			left++;
+		}
+		// find element on right that should be on left
+		while (array[right].codigos > pivot) {
+			right--;
+		}
+		// swap elements, and move left and right indices
+		if (left <= right) {
+			swap(left, right);
+			left++;
+			right--;
+		}
+	}
+	return left;
+    }
+    
+    public static void swap( int i, int j) {
+        int temp = array[i].codigos;
+        array[i].codigos = array[j].codigos;
+        array[j].codigos = temp;
+    }
+    
+    void shell() {
+        int size = contador;
+
+        for (int gap = size/2; gap > 0; gap /= 2) {//ordenamiento shell
+            for (int i = gap; i < size; i += 1) {
+                int temp = array[i].codigos;
+                int j;
+                for (j = i; j >= gap && array[j - gap].codigos > temp; j -= gap)
+                array[j].codigos = array[j - gap].codigos;
+                array[j].codigos = temp;
+            }
+        }
+    }
+    
+    static void burbuja() {
         for (int i = 0; i < contador - 1; i++) {
                 for (int j = 0; j < contador - i - 1; j++) {
                     if (array[j].codigos > array[j + 1].codigos) {
@@ -456,6 +481,7 @@ public class Insertar extends javax.swing.JFrame {
                 }
             }
     }
+    
     
     
     /**
@@ -496,12 +522,14 @@ public class Insertar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
+    private javax.swing.JButton btBusqueda;
     private javax.swing.JButton btInsertarImagen;
     private javax.swing.JButton btIzquierda;
     private javax.swing.JButton btLista;
     private javax.swing.JButton btRegresar;
     private javax.swing.JButton bubble;
     private javax.swing.JPanel imagen;
+    private javax.swing.JTextField inputBusqueda;
     private javax.swing.JLabel labCodigo;
     private javax.swing.JLabel labImagen;
     private javax.swing.JPanel panel;

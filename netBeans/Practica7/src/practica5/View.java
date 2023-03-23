@@ -211,6 +211,7 @@ public class View extends javax.swing.JFrame {
         Main ventana = new Main();
         ventana.setVisible(true);
         this.setVisible(false);
+        
     }//GEN-LAST:event_btRegresarActionPerformed
 
     /**
