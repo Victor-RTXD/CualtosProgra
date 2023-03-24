@@ -20,6 +20,7 @@ public class frmVer extends javax.swing.JFrame {
      */
     
     Nodo aux = Principal.inicio;
+    static int index = 0;
     static JFileChooser explorador = new JFileChooser();
     
     
@@ -44,9 +45,6 @@ public class frmVer extends javax.swing.JFrame {
               visualizarNodo(lblCodigo4,lblNombre4,lblEdad4,lblFrase4,lblFoto4);
             }
         }
-
-        
-        
     }
     
 
@@ -99,6 +97,8 @@ public class frmVer extends javax.swing.JFrame {
         lblCodigo3 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         lblCodigo4 = new javax.swing.JLabel();
+        btnRegresar1 = new javax.swing.JButton();
+        buscadorTxt = new javax.swing.JTextField();
 
         lblFoto2.setBackground(new java.awt.Color(255, 255, 255));
         lblFoto2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -343,13 +343,22 @@ public class frmVer extends javax.swing.JFrame {
         lblCodigo4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblCodigo4.setOpaque(true);
 
+        btnRegresar1.setBackground(new java.awt.Color(204, 204, 255));
+        btnRegresar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnRegresar1.setText("Buscar");
+        btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblFoto2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
@@ -391,10 +400,6 @@ public class frmVer extends javax.swing.JFrame {
                         .addGap(960, 960, 960)
                         .addComponent(btnSiguiente))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addGap(386, 386, 386)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblFoto1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,16 +434,28 @@ public class frmVer extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCodigo3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(lblCodigo3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(386, 386, 386)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRegresar1)
+                        .addGap(30, 30, 30)
+                        .addComponent(buscadorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(12, 12, 12))
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(btnRegresar1)
+                            .addComponent(buscadorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -561,6 +578,41 @@ public class frmVer extends javax.swing.JFrame {
         RecIzquierda();
     }//GEN-LAST:event_btnAnterioActionPerformed
 
+    public static int binarySearch(int item) {
+        int low = 0;
+        int high = frmIngresar.array.length - 1;
+
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            if (frmIngresar.array[middle].codigos == item) {
+                return middle;
+            } else if (frmIngresar.array[middle].codigos < item) {
+                low = middle + 1;
+            } else {
+                high = middle - 1;
+            }
+        }
+        
+        return -1;
+    }
+    
+    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+        buscadorTxt.getText();
+        
+        index = binarySearch(Integer.parseInt(buscadorTxt.getText()));
+
+        // Si el número se encontró, mostramos su índice
+        if (index != -1) {
+            buscadorTxt.setText("");
+            Buscador rtn = new Buscador();
+            rtn.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "no se encontro");
+        }
+        buscadorTxt.setText("");
+    }//GEN-LAST:event_btnRegresar1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -601,7 +653,9 @@ public class frmVer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterio;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRegresar1;
     private javax.swing.JButton btnSiguiente;
+    private javax.swing.JTextField buscadorTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -12,9 +12,10 @@ public class frmIngresar extends javax.swing.JFrame {
     /**
      * Creates new form frmIngresar
      */
-    Nodo auxiliar = Principal.inicio;
+    static Nodo auxiliar = Principal.inicio;
     static JFileChooser explorador = new JFileChooser();
     String dirtmp = "";
+    static ArregloObjetos array[];
     public frmIngresar() {
         initComponents();
     }
@@ -67,6 +68,11 @@ public class frmIngresar extends javax.swing.JFrame {
         txtFrase.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
 
         btnBuscarFoto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscarFoto.setMnemonic('b');
@@ -205,8 +211,11 @@ public class frmIngresar extends javax.swing.JFrame {
                 int x = Integer.parseInt(txtEdad.getText()); //Comprueba que haya insertado un numero
                 //Inserta el nodo
                 insertar(txtNombre.getText(),dirtmp,txtEdad.getText(),txtFrase.getText(),null,null,Integer.parseInt(txtCodigo.getText()));
-                JOptionPane.showMessageDialog(null, "Los datos se han guardado con exito");
                 Principal.contador++;
+                obtenerDatos();
+                quickSort(0, Principal.contador - 1);
+                JOptionPane.showMessageDialog(null, "Los datos se han guardado con exito");
+                
                 //Borra campos de textos e reinicializa
                 txtCodigo.setText("");
                 txtNombre.setText("");
@@ -217,6 +226,10 @@ public class frmIngresar extends javax.swing.JFrame {
                // Principal rtn = new Principal();
                // rtn.setVisible(true);
                // this.setVisible(false);
+               
+                for (int i = 0; i < Principal.contador; i++) {
+                    System.out.println(array[i].codigos);
+                }
             }catch(Exception ex)
             {
                 JOptionPane.showMessageDialog(null, "ERROR. Debe ingresar valores numericos en Codigo y/o edad");
@@ -243,6 +256,45 @@ public class frmIngresar extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    static void quickSort(int left, int right) {
+        int index = partition(left, right);
+	if (left < index - 1) {
+            // sort left
+            quickSort(left, index - 1);
+	}
+	if (index < right) {
+            // sort right
+            quickSort(index, right);
+	}
+    }
+    
+    private static int partition(int left, int right) {
+	int pivot = array[(left + right) / 2].codigos;
+	while (left <= right) {
+		// find element on left that should be on right
+		while (array[left].codigos < pivot) {
+			left++;
+		}
+		// find element on right that should be on left
+		while (array[right].codigos > pivot) {
+			right--;
+		}
+		// swap elements, and move left and right indices
+		if (left <= right) {
+			swap(left, right);
+			left++;
+			right--;
+		}
+	}
+	return left;
+    }
+    
+    public static void swap( int i, int j) {
+        int temp = array[i].codigos;
+        array[i].codigos = array[j].codigos;
+        array[j].codigos = temp;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -319,6 +371,28 @@ public class frmIngresar extends javax.swing.JFrame {
             Principal.inicio.setAnterior(nuevo);
             Principal.fin = nuevo;
         }
+    }
+    
+    static void  obtenerDatos() {
+        auxiliar = Principal.inicio;
+        array = new ArregloObjetos[Principal.contador];
+        
+        if (Principal.inicio == null) {
+           System.out.println("no hay nada");
+       } else {
+            for(int i = 0; i < Principal.contador; i++ ) {
+            array[i] = new ArregloObjetos();
+            array[i].codigos = auxiliar.getCodigo();
+            array[i].dirtmp = auxiliar.getRutaImagen();
+            array[i].nombre = auxiliar.getNombre();
+            array[i].edad = auxiliar.getEdad();
+            array[i].frase = auxiliar.getFrase();
+            System.out.println(array[i].codigos);
+            System.out.println(array[i].dirtmp);
+               
+            auxiliar = auxiliar.getSiguiente();
+            }
+       }
     }
     /**
      * Captura la ruta de una imagen y la guarda en la variable dirtmp

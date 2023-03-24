@@ -75,7 +75,6 @@ public class Principal extends javax.swing.JFrame {
             btnIngr.setVisible(false);
             btnBorrar.setVisible(false);
         }
-        
     }
 
     /**
@@ -152,8 +151,8 @@ public class Principal extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBorrar)
-                                    .addComponent(btnIngr))))
+                                    .addComponent(btnIngr)
+                                    .addComponent(btnBorrar))))
                         .addGap(44, 44, 44))))
         );
         layout.setVerticalGroup(
@@ -207,8 +206,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-       
-        CrearUsuario rtn = new CrearUsuario();
+       CrearUsuario rtn = new CrearUsuario();
         rtn.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnReturnActionPerformed
