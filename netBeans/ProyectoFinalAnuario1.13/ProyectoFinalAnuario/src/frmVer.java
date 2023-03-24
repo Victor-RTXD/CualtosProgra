@@ -608,7 +608,7 @@ public class frmVer extends javax.swing.JFrame {
             rtn.setVisible(true);
             this.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(null, "no se encontro");
+            JOptionPane.showMessageDialog(null, "no existe ese codigo");
         }
         buscadorTxt.setText("");
     }//GEN-LAST:event_btnRegresar1ActionPerformed
