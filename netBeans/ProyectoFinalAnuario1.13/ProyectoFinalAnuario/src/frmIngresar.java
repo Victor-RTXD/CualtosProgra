@@ -212,8 +212,8 @@ public class frmIngresar extends javax.swing.JFrame {
                 //Inserta el nodo
                 insertar(txtNombre.getText(),dirtmp,txtEdad.getText(),txtFrase.getText(),null,null,Integer.parseInt(txtCodigo.getText()));
                 Principal.contador++;
-                obtenerDatos();
-                quickSort(0, Principal.contador - 1);
+                obtenerDatos();//ingresa los datos al array
+                quickSort(0, Principal.contador - 1); // los ordena
                 JOptionPane.showMessageDialog(null, "Los datos se han guardado con exito");
                 
                 //Borra campos de textos e reinicializa
@@ -256,6 +256,12 @@ public class frmIngresar extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    /**
+     * Descripcion: La funcion quickSort esta compuesta tambien de las funciones swap y partition
+     * cuando se declara, left debe ser 0 y right contador - 1
+     * @param left
+     * @param right
+     */
     static void quickSort(int left, int right) {
         int index = partition(left, right);
 	if (left < index - 1) {

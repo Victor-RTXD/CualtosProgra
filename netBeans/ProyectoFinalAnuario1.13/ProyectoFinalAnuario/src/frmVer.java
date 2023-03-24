@@ -578,6 +578,12 @@ public class frmVer extends javax.swing.JFrame {
         RecIzquierda();
     }//GEN-LAST:event_btnAnterioActionPerformed
 
+    /**
+     * @param item
+     * @return middle  || -1
+     * Descripcion: se le ingresa un codigo y regresa el index del codigo en el array de la clase ArrayObjetos
+     * si es que se encuentra, ese index 
+     */
     public static int binarySearch(int item) {
         int low = 0;
         int high = frmIngresar.array.length - 1;
@@ -598,10 +604,9 @@ public class frmVer extends javax.swing.JFrame {
     
     private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
         buscadorTxt.getText();
-        
         index = binarySearch(Integer.parseInt(buscadorTxt.getText()));
 
-        // Si el número se encontró, mostramos su índice
+        // Si el número se encontró, mostramos su índice y activamos la pagina buscador
         if (index != -1) {
             buscadorTxt.setText("");
             Buscador rtn = new Buscador();
@@ -611,7 +616,7 @@ public class frmVer extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "no existe ese codigo");
         }
         buscadorTxt.setText("");
-    }//GEN-LAST:event_btnRegresar1ActionPerformed
+    }
 
     /**
      * @param args the command line arguments

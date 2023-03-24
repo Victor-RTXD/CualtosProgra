@@ -46,6 +46,10 @@ import javax.swing.JOptionPane;
  * Parche en en FrmVer
  * Agregado mnemonic a los botones
  * 
+ * Anuario 1.14 (victor)
+ * agregando quick sort, arreglo objetos, binary search, clase buscador
+ * arreglando el sin foto de la clase frmBorrarAlumno
+ * 
  * Trabajo faltante:
  * Que se guarden contrasenas y usuarios
  * Bloquear el boton regresar si se ingresa como usuario
