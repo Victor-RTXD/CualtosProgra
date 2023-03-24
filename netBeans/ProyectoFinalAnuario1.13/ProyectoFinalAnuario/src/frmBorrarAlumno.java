@@ -232,6 +232,7 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
                 }
                 if (datoEncontrado==true) 
                 {
+                    lblFoto.setText("");
                     lblNombre.setText(aux.getNombre());
                     lblEdad.setText(aux.getEdad());
                     lblFrase.setText(aux.getFrase());
