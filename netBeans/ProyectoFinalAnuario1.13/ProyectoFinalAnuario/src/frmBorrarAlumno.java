@@ -203,8 +203,8 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar un código.","Aviso",JOptionPane.WARNING_MESSAGE);
         }else
         {
-        eliminar(Principal.contador);
-        JOptionPane.showMessageDialog(null, "Dato eliminado con éxito.");
+            eliminar(Principal.contador);
+            JOptionPane.showMessageDialog(null, "Dato eliminado con éxito.");
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -320,6 +320,37 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
             boolean datoEncontrado = false;
             aux = Principal.inicio;
             int i = 0;
+            
+            int dato2 = frmVer.binarySearch(Integer.parseInt(txtCodigo.getText()));
+            frmIngresar.array[dato2].codigos = -1;
+            
+            ArregloObjetos[] newArr = new ArregloObjetos[Principal.contador - 1];
+
+//Paso 3: Copiar los elementos del array original que no sean "-1" al nuevo array
+            int index = 0;
+            for(int j = 0; j < frmIngresar.array.length; j++) {
+                if(frmIngresar.array[j].codigos != -1) {
+                    newArr[index] = new ArregloObjetos();
+                    newArr[index].codigos = frmIngresar.array[j].codigos;
+                    newArr[index].dirtmp = frmIngresar.array[j].dirtmp;
+                    newArr[index].edad = frmIngresar.array[j].edad;
+                    newArr[index].frase = frmIngresar.array[j].frase;
+                    newArr[index].nombre = frmIngresar.array[j].nombre;
+                    index++;
+                }
+            }
+            
+            frmIngresar.array = new ArregloObjetos[Principal.contador - 1];
+            index = 0;
+            for(int j = 0; j < Principal.contador - 1; j++) {
+                    frmIngresar.array[index] = new ArregloObjetos();
+                    frmIngresar.array[index].codigos = newArr[j].codigos;
+                    frmIngresar.array[index].dirtmp = newArr[j].dirtmp;
+                    frmIngresar.array[index].edad = newArr[j].edad;
+                    frmIngresar.array[index].frase = newArr[j].frase;
+                    frmIngresar.array[index].nombre = newArr[j].nombre;
+                    index++;
+            }
 
             while(i < Principal.contador) 
             {
@@ -359,6 +390,7 @@ public class frmBorrarAlumno extends javax.swing.JFrame {
                 aux.setRutaImagen(aux.getSiguiente().getRutaImagen());
                 aux.setEdad(aux.getSiguiente().getEdad());
                 */
+                Principal.contador = Principal.contador - 1;
             }else
             {
                 JOptionPane.showMessageDialog(null,"El codigo no existe. Prueba con otro nuevo");

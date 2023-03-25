@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 import java.awt.Image;
-import java.io.File;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 /**
@@ -602,7 +595,7 @@ public class frmVer extends javax.swing.JFrame {
         return -1;
     }
     
-    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
+    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {                                             
         buscadorTxt.getText();
         index = binarySearch(Integer.parseInt(buscadorTxt.getText()));
 
@@ -747,11 +740,10 @@ public class frmVer extends javax.swing.JFrame {
     
     void RecDerecha()
     {
-        if(aux.getSiguiente()==null){
+        if (aux.getSiguiente()==null){
             JOptionPane.showMessageDialog(null,"No hay más alumnos registrados");
            this.btnSiguiente.setVisible(false);
-        }else
-        {
+        }else {
            /*Nota: 
             * El visualizarNodo trabaja con la posicion actual de auxiliar
             * Habra movimientos constantes de auxiliar

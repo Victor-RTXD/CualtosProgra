@@ -1,6 +1,3 @@
-
-import javax.swing.JOptionPane;
-
 public class Nodo {
     private String nombre;
     private String rutaImagen;
