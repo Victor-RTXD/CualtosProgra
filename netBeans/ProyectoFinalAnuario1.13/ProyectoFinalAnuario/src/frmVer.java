@@ -12,13 +12,16 @@ public class frmVer extends javax.swing.JFrame {
      * Creates new form frmVer
      */
     
-    Nodo aux = Principal.inicio;
+    static public Nodo aux = Principal.inicio;
     static int index = 0;
     static JFileChooser explorador = new JFileChooser();
     
     
     public frmVer() {
         initComponents();
+        
+        ordenarLista();
+                
         if (aux != null) //Primer nodo
         {
             visualizarNodo(lblCodigo1,lblNombre1,lblEdad1,lblFrase1,lblFoto1);
@@ -737,6 +740,18 @@ public class frmVer extends javax.swing.JFrame {
         foto.setText("");
     }
     
+    static void ordenarLista() {
+        aux = Principal.inicio;
+        
+        for (int i = 0; i < Principal.contador; i++) {
+            aux.setCodigo(frmIngresar.array[i].codigos);
+            aux.setRutaImagen(frmIngresar.array[i].dirtmp);
+            aux.setNombre(frmIngresar.array[i].nombre);
+            aux.setEdad(frmIngresar.array[i].edad);
+            aux.setFrase(frmIngresar.array[i].frase);
+            aux = aux.getSiguiente();
+        }
+    }
     
     void RecDerecha()
     {

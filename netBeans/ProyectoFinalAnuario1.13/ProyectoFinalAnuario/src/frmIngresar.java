@@ -263,42 +263,31 @@ public class frmIngresar extends javax.swing.JFrame {
      * @param right
      */
     static void quickSort(int left, int right) {
-        int index = partition(left, right);
-	if (left < index - 1) {
-            // sort left
-            quickSort(left, index - 1);
-	}
-	if (index < right) {
-            // sort right
-            quickSort(index, right);
-	}
-    }
+        int pivote = (left + right) / 2; // Seleccionamos un elemento como pivote
+    int i = left;
+    int j = right;
     
-    private static int partition(int left, int right) {
-	int pivot = array[(left + right) / 2].codigos;
-	while (left <= right) {
-		// find element on left that should be on right
-		while (array[left].codigos < pivot) {
-			left++;
-		}
-		// find element on right that should be on left
-		while (array[right].codigos > pivot) {
-			right--;
-		}
-		// swap elements, and move left and right indices
-		if (left <= right) {
-			swap(left, right);
-			left++;
-			right--;
-		}
-	}
-	return left;
+    while (i <= j) {
+        while (array[i].codigos < array[pivote].codigos) { // Buscamos el primer elemento que deba estar a la derecha del pivote
+            i++;
+        }
+        while (array[j].codigos > array[pivote].codigos) { // Buscamos el primer elemento que deba estar a la izquierda del pivote
+            j--;
+        }
+        if (i <= j) { // Si encontramos elementos en posiciones incorrectas, los intercambiamos
+            ArregloObjetos temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+            i++;
+            j--;
+        }
     }
-    
-    public static void swap( int i, int j) {
-        int temp = array[i].codigos;
-        array[i].codigos = array[j].codigos;
-        array[j].codigos = temp;
+    if (left < j) { // Ordenamos la sublista izquierda
+        quickSort(left, j);
+    }
+    if (right > i) { // Ordenamos la sublista derecha
+        quickSort(i, right);
+    }
     }
     
     /**
@@ -400,6 +389,8 @@ public class frmIngresar extends javax.swing.JFrame {
             }
        }
     }
+    
+    
     /**
      * Captura la ruta de una imagen y la guarda en la variable dirtmp
      */
