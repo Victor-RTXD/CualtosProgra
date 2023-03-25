@@ -14,7 +14,7 @@ public class frmIngresar extends javax.swing.JFrame {
      */
     static Nodo auxiliar = Principal.inicio;
     static JFileChooser explorador = new JFileChooser();
-    String dirtmp = "";
+    static String dirtmp = "";
     static ArregloObjetos array[];
     public frmIngresar() {
         initComponents();
@@ -394,7 +394,7 @@ public class frmIngresar extends javax.swing.JFrame {
     /**
      * Captura la ruta de una imagen y la guarda en la variable dirtmp
      */
-    void insertarFoto()
+    static void insertarFoto()
         {
         try{
             explorador.addChoosableFileFilter(

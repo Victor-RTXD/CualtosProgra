@@ -1,6 +1,7 @@
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Buscador extends javax.swing.JFrame {
 
@@ -38,6 +39,8 @@ public class Buscador extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         edadEncontrado = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
+        buscadorFoto = new javax.swing.JButton();
+        Guardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +75,20 @@ public class Buscador extends javax.swing.JFrame {
             }
         });
 
+        buscadorFoto.setText("Buscar foto");
+        buscadorFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscadorFotoActionPerformed(evt);
+            }
+        });
+
+        Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,7 +118,12 @@ public class Buscador extends javax.swing.JFrame {
                             .addComponent(fraseEncontrado)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(btnRegresar)))
+                        .addComponent(btnRegresar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addComponent(Guardar)
+                        .addGap(32, 32, 32)
+                        .addComponent(buscadorFoto)))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,7 +152,11 @@ public class Buscador extends javax.swing.JFrame {
                         .addComponent(btnRegresar)
                         .addGap(78, 78, 78)
                         .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Guardar)
+                    .addComponent(buscadorFoto))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,6 +171,61 @@ public class Buscador extends javax.swing.JFrame {
     private void nombreEncontradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreEncontradoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreEncontradoActionPerformed
+
+    private void buscadorFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscadorFotoActionPerformed
+        frmIngresar.insertarFoto();//El usuario inserta la foto
+        try{
+            if(Principal.fin==null){
+                lblFoto.setText("Lista vacia");
+                lblFoto.setIcon(null);
+                }else
+                {    
+                ImageIcon foto;
+                foto = new ImageIcon(frmIngresar.dirtmp);
+                Icon icono;
+                icono = new ImageIcon(foto.getImage()
+                .getScaledInstance(lblFoto.getWidth(),lblFoto.getHeight()
+                ,Image.SCALE_DEFAULT));//adapatación al tamaño de la etiqueta
+                lblFoto.setIcon(icono);
+                }
+            }catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null,
+                "Error al abrir el archivo","Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+            }
+        lblFoto.setText("");
+    }//GEN-LAST:event_buscadorFotoActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        if (nombreEncontrado.getText().equals("") || edadEncontrado.getText().equals("") || fraseEncontrado.getText().equals("") || frmIngresar.dirtmp == "") {
+            JOptionPane.showMessageDialog(null, "Ningun campo puede estar vacío. Vuelva a ingresar de nuevo.");
+            //Borra campos de textos e reinicializa
+                nombreEncontrado.setText("");
+                edadEncontrado.setText("");
+                fraseEncontrado.setText("");
+                lblFoto.setIcon(null);
+                lblFoto.setText("Sin foto");
+        } else {
+            try {
+                frmIngresar.array[frmVer.index].nombre = nombreEncontrado.getText();
+                frmIngresar.array[frmVer.index].edad = edadEncontrado.getText();
+                frmIngresar.array[frmVer.index].frase = fraseEncontrado.getText();
+                frmIngresar.array[frmVer.index].dirtmp = frmIngresar.dirtmp;
+
+                nombreEncontrado.setText(frmIngresar.array[frmVer.index].nombre + "se guardo");
+                edadEncontrado.setText(frmIngresar.array[frmVer.index].edad);
+                fraseEncontrado.setText(frmIngresar.array[frmVer.index].frase);
+                
+                int x = Integer.parseInt(edadEncontrado.getText()); //Comprueba que haya insertado un numero
+                JOptionPane.showMessageDialog(null, "Los datos se han guardado con exito");
+                
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(null, "ERROR. Debe ingresar valores numericos en Codigo y/o edad");
+            }
+            
+        }
+    }//GEN-LAST:event_GuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,7 +263,9 @@ public class Buscador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Guardar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton buscadorFoto;
     private javax.swing.JTextField codigoEncontrado;
     private javax.swing.JTextField edadEncontrado;
     private javax.swing.JTextField fraseEncontrado;
