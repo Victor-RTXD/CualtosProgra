@@ -5,20 +5,15 @@ public class Proyecto10 {
     static Nodo chalan;
    
     public static void main(String[] args) {
-        // TODO code application logic here
-        insertarnodo(4);
-        insertarnodo(2);
-        insertarnodo(3);
-        insertarnodo(21);
-        insertarnodo(7);
+        insertarnodo(50);
+        insertarnodo(30);
+        insertarnodo(20);
+        insertarnodo(40);
+        insertarnodo(70);
+        insertarnodo(60);
+        insertarnodo(80);
 
-        if (buscar(RaizArbol, 21)) {
-            System.out.println("el nodo existe");
-        } else {
-            System.out.println("no existe nodo y arbol");
-        }
-
-        eliminar(RaizArbol, 7);
+        deleteNode(RaizArbol, 0);
         
         System.out.println("Preorden");
         preorden(RaizArbol);
@@ -35,7 +30,7 @@ public class Proyecto10 {
         return this.RaizArbol.valor;
     }
     
-    static void insertarnodo(int dato) {
+    static Nodo insertarnodo(int dato) {
         if (RaizArbol == null) {
          RaizArbol = new Nodo(dato, null, null, null); // se crea el nuevo nodo en el que se establecen los nodos en null y se pone el dato del parametro como dato en el nodo
          System.out.println("Raiz" + RaizArbol.valor); // se retorna el valor del primero nodo, osea la raiz del arbol.         
@@ -68,6 +63,8 @@ public class Proyecto10 {
                 System.out.println("Nodo insertado " + chalan.derecha.valor);
             }
         }
+
+        return chalan;
     }
     
     public static void preorden(Nodo nodo) {
@@ -132,25 +129,66 @@ public class Proyecto10 {
         return x.valor;
     }
 
-    public static void eliminar(Nodo x, int busqueda) {
-        if (x == null) {
-            System.out.println("no existe");
+    static Nodo deleteNode(Nodo root, int k)
+    {
+ 
+        // Base case
+        if (root == null) {
+            System.out.println("**  El nodo no existe  **");
+            return root;
         }
-
-        if (busqueda < x.valor) {
-            eliminar(x.izda, busqueda);
-        } else if (busqueda > x.valor) {
-            eliminar(x.derecha, busqueda);
-        } else if (busqueda == x.valor) {
-            //checar si esta solo, tiene un hijo o 2 hijos
-            if (x.derecha == null && x.izda == null) {
-                x.raiz.izda = null;
-                x.raiz.derecha = null;
-                x = null;
-                System.out.println("nodo madafacker eliminado");
-            } else if (x.derecha != null) {
-                //x.valor = sucesor(x.derecha, x.valor);
+ 
+        // Recursive calls for ancestors of
+        // node to be deleted
+        if (root.valor > k) {
+            root.izda = deleteNode(root.izda, k);
+            return root;
+        }
+        else if (root.valor < k) {
+            root.derecha = deleteNode(root.derecha, k);
+            return root;
+        }
+ 
+        // We reach here when root is the node
+        // to be deleted.
+ 
+        // If one of the children is empty
+        if (root.izda == null) {
+            Nodo temp = root.derecha;
+            return temp;
+        }
+        else if (root.derecha == null) {
+            Nodo temp = root.izda;
+            return temp;
+        }
+ 
+        // If both children exist
+        else {
+            Nodo succParent = root;
+ 
+            // Find successor
+            Nodo succ = root.derecha;
+ 
+            while (succ.izda != null) {
+                succParent = succ;
+                succ = succ.izda;
             }
+ 
+            // Delete successor. Since successor
+            // is always left child of its parent
+            // we can safely make successor's right
+            // right child as left of its parent.
+            // If there is no succ, then assign
+            // succ->right to succParent->right
+            if (succParent != root)
+                succParent.izda = succ.derecha;
+            else
+                succParent.derecha = succ.derecha;
+ 
+            // Copy Successor Data to root
+            root.valor = succ.valor;
+ 
+            return root;
         }
     }
 }
@@ -168,7 +206,3 @@ public class Proyecto10 {
  * si tiene 2 hojas se debe de ser la mayor clave menores al nodo que se busca
  * 
  */
-
- /*
-  * 
-  */

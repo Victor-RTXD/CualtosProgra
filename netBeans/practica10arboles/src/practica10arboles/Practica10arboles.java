@@ -102,9 +102,9 @@ public class Practica10arboles {
  return x.valor;
  }
  
- public static Nodo buscar(Nodo x, int busqueda)
+ public static Nodo buscar(Nodo x, int busqueda)//para buscar izquierda, derecha y tomar la ubicacion de x
  {
-     if(x==null)
+     if(x==null) //no se encontro
         return null;
      else if(x.valor==busqueda)
          return x;
@@ -114,6 +114,7 @@ public class Practica10arboles {
         return buscar(x.derecha,busqueda);
    return x;
  }
+ 
 public static void eliminar(Nodo x,int busqueda)
 {
 if(x==null)
@@ -121,9 +122,15 @@ if(x==null)
 else// el nodo a borrar es una hoja
     if(x.izda==null&&x.derecha==null)
     {
+    if(x.raiz.izda != null)
     if(x.raiz.izda.valor==busqueda)
     {
-        x.raiz.izda=null; } 
+        x.raiz.izda=null; 
+        x.raiz = null;
+        System.out.println("se elimino " + x.valor);
+        x= null;
+        System.out.println("");
+    } 
     else if(x.raiz.derecha.valor==busqueda){
         x.raiz.derecha=null;
      x.raiz=null;
@@ -135,22 +142,52 @@ else// el nodo a borrar es una hoja
 else if(x.izda==null)
 {
     if(x.raiz.valor>=x.valor){
-        x.raiz.izda=x.derecha;
+        x.raiz.izda=x.derecha; //
         x.izda.raiz=x.raiz;
         System.out.println("el nodo "+x.valor+" se ha borrado con éxito");
         x=null;
     }else
     {
-    x.raiz.derecha=x.derecha;
+    x.raiz.derecha=x.derecha; //es hijo derecho
     x.derecha.raiz=x.raiz;
     System.out.println("el nodo "+x.valor+" se ha borrado con éxito");
     x=null;
+    } 
+}   else if(x.derecha != null && x.izda != null) {
+    Nodo aux = x.izda;
+    
+    while(aux.derecha != null) {//buscar en lo mas profundo de la derecha
+        aux = aux.derecha;
     }
+    x.valor = aux.valor;
+    eliminar(aux, aux.valor);
     
+    }
 }
-    
-//eliminar cuando tiene un hijo izquierdo
-}
+
+    public static void preorden(Nodo nodo) {
+        if (nodo != null) {
+            System.out.print(nodo.valor + " ");
+            preorden(nodo.izda);
+            preorden(nodo.derecha);
+        }
+    }
+
+    public static void inorden(Nodo nodo){
+        if (nodo != null) {
+            inorden(nodo.izda);
+            System.out.print(nodo.valor + " ");
+            inorden(nodo.derecha);
+        }
+    }
+
+    public static void postorden(Nodo nodo) {
+        if (nodo != null) {
+            postorden(nodo.izda);
+            postorden(nodo.derecha);
+            System.out.print(nodo.valor + " ");
+        }
+    }
 
  
     public static void main(String[] args) {
@@ -167,9 +204,16 @@ else if(x.izda==null)
        else
             System.out.println("el nodo se a encontrado en la dirección"+buscar(RaizArbol,21));  
 */    
-    eliminar(buscar(RaizArbol,25),25);
+    eliminar(buscar(RaizArbol,7),7);
     
+    System.out.println("Preorden");
+    preorden(RaizArbol);
+        System.out.println();
+        System.out.println("Inorden");
+        inorden(RaizArbol);
+        System.out.println();
+        System.out.println("Postorden");
+        postorden(RaizArbol);
+        System.out.println();
     }
-   
-    
 }
