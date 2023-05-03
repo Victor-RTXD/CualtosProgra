@@ -14,6 +14,7 @@ public class Proyecto10 {
         insertarnodo(80);
 
         deleteNode(RaizArbol, 0);
+        deleteNode(RaizArbol, 30);
         
         System.out.println("Preorden");
         preorden(RaizArbol);
