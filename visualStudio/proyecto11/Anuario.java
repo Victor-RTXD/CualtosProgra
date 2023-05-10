@@ -13,6 +13,4 @@ public class Anuario {
         this.direccionFoto = direccionFoto;
         this.fechaCumple = fechaCumple;
     }
-
-    
 }

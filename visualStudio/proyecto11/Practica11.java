@@ -17,7 +17,7 @@ public class Practica11 {
 
         opc = sc.nextInt();
         if (opc == 1) {
-            if (archivo.exists()) {
+            if (!archivo.exists()) {  //!
                 try {
                     archivo.createNewFile();
                     System.out.println(archivo.getName() + " archivo creado");
@@ -53,6 +53,7 @@ public class Practica11 {
             fichero.writeBytes(datos.generacion + ",");
             fichero.writeBytes(datos.fechaCumple + ",");
             fichero.writeBytes(datos.direccionFoto + "\n");
+
             JOptionPane.showConfirmDialog(null, "registo completado");
             fichero.close();
         } catch (IOException ex) {
@@ -61,6 +62,26 @@ public class Practica11 {
     }
 
     public static void mostrar() {
+        try {
+            RandomAccessFile fichero = new RandomAccessFile("BasesDeDatos.txt", "rw");
+            FileReader leerArchivo = new FileReader("BasesDeDatos.txt");
+            long puntero = fichero.getFilePointer();
+            BufferedReader br = new BufferedReader(leerArchivo);
+            String registro;
 
+
+            while (puntero != fichero.length()) {
+                registro = br.readLine();
+                System.out.println("registro " + registro);
+                fichero.readLine();
+                puntero = fichero.getFilePointer();
+                System.out.println("puntero" + puntero + "tamaño del archivo" + fichero);
+            }
+
+            fichero.close();
+            leerArchivo.close();
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
-}
+} //investigar funcion split como funciona
