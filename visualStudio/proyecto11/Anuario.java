@@ -1,5 +1,4 @@
 package proyecto11;
-import java.io.*;
 
 public class Anuario {
     String nombre;

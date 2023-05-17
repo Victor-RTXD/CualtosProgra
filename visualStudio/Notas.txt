@@ -1,0 +1,10 @@
+*Operaciones con archivos de acceso directo
+Creacion: consiste en ir introduciendo los registros en la direccion obtenida por medio de un algoritmode conversion (dispersion). si esta se encuentrea ocupada la direccion encuentra
+en el nuevo registro debera ir a la zona de excedentes
+
+*Bajas
+para realizar la baja se puede realizar utilizando 2 tecnicas:
+baja logica: consiste en marcar el registro que se desea borrar(campo control). Desventaja el registro sigue ocpuando un espacio en el archivo.
+baja nula: consiste en igualas los campos a nulos. Desventaja fragmentacion
+
+*
