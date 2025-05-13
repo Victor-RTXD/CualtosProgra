@@ -24,7 +24,7 @@ const objectives = [
     borderColor: "border-amber-500"
   },
   {
-    id: 3,
+    id: 3, 
     title: "Salud y bienestar",
     description: "Garantizar una vida sana y promover el bienestar para todos en todas las edades.",
     link: "https://www.un.org/sustainabledevelopment/health/",
@@ -175,9 +175,46 @@ const objectives = [
   },
 ];
 
+// Estilos CSS personalizados para el efecto de volteo
+const flipCardStyles = `
+  .flip-card-container {
+    perspective: 1000px;
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card-container:hover .flip-card-inner,
+  .flip-card-container.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 0.75rem;
+  }
+  
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+`;
+
 const Onu = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-800 to-slate-900 text-gray-100 py-12 px-4">
+      {/* Estilos personalizados */}
+      <style>{flipCardStyles}</style>
+      
       <div className="container mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -241,22 +278,16 @@ const FlippingCard = ({ objective }) => {
 
   return (
     <div
-      className="h-72 perspective cursor-pointer group"
+      className={`h-72 flip-card-container cursor-pointer ${flipped ? "flipped" : ""}`}
       onClick={() => setFlipped(!flipped)}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
     >
-      <div 
-        className={`relative w-full h-full rounded-xl shadow-xl transition-all duration-500 preserve-3d ${
-          flipped ? "rotate-y-180" : ""
-        }`}
-      >
+      <div className="flip-card-inner h-full w-full shadow-xl">
         {/* Front */}
-        <div className={`absolute inset-0 p-6 rounded-xl bg-gradient-to-br ${objective.color} backface-hidden border-l-4 ${objective.borderColor}`}>
+        <div className={`flip-card-front p-6 bg-gradient-to-br ${objective.color} border-l-4 ${objective.borderColor}`}>
           <div className="flex items-center justify-between mb-4">
-            <div className={`flex items-center justify-center w-12 h-12 rounded-full bg-slate-800 bg-opacity-30 ${objective.iconColor}`}>
-              {objective.id}
-            </div>
+            <h3 className="text-lg font-bold mb-3">Objetivo {objective.id}</h3>
             <div className="text-xs font-medium px-2 py-1 rounded bg-slate-800 bg-opacity-30 text-gray-200">
               ODS {objective.id}
             </div>
@@ -275,7 +306,7 @@ const FlippingCard = ({ objective }) => {
         </div>
 
         {/* Back */}
-        <div className={`absolute inset-0 p-6 rounded-xl ${objective.hoverColor} text-white backface-hidden rotate-y-180`}>
+        <div className={`flip-card-back p-6 ${objective.hoverColor} text-white`}>
           <div className="flex flex-col h-full justify-between">
             <div>
               <h3 className="text-lg font-bold mb-3">Objetivo {objective.id}</h3>
@@ -290,12 +321,16 @@ const FlippingCard = ({ objective }) => {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="inline-flex items-center bg-white text-slate-800 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition w-full justify-center"
+                onClick={(e) => e.stopPropagation()}
               >
                 Sitio oficial
                 <ExternalLink className="ml-2 h-4 w-4" />
               </a>
               
-              <button className="inline-flex items-center justify-center w-full bg-black bg-opacity-30 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+              <button 
+                className="inline-flex items-center justify-center w-full bg-black bg-opacity-30 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                onClick={(e) => e.stopPropagation()}
+              >
                 Ver recursos
               </button>
             </div>
