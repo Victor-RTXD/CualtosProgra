@@ -1,476 +1,729 @@
-#!/usr/bin/env python3
+from lexer import TokenType
 
-class Token:
-    def __init__(self, type, value, line, column):
-        self.type = type
-        self.value = value
-        self.line = line
-        self.column = column
+class ParserError(Exception):
+    def __init__(self, message, token):
+        self.message = message
+        self.token = token
+        super().__init__(f"Error en línea {token.line}, columna {token.column}: {message}")
 
-class TokenType:
-    def __init__(self, name):
+class ASTNode:
+    def __init__(self):
+        pass
+    
+    def __str__(self):
+        return self.__class__.__name__
+    
+    def __repr__(self):
+        return self.__str__()
+
+class Program(ASTNode):
+    def __init__(self):
+        super().__init__()
+        self.functions = []
+        self.declarations = []
+    
+    def __str__(self):
+        return f"Program(functions={len(self.functions)}, declarations={len(self.declarations)})"
+
+class Function(ASTNode):
+    def __init__(self, return_type, name, params, body):
+        super().__init__()
+        self.return_type = return_type
         self.name = name
+        self.params = params  # Lista de parámetros (objetos Parameter)
+        self.body = body  # Cuerpo de la función (objeto CompoundStatement)
+    
+    def __str__(self):
+        return f"Function({self.return_type}, {self.name}, params={len(self.params)})"
+
+class Parameter(ASTNode):
+    def __init__(self, type_spec, name):
+        super().__init__()
+        self.type = type_spec
+        self.name = name
+    
+    def __str__(self):
+        return f"Parameter({self.type}, {self.name})"
+
+class VarDeclaration(ASTNode):
+    def __init__(self, type_spec, name, initializer=None):
+        super().__init__()
+        self.type = type_spec
+        self.name = name
+        self.initializer = initializer  # Opcional
+    
+    def __str__(self):
+        if self.initializer:
+            return f"VarDeclaration({self.type}, {self.name}, initializer=True)"
+        return f"VarDeclaration({self.type}, {self.name})"
+
+class Statement(ASTNode):
+    pass
+
+class ExpressionStatement(Statement):
+    def __init__(self, expression):
+        super().__init__()
+        self.expression = expression
+    
+    def __str__(self):
+        return f"ExpressionStatement({self.expression})"
+
+class CompoundStatement(Statement):
+    def __init__(self):
+        super().__init__()
+        self.declarations = []
+        self.statements = []
+    
+    def __str__(self):
+        return f"CompoundStatement(declarations={len(self.declarations)}, statements={len(self.statements)})"
+
+class IfStatement(Statement):
+    def __init__(self, condition, then_stmt, else_stmt=None):
+        super().__init__()
+        self.condition = condition
+        self.then_stmt = then_stmt
+        self.else_stmt = else_stmt  # Opcional
+    
+    def __str__(self):
+        if self.else_stmt:
+            return f"IfStatement({self.condition}, then, else)"
+        return f"IfStatement({self.condition}, then)"
+
+class WhileStatement(Statement):
+    def __init__(self, condition, body):
+        super().__init__()
+        self.condition = condition
+        self.body = body
+    
+    def __str__(self):
+        return f"WhileStatement({self.condition}, body)"
+
+class ForStatement(Statement):
+    def __init__(self, init, condition, update, body):
+        super().__init__()
+        self.init = init  # Puede ser None
+        self.condition = condition  # Puede ser None
+        self.update = update  # Puede ser None
+        self.body = body
+    
+    def __str__(self):
+        return f"ForStatement(init, {self.condition}, update, body)"
+
+class ReturnStatement(Statement):
+    def __init__(self, expression=None):
+        super().__init__()
+        self.expression = expression  # Puede ser None
+    
+    def __str__(self):
+        if self.expression:
+            return f"ReturnStatement({self.expression})"
+        return "ReturnStatement()"
+
+class Expression(ASTNode):
+    pass
+
+class BinaryExpression(Expression):
+    def __init__(self, left, operator, right):
+        super().__init__()
+        self.left = left
+        self.operator = operator
+        self.right = right
+    
+    def __str__(self):
+        return f"BinaryExpression({self.left}, {self.operator}, {self.right})"
+
+class UnaryExpression(Expression):
+    def __init__(self, operator, expression):
+        super().__init__()
+        self.operator = operator
+        self.expression = expression
+    
+    def __str__(self):
+        return f"UnaryExpression({self.operator}, {self.expression})"
+
+class Identifier(Expression):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+    
+    def __str__(self):
+        return f"Identifier({self.name})"
+
+class Literal(Expression):
+    def __init__(self, value, type_name):
+        super().__init__()
+        self.value = value
+        self.type = type_name
+    
+    def __str__(self):
+        return f"Literal({self.value}, {self.type})"
+
+class CallExpression(Expression):
+    def __init__(self, callee, arguments):
+        super().__init__()
+        self.callee = callee
+        self.arguments = arguments  # Lista de expresiones
+    
+    def __str__(self):
+        return f"CallExpression({self.callee}, args={len(self.arguments)})"
+
+class AssignmentExpression(Expression):
+    def __init__(self, left, operator, right):
+        super().__init__()
+        self.left = left
+        self.operator = operator
+        self.right = right
+    
+    def __str__(self):
+        return f"AssignmentExpression({self.left}, {self.operator}, {self.right})"
+
 
 class Parser:
-    def __init__(self, tokens=None):
-        self.tokens = tokens or []
-        self.current_token_index = 0
-        self.errors = []
-        
-    def set_tokens(self, tokens):
+    def __init__(self, tokens):
         self.tokens = tokens
-        self.current_token_index = 0
+        self.current = 0
         self.errors = []
-    
-    def get_errors(self):
-        return self.errors
-    
-    def current_token(self):
-        if self.current_token_index < len(self.tokens):
-            return self.tokens[self.current_token_index]
-        return None
-    
-    def peek_next_token(self):
-        if self.current_token_index + 1 < len(self.tokens):
-            return self.tokens[self.current_token_index + 1]
-        return None
-    
-    def advance(self):
-        self.current_token_index += 1
-        return self.current_token() if self.current_token_index < len(self.tokens) else None
-    
-    def add_error(self, message):
-        token = self.current_token()
-        if token:
-            self.errors.append((message, token.line, token.column))
-        else:
-            self.errors.append((message, -1, -1))
-    
-    def expect(self, token_type):
-        current = self.current_token()
-        if current and current.type.name == token_type:
-            return self.advance()
-        
-        if current:
-            self.add_error(f"Se esperaba {token_type}, pero se encontró {current.type.name} ('{current.value}')")
-        else:
-            self.add_error(f"Se esperaba {token_type}, pero se llegó al final del archivo")
-        return None
     
     def parse(self):
-        """Inicia el proceso de análisis sintáctico."""
-        self.current_token_index = 0
-        self.errors = []
-        self.parse_program()
-        return len(self.errors) == 0
+        """Punto de entrada principal del parser."""
+        try:
+            self.ast = self.program()
+            return self.errors
+        except ParserError as e:
+            self.errors.append(str(e))
+            return self.errors
+        except Exception as e:
+            token = self.peek()
+            self.errors.append(f"Error inesperado en línea {token.line}, columna {token.column}: {str(e)}")
+            return self.errors
     
-    def parse_program(self):
-        """Analiza el programa completo."""
-        while self.current_token() and self.current_token().type.name != 'EOF':
-            if self.current_token().type.name == 'PREPROCESSOR':
-                self.parse_preprocessor()
-            elif self.current_token().type.name in ['INT', 'FLOAT', 'CHAR', 'VOID']:
-                self.parse_function_or_declaration()
+    def program(self):
+        """Devuelve el AST completo para el analizador semántico."""
+        if hasattr(self, 'ast'):
+            return self.ast
+        return self._parse_program()
+    
+    def _parse_program(self):
+        """programa -> declaracion_externa*"""
+        program = Program()
+        
+        while not self.is_at_end():
+            try:
+                # Verificar si es una declaración global o una función
+                if self.match(TokenType.INT, TokenType.CHAR, TokenType.FLOAT, TokenType.VOID):
+                    self.backup()  # Retroceder para procesar correctamente
+                    
+                    # Guardar la posición para retroceder si es necesario
+                    save_pos = self.current
+                    
+                    try:
+                        # Obtener el tipo
+                        type_spec = self.type_spec()
+                        
+                        # Obtener el identificador
+                        name = self.consume(TokenType.IDENTIFIER, "Se esperaba un identificador.").value
+                        
+                        # Verificar si es una función (tiene paréntesis después del identificador)
+                        if self.check(TokenType.LPAREN):
+                            # Es una función, retroceder para procesarla correctamente
+                            self.current = save_pos
+                            func = self.function_declaration()
+                            program.functions.append(func)
+                        else:
+                            # Es una declaración de variable global
+                            # Verificar inicialización
+                            initializer = None
+                            if self.match(TokenType.ASSIGN):
+                                initializer = self.expression()
+                            
+                            decl = VarDeclaration(type_spec, name, initializer)
+                            program.declarations.append(decl)
+                            
+                            # Verificar punto y coma
+                            self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la declaración.")
+                    except ParserError as e:
+                        self.errors.append(str(e))
+                        self.synchronize()
+                else:
+                    # Si no comienza con un tipo, es un error
+                    token = self.peek()
+                    raise ParserError(f"Se esperaba una declaración, se encontró '{token.value}'", token)
+            except ParserError as e:
+                self.errors.append(str(e))
+                self.synchronize()
+        
+        self.ast = program
+        return program
+    
+    def function_declaration(self):
+        """function_declaration -> type identifier '(' parameters? ')' compound_statement"""
+        return_type = self.type_spec()
+        name = self.consume(TokenType.IDENTIFIER, "Se esperaba un identificador.").value
+        
+        self.consume(TokenType.LPAREN, "Se esperaba '(' después del nombre de la función.")
+        params = []
+        
+        # Parámetros
+        if not self.check(TokenType.RPAREN):
+            params = self.parameters()
+        
+        self.consume(TokenType.RPAREN, "Se esperaba ')' después de los parámetros.")
+        
+        # Cuerpo de la función
+        body = self.compound_statement()
+        
+        return Function(return_type, name, params, body)
+    
+    def parameters(self):
+        """parameters -> parameter (',' parameter)*"""
+        params = []
+        
+        # Primer parámetro
+        params.append(self.parameter())
+        
+        # Resto de parámetros
+        while self.match(TokenType.COMMA):
+            params.append(self.parameter())
+        
+        return params
+    
+    def parameter(self):
+        """parameter -> type_spec identifier"""
+        type_spec = self.type_spec()
+        name = self.consume(TokenType.IDENTIFIER, "Se esperaba un identificador.").value
+        
+        return Parameter(type_spec, name)
+    
+    def type_spec(self):
+        """type_spec -> 'int' | 'char' | 'float' | 'void'"""
+        if self.match(TokenType.INT):
+            return "int"
+        elif self.match(TokenType.CHAR):
+            return "char"
+        elif self.match(TokenType.FLOAT):
+            return "float"
+        elif self.match(TokenType.VOID):
+            return "void"
+        else:
+            token = self.peek()
+            raise ParserError("Se esperaba un tipo de dato.", token)
+    
+    def declaration(self):
+        """declaration -> type_spec identifier ('=' expression)?"""
+        type_spec = self.type_spec()
+        name = self.consume(TokenType.IDENTIFIER, "Se esperaba un identificador.").value
+        
+        # Verificar inicialización
+        initializer = None
+        if self.match(TokenType.ASSIGN):
+            initializer = self.expression()
+        
+        return VarDeclaration(type_spec, name, initializer)
+    
+    def compound_statement(self):
+        """compound_statement -> '{' (declaration | statement)* '}'"""
+        self.consume(TokenType.LBRACE, "Se esperaba '{'.")
+        
+        block = CompoundStatement()
+        
+        while not self.check(TokenType.RBRACE) and not self.is_at_end():
+            try:
+                # Verificar si es una declaración de variable
+                if self.check(TokenType.INT) or self.check(TokenType.CHAR) or self.check(TokenType.FLOAT) or self.check(TokenType.VOID):
+                    decl = self.declaration()
+                    block.declarations.append(decl)
+                    self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la declaración.")
+                else:
+                    stmt = self.statement()
+                    if stmt:  # Puede que statement devuelva None en caso de error
+                        block.statements.append(stmt)
+            except ParserError as e:
+                self.errors.append(str(e))
+                self.synchronize()
+        
+        self.consume(TokenType.RBRACE, "Se esperaba '}'.")
+        
+        return block
+    
+    def statement(self):
+        """
+        statement -> expression_statement
+                  | compound_statement
+                  | if_statement
+                  | while_statement
+                  | for_statement
+                  | return_statement
+        """
+        try:
+            if self.match(TokenType.IF):
+                return self.if_statement()
+            elif self.match(TokenType.WHILE):
+                return self.while_statement()
+            elif self.match(TokenType.FOR):
+                return self.for_statement()
+            elif self.match(TokenType.RETURN):
+                return self.return_statement()
+            elif self.check(TokenType.LBRACE):
+                return self.compound_statement()
             else:
-                self.add_error(f"Elemento inesperado en nivel global: {self.current_token().type.name}")
-                self.advance()
+                return self.expression_statement()
+        except ParserError as e:
+            self.errors.append(str(e))
+            self.synchronize()
+            return None  # Devolver None en caso de error para evitar errores en cascada
     
-    def parse_preprocessor(self):
-        """Analiza directivas de preprocesador."""
-        token = self.current_token()
-        # Simplemente avanzar por ahora, en una implementación completa haría más validaciones
-        self.advance()
+    def if_statement(self):
+        """if_statement -> 'if' '(' expression ')' statement ('else' statement)?"""
+        self.consume(TokenType.LPAREN, "Se esperaba '(' después de 'if'.")
+        condition = self.expression()
+        self.consume(TokenType.RPAREN, "Se esperaba ')' después de la condición.")
+        
+        then_stmt = self.statement()
+        
+        # Manejar 'else' opcional
+        else_stmt = None
+        if self.match(TokenType.ELSE):
+            else_stmt = self.statement()
+        
+        return IfStatement(condition, then_stmt, else_stmt)
     
-    def parse_function_or_declaration(self):
-        """Decide si es una declaración de función o variable."""
-        # Guardamos el tipo para la declaración
-        type_token = self.current_token()
-        self.advance()  # Consumir el tipo
+    def while_statement(self):
+        """while_statement -> 'while' '(' expression ')' statement"""
+        self.consume(TokenType.LPAREN, "Se esperaba '(' después de 'while'.")
+        condition = self.expression()
+        self.consume(TokenType.RPAREN, "Se esperaba ')' después de la condición.")
         
-        # Esperamos un identificador
-        if not self.current_token() or self.current_token().type.name != 'IDENTIFIER':
-            self.add_error("Se esperaba un identificador después del tipo")
-            return
+        body = self.statement()
         
-        identifier = self.current_token().value
-        self.advance()  # Consumir el identificador
-        
-        # Si hay un paréntesis, es una función
-        if self.current_token() and self.current_token().type.name == 'LEFT_PAREN':
-            self.parse_function_definition(type_token, identifier)
-        else:
-            self.parse_variable_declaration(type_token, identifier)
+        return WhileStatement(condition, body)
     
-    def parse_function_definition(self, return_type, name):
-        """Analiza la definición de una función."""
-        # Ya sabemos que el token actual es LEFT_PAREN
-        self.advance()  # Consumir '('
+    def for_statement(self):
+        """for_statement -> 'for' '(' (expression?';' expression?';' expression?) ')' statement"""
+        self.consume(TokenType.LPAREN, "Se esperaba '(' después de 'for'.")
         
-        # Analizar parámetros (simplificado)
-        self.parse_parameters()
-        
-        # Esperar paréntesis de cierre
-        if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-            self.add_error("Se esperaba ')' después de los parámetros")
-        else:
-            self.advance()  # Consumir ')'
-        
-        # Esperar bloque de código
-        self.parse_block()
-    
-    def parse_parameters(self):
-        """Analiza los parámetros de una función."""
-        # Si el siguiente token es RIGHT_PAREN, no hay parámetros
-        if self.current_token() and self.current_token().type.name == 'RIGHT_PAREN':
-            return
-            
-        while self.current_token() and self.current_token().type.name != 'RIGHT_PAREN':
-            # Esperar tipo de dato
-            if self.current_token().type.name not in ['INT', 'FLOAT', 'CHAR', 'VOID']:
-                self.add_error("Se esperaba un tipo de dato en parámetro")
-                break
-            
-            self.advance()  # Consumir tipo
-            
-            # Esperar identificador
-            if not self.current_token() or self.current_token().type.name != 'IDENTIFIER':
-                self.add_error("Se esperaba un identificador en parámetro")
-                break
-                
-            self.advance()  # Consumir identificador
-            
-            # Si hay una coma, continuar con el siguiente parámetro
-            if self.current_token() and self.current_token().type.name == 'COMMA':
-                self.advance()  # Consumir coma
-            elif self.current_token() and self.current_token().type.name != 'RIGHT_PAREN':
-                self.add_error("Se esperaba ',' o ')' después del parámetro")
-                break
-    
-    def parse_variable_declaration(self, type_token, identifier):
-        """Analiza una declaración de variable."""
-        # Verificar si hay inicialización
-        if self.current_token() and self.current_token().type.name == 'ASSIGN':
-            self.advance()  # Consumir '='
-            self.parse_expression()
-            
-        # Esperar punto y coma
-        if not self.current_token() or self.current_token().type.name != 'SEMICOLON':
-            self.add_error("Se esperaba ';' después de la declaración")
-        else:
-            self.advance()  # Consumir ';'
-    
-    def parse_block(self):
-        """Analiza un bloque de código entre llaves."""
-        if not self.current_token() or self.current_token().type.name != 'LEFT_BRACE':
-            self.add_error("Se esperaba '{' para iniciar un bloque")
-            return
-            
-        self.advance()  # Consumir '{'
-        
-        # Analizar contenido del bloque
-        while self.current_token() and self.current_token().type.name != 'RIGHT_BRACE':
-            self.parse_statement()
-            
-            # Si llegamos al final sin encontrar la llave de cierre
-            if not self.current_token():
-                self.add_error("Se esperaba '}' para cerrar el bloque")
-                return
-                
-        # Consumir '}'
-        self.advance()
-    
-    def parse_statement(self):
-        """Analiza una instrucción."""
-        if not self.current_token():
-            return
-            
-        token_type = self.current_token().type.name
-        
-        # Declaración de variable
-        if token_type in ['INT', 'FLOAT', 'CHAR', 'VOID']:
-            type_token = self.current_token()
-            self.advance()  # Consumir tipo
-            
-            if not self.current_token() or self.current_token().type.name != 'IDENTIFIER':
-                self.add_error("Se esperaba un identificador después del tipo")
-                return
-                
-            identifier = self.current_token().value
-            self.advance()  # Consumir identificador
-            
-            self.parse_variable_declaration(type_token, identifier)
-            
-        # If statement
-        elif token_type == 'IF':
-            self.parse_if_statement()
-            
-        # For loop
-        elif token_type == 'FOR':
-            self.parse_for_loop()
-            
-        # While loop
-        elif token_type == 'WHILE':
-            self.parse_while_loop()
-            
-        # Return statement
-        elif token_type == 'RETURN':
-            self.parse_return_statement()
-            
-        # Expression statement (como llamadas a función)
-        elif token_type == 'IDENTIFIER':
-            self.parse_expression_statement()
-            
-        # Block
-        elif token_type == 'LEFT_BRACE':
-            self.parse_block()
-            
-        # Otro tipo de token
-        else:
-            self.add_error(f"Elemento inesperado en instrucción: {token_type}")
-            self.advance()
-    
-    def parse_if_statement(self):
-        """Analiza una instrucción if."""
-        self.advance()  # Consumir 'if'
-        
-        # Esperar paréntesis de apertura
-        if not self.current_token() or self.current_token().type.name != 'LEFT_PAREN':
-            self.add_error("Se esperaba '(' después de 'if'")
-        else:
-            self.advance()  # Consumir '('
-            
-        # Analizar la condición
-        self.parse_expression()
-        
-        # Esperar paréntesis de cierre
-        if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-            self.add_error("Se esperaba ')' después de la condición")
-        else:
-            self.advance()  # Consumir ')'
-            
-        # Analizar el cuerpo del if
-        self.parse_statement()
-        
-        # Verificar si hay un else
-        if self.current_token() and self.current_token().type.name == 'ELSE':
-            self.advance()  # Consumir 'else'
-            self.parse_statement()
-    
-    def parse_for_loop(self):
-        """Analiza un bucle for."""
-        self.advance()  # Consumir 'for'
-        
-        # Esperar paréntesis de apertura
-        if not self.current_token() or self.current_token().type.name != 'LEFT_PAREN':
-            self.add_error("Se esperaba '(' después de 'for'")
-        else:
-            self.advance()  # Consumir '('
-            
         # Inicialización
-        if self.current_token().type.name in ['INT', 'FLOAT', 'CHAR']:
-            type_token = self.current_token()
-            self.advance()  # Consumir tipo
-            
-            if not self.current_token() or self.current_token().type.name != 'IDENTIFIER':
-                self.add_error("Se esperaba un identificador después del tipo")
-            else:
-                identifier = self.current_token().value
-                self.advance()  # Consumir identificador
-                self.parse_variable_declaration(type_token, identifier)
-        else:
-            self.parse_expression_statement()
-            
+        init = None
+        if not self.check(TokenType.SEMICOLON):
+            init = self.expression()
+        self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la inicialización.")
+        
         # Condición
-        self.parse_expression()
+        condition = None
+        if not self.check(TokenType.SEMICOLON):
+            condition = self.expression()
+        self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la condición.")
         
-        # Esperar punto y coma
-        if not self.current_token() or self.current_token().type.name != 'SEMICOLON':
-            self.add_error("Se esperaba ';' después de la condición")
-        else:
-            self.advance()  # Consumir ';'
+        # Actualización
+        update = None
+        if not self.check(TokenType.RPAREN):
+            update = self.expression()
+        self.consume(TokenType.RPAREN, "Se esperaba ')' después de la expresión de actualización.")
+        
+        body = self.statement()
+        
+        return ForStatement(init, condition, update, body)
+    
+    def return_statement(self):
+        """return_statement -> 'return' expression? ';'"""
+        expr = None
+        if not self.check(TokenType.SEMICOLON):
+            expr = self.expression()
+        
+        self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la sentencia return.")
+        
+        return ReturnStatement(expr)
+    
+    def expression_statement(self):
+        """expression_statement -> expression? ';'"""
+        expr = None
+        if not self.check(TokenType.SEMICOLON):
+            expr = self.expression()
+        
+        self.consume(TokenType.SEMICOLON, "Se esperaba ';' después de la expresión.")
+        
+        return ExpressionStatement(expr)
+    
+    def expression(self):
+        """expression -> assignment"""
+        return self.assignment()
+    
+    def assignment(self):
+        """assignment -> logical_or (('=' | '+=' | '-=' | '*=' | '/=' | '%=' | '&=' | '|=' | '^=' | '<<=' | '>>=') assignment)?"""
+        expr = self.logical_or()
+        
+        if self.match(TokenType.ASSIGN, TokenType.PLUS_ASSIGN, TokenType.MINUS_ASSIGN, 
+                      TokenType.MULT_ASSIGN, TokenType.DIV_ASSIGN, TokenType.MOD_ASSIGN,
+                      TokenType.BITAND_ASSIGN, TokenType.BITOR_ASSIGN, TokenType.BITXOR_ASSIGN,
+                      TokenType.LSHIFT_ASSIGN, TokenType.RSHIFT_ASSIGN):
+            operator = self.previous().value
+            right = self.assignment()
             
-        # Incremento
-        self.parse_expression()
-        
-        # Esperar paréntesis de cierre
-        if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-            self.add_error("Se esperaba ')' al final del bucle for")
-        else:
-            self.advance()  # Consumir ')'
+            # Validar que el lado izquierdo sea un lvalue
+            if not isinstance(expr, Identifier) and not isinstance(expr, CallExpression):
+                token = self.previous()
+                self.error(token, "El lado izquierdo de una asignación debe ser un lvalue.")
             
-        # Cuerpo del bucle
-        self.parse_statement()
-    
-    def parse_while_loop(self):
-        """Analiza un bucle while."""
-        self.advance()  # Consumir 'while'
+            return AssignmentExpression(expr, operator, right)
         
-        # Esperar paréntesis de apertura
-        if not self.current_token() or self.current_token().type.name != 'LEFT_PAREN':
-            self.add_error("Se esperaba '(' después de 'while'")
-        else:
-            self.advance()  # Consumir '('
+        return expr
+    
+    def logical_or(self):
+        """logical_or -> logical_and ('||' logical_and)*"""
+        expr = self.logical_and()
+        
+        while self.match(TokenType.OR):
+            operator = self.previous().value
+            right = self.logical_and()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def logical_and(self):
+        """logical_and -> equality ('&&' equality)*"""
+        expr = self.equality()
+        
+        while self.match(TokenType.AND):
+            operator = self.previous().value
+            right = self.equality()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def equality(self):
+        """equality -> comparison (('==' | '!=') comparison)*"""
+        expr = self.comparison()
+        
+        while self.match(TokenType.EQUAL, TokenType.NOT_EQUAL):
+            operator = self.previous().value
+            right = self.comparison()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def comparison(self):
+        """comparison -> bitwise_or (('<' | '>' | '<=' | '>=') bitwise_or)*"""
+        expr = self.bitwise_or()
+        
+        while self.match(TokenType.LESS_THAN, TokenType.GREATER_THAN, TokenType.LESS_EQUAL, TokenType.GREATER_EQUAL):
+            operator = self.previous().value
+            right = self.bitwise_or()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def bitwise_or(self):
+        """bitwise_or -> bitwise_xor ('|' bitwise_xor)*"""
+        expr = self.bitwise_xor()
+        
+        while self.match(TokenType.BITOR):
+            operator = self.previous().value
+            right = self.bitwise_xor()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def bitwise_xor(self):
+        """bitwise_xor -> bitwise_and ('^' bitwise_and)*"""
+        expr = self.bitwise_and()
+        
+        while self.match(TokenType.BITXOR):
+            operator = self.previous().value
+            right = self.bitwise_and()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def bitwise_and(self):
+        """bitwise_and -> shift ('&' shift)*"""
+        expr = self.shift()
+        
+        while self.match(TokenType.BITAND):
+            operator = self.previous().value
+            right = self.shift()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def shift(self):
+        """shift -> additive (('<<' | '>>') additive)*"""
+        expr = self.additive()
+        
+        while self.match(TokenType.LSHIFT, TokenType.RSHIFT):
+            operator = self.previous().value
+            right = self.additive()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def additive(self):
+        """additive -> multiplicative (('+' | '-') multiplicative)*"""
+        expr = self.multiplicative()
+        
+        while self.match(TokenType.PLUS, TokenType.MINUS):
+            operator = self.previous().value
+            right = self.multiplicative()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def multiplicative(self):
+        """multiplicative -> unary (('*' | '/' | '%') unary)*"""
+        expr = self.unary()
+        
+        while self.match(TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.MOD):
+            operator = self.previous().value
+            right = self.unary()
+            expr = BinaryExpression(expr, operator, right)
+        
+        return expr
+    
+    def unary(self):
+        """unary -> ('!' | '-' | '~' | '++' | '--') unary | postfix"""
+        if self.match(TokenType.NOT, TokenType.MINUS, TokenType.BITNOT, TokenType.INCREMENT, TokenType.DECREMENT):
+            operator = self.previous().value
+            right = self.unary()
+            return UnaryExpression(operator, right)
+        
+        return self.postfix()
+    
+    def postfix(self):
+        """postfix -> primary ('++' | '--')?"""
+        expr = self.primary()
+        
+        if self.match(TokenType.INCREMENT, TokenType.DECREMENT):
+            operator = self.previous().value
+            return UnaryExpression(operator + "_post", expr)  # Usar un sufijo para diferenciar
+        
+        return expr
+    
+    def primary(self):
+        """
+        primary -> INTEGER_LITERAL | FLOAT_LITERAL | CHAR_LITERAL | STRING_LITERAL
+                 | IDENTIFIER ('(' arguments? ')')?
+                 | '(' expression ')'
+        """
+        if self.match(TokenType.INTEGER_LITERAL):
+            return Literal(self.previous().value, "int")
+        
+        if self.match(TokenType.FLOAT_LITERAL):
+            return Literal(self.previous().value, "float")
+        
+        if self.match(TokenType.CHAR_LITERAL):
+            return Literal(self.previous().value, "char")
+        
+        if self.match(TokenType.STRING_LITERAL):
+            return Literal(self.previous().value, "string")
+        
+        if self.match(TokenType.IDENTIFIER):
+            identifier = Identifier(self.previous().value)
             
-        # Condición
-        self.parse_expression()
-        
-        # Esperar paréntesis de cierre
-        if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-            self.add_error("Se esperaba ')' después de la condición")
-        else:
-            self.advance()  # Consumir ')'
-            
-        # Cuerpo del bucle
-        self.parse_statement()
-    
-    def parse_return_statement(self):
-        """Analiza una instrucción return."""
-        self.advance()  # Consumir 'return'
-        
-        # Puede haber una expresión o no
-        if self.current_token() and self.current_token().type.name != 'SEMICOLON':
-            self.parse_expression()
-            
-        # Esperar punto y coma
-        if not self.current_token() or self.current_token().type.name != 'SEMICOLON':
-            self.add_error("Se esperaba ';' después de return")
-        else:
-            self.advance()  # Consumir ';'
-    
-    def parse_expression_statement(self):
-        """Analiza una instrucción de expresión."""
-        self.parse_expression()
-        
-        # Esperar punto y coma
-        if not self.current_token() or self.current_token().type.name != 'SEMICOLON':
-            self.add_error("Se esperaba ';' después de la expresión")
-        else:
-            self.advance()  # Consumir ';'
-    
-    def parse_expression(self):
-        """Analiza una expresión."""
-        self.parse_assignment_expression()
-    
-    def parse_assignment_expression(self):
-        """Analiza una expresión de asignación."""
-        self.parse_logical_or_expression()
-        
-        # Si hay un operador de asignación
-        if self.current_token() and self.current_token().type.name == 'ASSIGN':
-            self.advance()  # Consumir operador
-            self.parse_assignment_expression()
-    
-    def parse_logical_or_expression(self):
-        """Analiza una expresión OR lógica."""
-        self.parse_logical_and_expression()
-        
-        while self.current_token() and self.current_token().type.name == 'LOGICAL_OR':
-            self.advance()  # Consumir operador
-            self.parse_logical_and_expression()
-    
-    def parse_logical_and_expression(self):
-        """Analiza una expresión AND lógica."""
-        self.parse_equality_expression()
-        
-        while self.current_token() and self.current_token().type.name == 'LOGICAL_AND':
-            self.advance()  # Consumir operador
-            self.parse_equality_expression()
-    
-    def parse_equality_expression(self):
-        """Analiza una expresión de igualdad."""
-        self.parse_relational_expression()
-        
-        while self.current_token() and self.current_token().type.name in ['EQUAL', 'NOT_EQUAL']:
-            self.advance()  # Consumir operador
-            self.parse_relational_expression()
-    
-    def parse_relational_expression(self):
-        """Analiza una expresión relacional."""
-        self.parse_additive_expression()
-        
-        while self.current_token() and self.current_token().type.name in ['LESS', 'LESS_EQUAL', 'GREATER', 'GREATER_EQUAL']:
-            self.advance()  # Consumir operador
-            self.parse_additive_expression()
-    
-    def parse_additive_expression(self):
-        """Analiza una expresión aditiva."""
-        self.parse_multiplicative_expression()
-        
-        while self.current_token() and self.current_token().type.name in ['PLUS', 'MINUS']:
-            self.advance()  # Consumir operador
-            self.parse_multiplicative_expression()
-    
-    def parse_multiplicative_expression(self):
-        """Analiza una expresión multiplicativa."""
-        self.parse_unary_expression()
-        
-        while self.current_token() and self.current_token().type.name in ['MULTIPLY', 'DIVIDE', 'MODULO']:
-            self.advance()  # Consumir operador
-            self.parse_unary_expression()
-    
-    def parse_unary_expression(self):
-        """Analiza una expresión unaria."""
-        if self.current_token() and self.current_token().type.name in ['MINUS', 'NOT']:
-            self.advance()  # Consumir operador
-            self.parse_unary_expression()
-        else:
-            self.parse_primary_expression()
-    
-    def parse_primary_expression(self):
-        """Analiza una expresión primaria."""
-        if not self.current_token():
-            self.add_error("Se esperaba una expresión primaria")
-            return
-            
-        token_type = self.current_token().type.name
-        
-        if token_type == 'IDENTIFIER':
-            self.advance()  # Consumir identificador
-            
-            # Si es una llamada a función
-            if self.current_token() and self.current_token().type.name == 'LEFT_PAREN':
-                self.parse_function_call()
+            # Verificar si es una llamada a función
+            if self.match(TokenType.LPAREN):
+                arguments = []
                 
-        elif token_type in ['INTEGER', 'FLOAT_LITERAL', 'CHARACTER', 'STRING']:
-            self.advance()  # Consumir literal
-            
-        elif token_type == 'LEFT_PAREN':
-            self.advance()  # Consumir '('
-            self.parse_expression()
-            
-            # Esperar paréntesis de cierre
-            if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-                self.add_error("Se esperaba ')' para cerrar la expresión")
-            else:
-                self.advance()  # Consumir ')'
+                # Procesar argumentos si hay
+                if not self.check(TokenType.RPAREN):
+                    arguments = self.arguments()
                 
-        else:
-            self.add_error(f"Token inesperado en expresión primaria: {token_type}")
+                self.consume(TokenType.RPAREN, "Se esperaba ')' después de los argumentos.")
+                
+                return CallExpression(identifier, arguments)
+            
+            return identifier
+        
+        if self.match(TokenType.LPAREN):
+            expr = self.expression()
+            self.consume(TokenType.RPAREN, "Se esperaba ')' después de la expresión.")
+            return expr
+        
+        # Si no coincide con ninguno de los anteriores, es un error
+        token = self.peek()
+        raise ParserError(f"Se esperaba una expresión, se encontró '{token.value}'", token)
+    
+    def arguments(self):
+        """arguments -> expression (',' expression)*"""
+        args = []
+        
+        # Primer argumento
+        args.append(self.expression())
+        
+        # Resto de argumentos
+        while self.match(TokenType.COMMA):
+            args.append(self.expression())
+        
+        return args
+    
+    # Métodos auxiliares para el parser
+    
+    def match(self, *types):
+        """Verifica si el token actual es de alguno de los tipos dados."""
+        for type in types:
+            if self.check(type):
+                self.advance()
+                return True
+        return False
+    
+    def check(self, type):
+        """Verifica si el token actual es del tipo dado sin consumirlo."""
+        if self.is_at_end():
+            return False
+        return self.peek().type == type
+    
+    def advance(self):
+        """Avanza al siguiente token y devuelve el anterior."""
+        if not self.is_at_end():
+            self.current += 1
+        return self.previous()
+    
+    def is_at_end(self):
+        """Verifica si hemos llegado al final de los tokens."""
+        return self.peek().type == TokenType.EOF
+    
+    def peek(self):
+        """Devuelve el token actual sin consumirlo."""
+        return self.tokens[self.current]
+    
+    def previous(self):
+        """Devuelve el token anterior."""
+        return self.tokens[self.current - 1]
+    
+    def consume(self, type, message):
+        """Consume el token actual si es del tipo dado, sino genera un error."""
+        if self.check(type):
+            return self.advance()
+        
+        token = self.peek()
+        raise ParserError(message, token)
+    
+    def backup(self):
+        """Retrocede un token."""
+        if self.current > 0:
+            self.current -= 1
+    
+    def error(self, token, message):
+        """Genera un error y lo registra."""
+        error = ParserError(message, token)
+        self.errors.append(str(error))
+        return error
+    
+    def synchronize(self):
+        """
+        Recuperación de errores: avanza hasta encontrar un punto 
+        sincronización (como ';' o el inicio de una declaración).
+        """
+        self.advance()
+        
+        while not self.is_at_end():
+            # Si encontramos un ';', podemos sincronizar después de él
+            if self.previous().type == TokenType.SEMICOLON:
+                return
+            
+            # Sincronizar en el inicio de una declaración
+            if self.peek().type in (
+                TokenType.INT, TokenType.CHAR, TokenType.FLOAT, TokenType.VOID,
+                TokenType.IF, TokenType.WHILE, TokenType.FOR, TokenType.RETURN,
+                TokenType.LBRACE  # Inicio de bloque
+            ):
+                return
+            
             self.advance()
-    
-    def parse_function_call(self):
-        """Analiza una llamada a función."""
-        # Ya se consumió el identificador y estamos en '('
-        self.advance()  # Consumir '('
-        
-        # Si no hay argumentos
-        if self.current_token() and self.current_token().type.name == 'RIGHT_PAREN':
-            self.advance()  # Consumir ')'
-            return
-            
-        # Analizar argumentos
-        self.parse_argument_list()
-        
-        # Esperar paréntesis de cierre
-        if not self.current_token() or self.current_token().type.name != 'RIGHT_PAREN':
-            self.add_error("Se esperaba ')' después de los argumentos")
-        else:
-            self.advance()  # Consumir ')'
-    
-    def parse_argument_list(self):
-        """Analiza una lista de argumentos."""
-        self.parse_expression()
-        
-        while self.current_token() and self.current_token().type.name == 'COMMA':
-            self.advance()  # Consumir ','
-            self.parse_expression()

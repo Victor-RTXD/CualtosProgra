@@ -1,6 +1,28 @@
-# lexer.py
 import re
 
+# Definimos los tipos de tokens
+TOKEN_SPECIFICATION = [
+    ("COMMENT_MULTI", r"/\*[\s\S]*?\*/"),
+    ("COMMENT_SINGLE", r"//.*"),
+    ("STRING_LITERAL", r'"(\\.|[^"\\])*"'),
+    ("CHAR_LITERAL", r"'(\\.|[^'\\])'"),
+    ("HEX_NUMBER", r"0[xX][0-9a-fA-F]+"),
+    ("FLOAT", r"\d+\.\d+"),                   # <-- Agregado
+    ("NUMBER", r"\d+"),                       # <-- Renombrado, solo enteros
+    ("DEFINE", r"#define"),
+    ("IDENTIFIER", r"[A-Za-z_]\w*"),
+    ("SYMBOL", r"[{}()\[\];,]"),
+    ("OPERATOR", r"[=+\-*/%<>!&|^~]+"),
+    ("WHITESPACE", r"\s+"),
+    ("UNKNOWN", r"."),
+]
+
+# Compilamos el patrón general de tokens
+token_regex = re.compile(
+    "|".join(f"(?P<{name}>{pattern})" for name, pattern in TOKEN_SPECIFICATION)
+)
+
+# Clase Token
 class Token:
     def __init__(self, type_, value, line, column):
         self.type = type_
@@ -9,69 +31,43 @@ class Token:
         self.column = column
 
     def __repr__(self):
-        return f"Token({self.type}, {self.value}, Line={self.line}, Col={self.column})"
+        return f"{self.type}({self.value}) at {self.line}:{self.column}"
 
-class LexerError(Exception):
-    pass
+# Función del lexer
+def tokenize(code):
+    tokens = []
+    line_num = 1
+    line_start = 0
 
-class Lexer:
-    def __init__(self, code):
-        self.code = code
-        self.tokens = []
-        self.current_line = 1
+    for match in token_regex.finditer(code):
+        kind = match.lastgroup
+        value = match.group()
+        column = match.start() - line_start
 
-    def tokenize(self):
-        token_specification = [
-            ('COMMENT',     r'//.*'),
-            ('MCOMMENT',    r'/\*[\s\S]*?\*/'),
-            ('PREPROCESSOR', r'#\s*[a-zA-Z_]+\s*[^ \n]*'),  # <-- Mueve esta línea arriba
-            ('DEFINE',      r'#define'),
-            ('KEYWORD',     r'\b(int|char|return|printf|main)\b'),
-            ('HEX_STRING',  r'"(\\x[0-9A-Fa-f]{2})*"'),
-            ('STRING',      r'"[^"\n]*"?'),
-            ('NUMBER',      r'0[xX][0-9a-fA-F]+|\d+'),
-            ('ID',          r'[A-Za-z_]\w*'),
-            ('OP',          r'[\+\-\*/=]'),
-            ('SEMICOLON',   r';'),
-            ('COMMA',       r','),
-            ('LPAREN',      r'\('),
-            ('RPAREN',      r'\)'),
-            ('LBRACE',      r'\{'),
-            ('RBRACE',      r'\}'),
-            ('NEWLINE',     r'\n'),
-            ('SKIP',        r'[ \t]+'),
-            ('MISMATCH',    r'.'),  # <-- Siempre al final
-        ]
+        if kind == "WHITESPACE":
+            line_num += value.count("\n")
+            if "\n" in value:
+                line_start = match.end()
+            continue
+        elif kind in ("COMMENT_SINGLE", "COMMENT_MULTI"):
+            continue  # Ignorar comentarios
+        elif kind == "UNKNOWN":
+            raise SyntaxError(f"Token desconocido '{value}' en línea {line_num}, columna {column}")
 
 
-        tok_regex = '|'.join(f'(?P<{name}>{pattern})' for name, pattern in token_specification)
-        get_token = re.compile(tok_regex).match
+        token = Token(kind, value, line_num, column)
+        tokens.append(token)
 
-        line_num = 1
-        line_start = 0
-        pos = 0
-        mo = get_token(self.code, pos)
+    return tokens
 
-        while mo:
-            kind = mo.lastgroup
-            value = mo.group()
-            column = mo.start() - line_start
+# === Ejemplo de uso ===
+if __name__ == "__main__":
+    with open("codigo1.c", "r", encoding="utf-8") as f:
+        code = f.read()
 
-            if kind == 'NEWLINE':
-                line_num += 1
-                line_start = mo.end()
-            elif kind == 'SKIP' or kind == 'COMMENT' or kind == 'MCOMMENT':
-                pass
-            elif kind == 'MISMATCH':
-                raise LexerError(f'Caracter no válido {value!r} en línea {line_num}')
-            else:
-                if kind == 'STRING' and not value.endswith('"'):
-                    raise LexerError(f'String sin cerrar en línea {line_num}')
-                if kind == 'NUMBER' and len(value) > 30:
-                    raise LexerError(f'Número demasiado grande en línea {line_num}: {value}')
-                self.tokens.append(Token(kind, value, line_num, column))
-
-            pos = mo.end()
-            mo = get_token(self.code, pos)
-
-        return self.tokens
+    try:
+        tokens = tokenize(code)
+        for token in tokens:
+            print(token)
+    except SyntaxError as e:
+        print("Error léxico:", e)

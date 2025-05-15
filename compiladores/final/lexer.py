@@ -137,8 +137,8 @@ class Lexer:
             
             # Literales numéricos
             ('HEX_INTEGER', r'0[xX][0-9a-fA-F]+'),
-            ('INTEGER', r'[0-9]+'),
             ('FLOAT', r'[0-9]+\.[0-9]*([eE][+-]?[0-9]+)?|[0-9]*\.[0-9]+([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+'),
+            ('INTEGER', r'[0-9]+'),
             
             # Literales de cadena y carácter
             ('STRING', r'"(\\.|[^"\\])*"'),

@@ -1,24 +1,23 @@
-# codegen.py
+def generate_code(ast):
+    code_lines = []
 
-class CodeGenerator:
-    def __init__(self):
-        self.temp_count = 0
-        self.code = []
+    def emit(node, indent=0):
+        space = "    " * indent
+        if node.type == "Function":
+            code_lines.append(f"{space}func {node.value}() {{")
+            for child in node.children:
+                emit(child, indent + 1)
+            code_lines.append(f"{space}}}")
+        elif node.type == "Declaration":
+            line = f"{space}let {node.value}"
+            if node.children:
+                line += f" = {node.children[0].value}"
+            code_lines.append(line + ";")
+        elif node.type == "Return":
+            code_lines.append(f"{space}return {node.value};")
+        elif node.type == "Program":
+            for child in node.children:
+                emit(child, indent)
 
-    def new_temp(self):
-        self.temp_count += 1
-        return f"t{self.temp_count}"
-
-    def generate(self, ast):
-        for node in ast:
-            if node.nodetype == 'DECL':
-                t = self.new_temp()
-                self.code.append(f"{t} = {node.value['value']}  // {node.value['type']} {node.value['id']}")
-            elif node.nodetype == 'PRINTF':
-                args = ', '.join(node.value)
-                self.code.append(f"call printf, {args}")
-            elif node.nodetype == 'RETURN':
-                self.code.append(f"return {node.value}")
-            elif node.nodetype == 'DEFINE':
-                self.code.append(f"// macro: {node.value}")
-        return self.code
+    emit(ast)
+    return "\n".join(code_lines)

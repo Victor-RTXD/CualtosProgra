@@ -1,33 +1,26 @@
-# main.py
-from lexer import Lexer
+from lexer import tokenize
 from parser import Parser
-from semantic import SemanticAnalyzer
-from codegen import CodeGenerator
-
-def run_compiler(source_code):
-    print("🔍 Análisis léxico...")
-    lexer = Lexer(source_code)
-    tokens = lexer.tokenize()
-    for token in tokens:
-        print(token)
-
-    print("\n🧱 Análisis sintáctico...")
-    parser = Parser(tokens)
-    ast = parser.parse()
-    
-    print("\n🔬 Análisis semántico...")
-    semantic = SemanticAnalyzer()
-    semantic.analyze(ast)
-
-    print("\n⚙️ Generación de código intermedio...")
-    generator = CodeGenerator()
-    code = generator.generate(ast)
-
-    print("\n🎯 Código Intermedio:")
-    for line in code:
-        print(line)
+from semantic import semantic_analysis
+from codegen import generate_code
+import sys
 
 if __name__ == "__main__":
-    with open("sample_code.c", "r", encoding="utf-8") as f:
-        source = f.read()
-        run_compiler(source)
+    if len(sys.argv) < 2:
+        print("Uso: python main.py <archivo.c>")
+        sys.exit(1)
+
+    with open(sys.argv[1], "r", encoding="utf-8") as f:
+        code = f.read()
+
+    try:
+        tokens = tokenize(code)
+        parser = Parser(tokens)
+        ast = parser.parse()
+        semantic_analysis(ast)
+        result = generate_code(ast)
+
+        print("=== Código Intermedio ===")
+        print(result)
+
+    except Exception as e:
+        print("Error:", e)
