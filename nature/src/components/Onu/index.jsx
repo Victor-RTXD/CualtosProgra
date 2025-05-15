@@ -11,7 +11,8 @@ const objectives = [
     color: "from-red-800 to-red-700",
     hoverColor: "bg-red-700",
     iconColor: "text-red-400",
-    borderColor: "border-red-500"
+    borderColor: "border-red-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_1.jpg"
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const objectives = [
     color: "from-amber-800 to-amber-700",
     hoverColor: "bg-amber-700",
     iconColor: "text-amber-400",
-    borderColor: "border-amber-500"
+    borderColor: "border-amber-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_2.jpg"
   },
   {
     id: 3, 
@@ -31,7 +33,8 @@ const objectives = [
     color: "from-green-800 to-green-700",
     hoverColor: "bg-green-700",
     iconColor: "text-green-400",
-    borderColor: "border-green-500"
+    borderColor: "border-green-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_3.jpg"
   },
   {
     id: 4,
@@ -41,7 +44,8 @@ const objectives = [
     color: "from-rose-800 to-rose-700",
     hoverColor: "bg-rose-700",
     iconColor: "text-rose-400",
-    borderColor: "border-rose-500"
+    borderColor: "border-rose-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_4.jpg"
   },
   {
     id: 5,
@@ -51,7 +55,8 @@ const objectives = [
     color: "from-orange-800 to-orange-700",
     hoverColor: "bg-orange-700",
     iconColor: "text-orange-400",
-    borderColor: "border-orange-500"
+    borderColor: "border-orange-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_5.jpg"
   },
   {
     id: 6,
@@ -61,7 +66,8 @@ const objectives = [
     color: "from-blue-800 to-blue-700",
     hoverColor: "bg-blue-700",
     iconColor: "text-blue-400",
-    borderColor: "border-blue-500"
+    borderColor: "border-blue-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_6.jpg"
   },
   {
     id: 7,
@@ -71,7 +77,8 @@ const objectives = [
     color: "from-yellow-800 to-yellow-700",
     hoverColor: "bg-yellow-700",
     iconColor: "text-yellow-400",
-    borderColor: "border-yellow-500"
+    borderColor: "border-yellow-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_7.jpg"
   },
   {
     id: 8,
@@ -81,7 +88,8 @@ const objectives = [
     color: "from-purple-800 to-purple-700",
     hoverColor: "bg-purple-700",
     iconColor: "text-purple-400",
-    borderColor: "border-purple-500"
+    borderColor: "border-purple-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_8.jpg"
   },
   {
     id: 9,
@@ -91,7 +99,8 @@ const objectives = [
     color: "from-indigo-800 to-indigo-700",
     hoverColor: "bg-indigo-700",
     iconColor: "text-indigo-400",
-    borderColor: "border-indigo-500"
+    borderColor: "border-indigo-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_9.jpg"
   },
   {
     id: 10,
@@ -101,7 +110,8 @@ const objectives = [
     color: "from-pink-800 to-pink-700",
     hoverColor: "bg-pink-700",
     iconColor: "text-pink-400",
-    borderColor: "border-pink-500"
+    borderColor: "border-pink-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_10.jpg"
   },
   {
     id: 11,
@@ -111,7 +121,8 @@ const objectives = [
     color: "from-amber-800 to-amber-700",
     hoverColor: "bg-amber-700",
     iconColor: "text-amber-400",
-    borderColor: "border-amber-500"
+    borderColor: "border-amber-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_11.jpg"
   },
   {
     id: 12,
@@ -121,7 +132,8 @@ const objectives = [
     color: "from-emerald-800 to-emerald-700",
     hoverColor: "bg-emerald-700",
     iconColor: "text-emerald-400",
-    borderColor: "border-emerald-500"
+    borderColor: "border-emerald-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_12.jpg"
   },
   {
     id: 13,
@@ -131,7 +143,8 @@ const objectives = [
     color: "from-teal-800 to-teal-700",
     hoverColor: "bg-teal-700",
     iconColor: "text-teal-400",
-    borderColor: "border-teal-500"
+    borderColor: "border-teal-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_13.jpg"
   },
   {
     id: 14,
@@ -141,7 +154,8 @@ const objectives = [
     color: "from-cyan-800 to-cyan-700",
     hoverColor: "bg-cyan-700",
     iconColor: "text-cyan-400",
-    borderColor: "border-cyan-500"
+    borderColor: "border-cyan-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_14.jpg"
   },
   {
     id: 15,
@@ -151,7 +165,8 @@ const objectives = [
     color: "from-lime-800 to-lime-700",
     hoverColor: "bg-lime-700",
     iconColor: "text-lime-400",
-    borderColor: "border-lime-500"
+    borderColor: "border-lime-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_15.jpg"
   },
   {
     id: 16,
@@ -161,7 +176,8 @@ const objectives = [
     color: "from-blue-800 to-blue-700",
     hoverColor: "bg-blue-700",
     iconColor: "text-blue-400",
-    borderColor: "border-blue-500"
+    borderColor: "border-blue-500",
+    imageUrl: "src/assets/Screenshot 2025-05-14 114759.png"
   },
   {
     id: 17,
@@ -171,7 +187,8 @@ const objectives = [
     color: "from-violet-800 to-violet-700",
     hoverColor: "bg-violet-700",
     iconColor: "text-violet-400",
-    borderColor: "border-violet-500"
+    borderColor: "border-violet-500",
+    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_17.jpg"
   },
 ];
 
@@ -233,15 +250,6 @@ const Onu = () => {
             <button className="bg-teal-700 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition">
               Todos los ODS
             </button>
-            <button className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">
-              Medioambientales
-            </button>
-            <button className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">
-              Sociales
-            </button>
-            <button className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">
-              Económicos
-            </button>
           </div>
         </div>
 
@@ -285,25 +293,24 @@ const FlippingCard = ({ objective }) => {
     >
       <div className="flip-card-inner h-full w-full shadow-xl">
         {/* Front */}
-        <div className={`flip-card-front p-6 bg-gradient-to-br ${objective.color} border-l-4 ${objective.borderColor}`}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold mb-3">Objetivo {objective.id}</h3>
-            <div className="text-xs font-medium px-2 py-1 rounded bg-slate-800 bg-opacity-30 text-gray-200">
-              ODS {objective.id}
-            </div>
-          </div>
-          <h2 className="text-xl font-bold text-white mb-3">{objective.title}</h2>
-          <p className="text-gray-200 text-sm">{objective.description}</p>
-          
-          <div className="absolute bottom-4 right-4">
-            <span className="text-xs text-gray-300 opacity-70 flex items-center">
-              Clic para más info
-              <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M15.707 4.293a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-            </span>
-          </div>
-        </div>
+        <div className="flip-card-front relative h-full w-full rounded-xl overflow-hidden">
+  {/* Imagen de fondo */}
+  <img
+  src={objective.imageUrl}
+  alt={`ODS ${objective.id}`}
+  className="absolute inset-0 w-full h-full object-cover object-top"
+/>
+
+  {/* Gradiente oscuro para legibilidad */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+  {/* Contenido textual */}
+  <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10">
+    <h3 className="text-lg font-bold">Objetivo {objective.id}: {objective.title}</h3>
+    <p className="text-sm mt-1 line-clamp-3">{objective.description}</p>
+  </div>
+</div>
+
 
         {/* Back */}
         <div className={`flip-card-back p-6 ${objective.hoverColor} text-white`}>
@@ -314,7 +321,7 @@ const FlippingCard = ({ objective }) => {
                 Este objetivo busca crear un impacto positivo en nuestra sociedad y planeta a través de acciones concretas y medibles.
               </p>
             </div>
-            
+
             <div className="space-y-3">
               <a 
                 href={objective.link} 
@@ -326,7 +333,7 @@ const FlippingCard = ({ objective }) => {
                 Sitio oficial
                 <ExternalLink className="ml-2 h-4 w-4" />
               </a>
-              
+
               <button 
                 className="inline-flex items-center justify-center w-full bg-black bg-opacity-30 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
                 onClick={(e) => e.stopPropagation()}
@@ -340,5 +347,6 @@ const FlippingCard = ({ objective }) => {
     </div>
   );
 };
+
 
 export default Onu;
