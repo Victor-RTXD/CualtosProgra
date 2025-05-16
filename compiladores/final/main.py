@@ -63,6 +63,13 @@ def main():
         # Análisis léxico
         lexer = Lexer()
         tokens = lexer.tokenize(source_code)
+
+                # Mostrar los tokens encontrados
+        print("\nTokens encontrados:")
+        print("-" * 50)
+        for token in tokens:
+            if token.type.name != 'EOF':
+                print(f"Línea {token.line}, Col {token.column}: {token.type.name} - '{token.value}'")
         
         errors = lexer.get_errors()
         if errors:
@@ -73,6 +80,7 @@ def main():
             return 1
         
         print("\nAnálisis léxico completado con éxito.")
+        print("***************************************************************************************************************")
 
         # Análisis sintáctico
         print("\nIniciando análisis sintáctico...")
@@ -87,6 +95,7 @@ def main():
             return 1
 
         print("\nAnálisis sintáctico completado con éxito.")
+        print("***************************************************************************************************************")
         
         # Obtener el AST
         ast = parser.program()
@@ -110,6 +119,7 @@ def main():
             return 1
         
         print("\nAnálisis semántico completado con éxito.")
+        print("***************************************************************************************************************")
 
         # Generación de código de tres direcciones (TAC)
         print("\nGenerando código de tres direcciones...")

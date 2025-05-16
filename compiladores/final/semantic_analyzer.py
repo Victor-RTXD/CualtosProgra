@@ -10,7 +10,7 @@ class SemanticError:
         self.column = column
     
     def __str__(self):
-        return f"Error semántico en línea {self.line}, columna {self.column}: {self.message}"
+        return f"Error semántico  {self.message}"
 
 class Symbol:
     def __init__(self, name, type_spec, line, column):

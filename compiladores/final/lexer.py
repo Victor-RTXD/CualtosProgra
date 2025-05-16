@@ -224,6 +224,10 @@ class Lexer:
         self.errors = []
         tokens = []
         
+        # Constantes para límites de C
+        INT_MAX = 2147483647  # 2^31 - 1
+        INT_MIN = -2147483648  # -2^31
+        
         while self.pos < len(text):
             match = self.regex_obj.match(text, self.pos)
             if match:
@@ -273,14 +277,25 @@ class Lexer:
                 elif group_name in ('INTEGER', 'HEX_INTEGER'):
                     # Validar que el entero no sea demasiado grande
                     try:
+                        # Primero convertimos a int de Python
                         if group_name == 'HEX_INTEGER':
-                            int(value, 16)
+                            # Para hexadecimales, quitamos el prefijo 0x/0X antes de convertir
+                            num_str = value[2:] if value.startswith(('0x', '0X')) else value
+                            num_value = int(num_str, 16)
                         else:
-                            int(value)
-                        token = Token(TokenType.INTEGER_LITERAL, value, self.line, column)
+                            num_value = int(value)
+                        
+                        # Luego verificamos si está dentro del rango de un int de C
+                        if num_value > INT_MAX or num_value < INT_MIN:
+                            error_msg = f"Entero fuera del rango permitido: {value} (valor: {num_value})"
+                            self.errors.append((error_msg, self.line, column))
+                            token = Token(TokenType.ERROR, value, self.line, column)
+                        else:
+                            token = Token(TokenType.INTEGER_LITERAL, value, self.line, column)
+                        
                         tokens.append(token)
                     except ValueError:
-                        error_msg = f"Entero demasiado grande: {value}"
+                        error_msg = f"Entero con formato inválido: {value}"
                         self.errors.append((error_msg, self.line, column))
                         token = Token(TokenType.ERROR, value, self.line, column)
                         tokens.append(token)
@@ -288,11 +303,17 @@ class Lexer:
                 elif group_name == 'FLOAT':
                     # Validar que el float no sea demasiado grande
                     try:
-                        float(value)
-                        token = Token(TokenType.FLOAT_LITERAL, value, self.line, column)
+                        float_val = float(value)
+                        # Verificar si el float está en un rango válido (para C)
+                        if float_val == float('inf') or float_val == float('-inf'):
+                            error_msg = f"Float fuera del rango permitido: {value}"
+                            self.errors.append((error_msg, self.line, column))
+                            token = Token(TokenType.ERROR, value, self.line, column)
+                        else:
+                            token = Token(TokenType.FLOAT_LITERAL, value, self.line, column)
                         tokens.append(token)
                     except ValueError:
-                        error_msg = f"Float demasiado grande o con formato incorrecto: {value}"
+                        error_msg = f"Float con formato incorrecto: {value}"
                         self.errors.append((error_msg, self.line, column))
                         token = Token(TokenType.ERROR, value, self.line, column)
                         tokens.append(token)
