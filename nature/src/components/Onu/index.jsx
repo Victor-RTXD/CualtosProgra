@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Globe, ExternalLink } from "lucide-react";
+import { Globe, ExternalLink, Info, X, ArrowLeft, ArrowRight } from "lucide-react";
 
 // Datos de los objetivos con colores específicos para cada ODS
 const objectives = [
@@ -8,345 +8,447 @@ const objectives = [
     title: "Fin de la pobreza",
     description: "Erradicar la pobreza en todas sus formas en todo el mundo.",
     link: "https://www.un.org/sustainabledevelopment/poverty/",
-    color: "from-red-800 to-red-700",
-    hoverColor: "bg-red-700",
-    iconColor: "text-red-400",
-    borderColor: "border-red-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_1.jpg"
+    color: "bg-red-700",
+    textColor: "text-red-200",
+    borderColor: "border-red-600",
+    gradient: "from-red-900 to-red-700",
+    icon: "💰"
   },
   {
     id: 2,
     title: "Hambre cero",
     description: "Poner fin al hambre, lograr la seguridad alimentaria y promover la agricultura sostenible.",
     link: "https://www.un.org/sustainabledevelopment/hunger/",
-    color: "from-amber-800 to-amber-700",
-    hoverColor: "bg-amber-700",
-    iconColor: "text-amber-400",
-    borderColor: "border-amber-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_2.jpg"
+    color: "bg-amber-700",
+    textColor: "text-amber-200",
+    borderColor: "border-amber-600",
+    gradient: "from-amber-900 to-amber-700",
+    icon: "🌾"
   },
   {
     id: 3, 
     title: "Salud y bienestar",
     description: "Garantizar una vida sana y promover el bienestar para todos en todas las edades.",
     link: "https://www.un.org/sustainabledevelopment/health/",
-    color: "from-green-800 to-green-700",
-    hoverColor: "bg-green-700",
-    iconColor: "text-green-400",
-    borderColor: "border-green-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_3.jpg"
+    color: "bg-green-700",
+    textColor: "text-green-200",
+    borderColor: "border-green-600",
+    gradient: "from-green-900 to-green-700",
+    icon: "❤️"
   },
   {
     id: 4,
     title: "Educación de calidad",
     description: "La educación es la base para mejorar nuestra vida y el desarrollo sostenible.",
     link: "https://www.un.org/sustainabledevelopment/education/",
-    color: "from-rose-800 to-rose-700",
-    hoverColor: "bg-rose-700",
-    iconColor: "text-rose-400",
-    borderColor: "border-rose-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_4.jpg"
+    color: "bg-rose-700",
+    textColor: "text-rose-200",
+    borderColor: "border-rose-600",
+    gradient: "from-rose-900 to-rose-700",
+    icon: "📚"
   },
   {
     id: 5,
     title: "Igualdad de género",
     description: "La igualdad entre los géneros es fundamental para conseguir un mundo pacífico, próspero y sostenible.",
     link: "https://www.un.org/sustainabledevelopment/gender-equality/",
-    color: "from-orange-800 to-orange-700",
-    hoverColor: "bg-orange-700",
-    iconColor: "text-orange-400",
-    borderColor: "border-orange-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_5.jpg"
+    color: "bg-orange-700",
+    textColor: "text-orange-200",
+    borderColor: "border-orange-600",
+    gradient: "from-orange-900 to-orange-700",
+    icon: "⚖️"
   },
   {
     id: 6,
     title: "Agua limpia y saneamiento",
     description: "El agua libre de impurezas y accesible para todos es parte esencial del mundo en que queremos vivir.",
     link: "https://www.un.org/sustainabledevelopment/water-and-sanitation/",
-    color: "from-blue-800 to-blue-700",
-    hoverColor: "bg-blue-700",
-    iconColor: "text-blue-400",
-    borderColor: "border-blue-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_6.jpg"
+    color: "bg-blue-700",
+    textColor: "text-blue-200",
+    borderColor: "border-blue-600",
+    gradient: "from-blue-900 to-blue-700",
+    icon: "💧"
   },
   {
     id: 7,
     title: "Energía asequible y no contaminante",
     description: "El acceso a una energía asequible, segura, sostenible y moderna para todos.",
     link: "https://www.un.org/sustainabledevelopment/energy/",
-    color: "from-yellow-800 to-yellow-700",
-    hoverColor: "bg-yellow-700",
-    iconColor: "text-yellow-400",
-    borderColor: "border-yellow-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_7.jpg"
+    color: "bg-yellow-700",
+    textColor: "text-yellow-200",
+    borderColor: "border-yellow-600",
+    gradient: "from-yellow-900 to-yellow-700",
+    icon: "⚡"
   },
   {
     id: 8,
     title: "Trabajo decente y crecimiento económico",
     description: "Promover el crecimiento económico inclusivo y sostenible, el empleo y el trabajo decente para todos.",
     link: "https://www.un.org/sustainabledevelopment/economic-growth/",
-    color: "from-purple-800 to-purple-700",
-    hoverColor: "bg-purple-700",
-    iconColor: "text-purple-400",
-    borderColor: "border-purple-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_8.jpg"
+    color: "bg-purple-700",
+    textColor: "text-purple-200",
+    borderColor: "border-purple-600",
+    gradient: "from-purple-900 to-purple-700",
+    icon: "📈"
   },
   {
     id: 9,
     title: "Industria, innovación e infraestructuras",
     description: "Construir infraestructuras resilientes, promover la industrialización sostenible y fomentar la innovación.",
     link: "https://www.un.org/sustainabledevelopment/infrastructure-industrialization/",
-    color: "from-indigo-800 to-indigo-700",
-    hoverColor: "bg-indigo-700",
-    iconColor: "text-indigo-400",
-    borderColor: "border-indigo-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_9.jpg"
+    color: "bg-indigo-700",
+    textColor: "text-indigo-200",
+    borderColor: "border-indigo-600",
+    gradient: "from-indigo-900 to-indigo-700",
+    icon: "🏭"
   },
   {
     id: 10,
     title: "Reducción de las desigualdades",
     description: "Reducir la desigualdad en y entre los países para un desarrollo social y económico sostenible.",
     link: "https://www.un.org/sustainabledevelopment/inequality/",
-    color: "from-pink-800 to-pink-700",
-    hoverColor: "bg-pink-700",
-    iconColor: "text-pink-400",
-    borderColor: "border-pink-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_10.jpg"
+    color: "bg-pink-700",
+    textColor: "text-pink-200",
+    borderColor: "border-pink-600",
+    gradient: "from-pink-900 to-pink-700",
+    icon: "🤝"
   },
   {
     id: 11,
     title: "Ciudades y comunidades sostenibles",
     description: "Lograr que las ciudades sean más inclusivas, seguras, resilientes y sostenibles.",
     link: "https://www.un.org/sustainabledevelopment/cities/",
-    color: "from-amber-800 to-amber-700",
-    hoverColor: "bg-amber-700",
-    iconColor: "text-amber-400",
-    borderColor: "border-amber-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_11.jpg"
+    color: "bg-amber-700",
+    textColor: "text-amber-200",
+    borderColor: "border-amber-600",
+    gradient: "from-amber-900 to-amber-700",
+    icon: "🏙️"
   },
   {
     id: 12,
     title: "Producción y consumo responsables",
     description: "Garantizar modalidades de consumo y producción sostenibles para el futuro del planeta.",
     link: "https://www.un.org/sustainabledevelopment/sustainable-consumption-production/",
-    color: "from-emerald-800 to-emerald-700",
-    hoverColor: "bg-emerald-700",
-    iconColor: "text-emerald-400",
-    borderColor: "border-emerald-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_12.jpg"
+    color: "bg-emerald-700",
+    textColor: "text-emerald-200",
+    borderColor: "border-emerald-600",
+    gradient: "from-emerald-900 to-emerald-700",
+    icon: "♻️"
   },
   {
     id: 13,
     title: "Acción por el clima",
     description: "Adoptar medidas urgentes para combatir el cambio climático y sus efectos.",
     link: "https://www.un.org/sustainabledevelopment/climate-change/",
-    color: "from-teal-800 to-teal-700",
-    hoverColor: "bg-teal-700",
-    iconColor: "text-teal-400",
-    borderColor: "border-teal-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_13.jpg"
+    color: "bg-teal-700",
+    textColor: "text-teal-200",
+    borderColor: "border-teal-600",
+    gradient: "from-teal-900 to-teal-700",
+    icon: "🌍"
   },
   {
     id: 14,
     title: "Vida submarina",
     description: "Conservar y utilizar de forma sostenible los océanos, los mares y los recursos marinos.",
     link: "https://www.un.org/sustainabledevelopment/oceans/",
-    color: "from-cyan-800 to-cyan-700",
-    hoverColor: "bg-cyan-700",
-    iconColor: "text-cyan-400",
-    borderColor: "border-cyan-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_14.jpg"
+    color: "bg-cyan-700",
+    textColor: "text-cyan-200",
+    borderColor: "border-cyan-600",
+    gradient: "from-cyan-900 to-cyan-700",
+    icon: "🐋"
   },
   {
     id: 15,
     title: "Vida de ecosistemas terrestres",
     description: "Gestionar sosteniblemente los bosques, luchar contra la desertificación y detener la pérdida de biodiversidad.",
     link: "https://www.un.org/sustainabledevelopment/biodiversity/",
-    color: "from-lime-800 to-lime-700",
-    hoverColor: "bg-lime-700",
-    iconColor: "text-lime-400",
-    borderColor: "border-lime-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_15.jpg"
+    color: "bg-lime-700",
+    textColor: "text-lime-200",
+    borderColor: "border-lime-600",
+    gradient: "from-lime-900 to-lime-700",
+    icon: "🌳"
   },
   {
     id: 16,
     title: "Paz, justicia e instituciones sólidas",
     description: "Promover sociedades justas, pacíficas e inclusivas para el desarrollo sostenible.",
     link: "https://www.un.org/sustainabledevelopment/peace-justice/",
-    color: "from-blue-800 to-blue-700",
-    hoverColor: "bg-blue-700",
-    iconColor: "text-blue-400",
-    borderColor: "border-blue-500",
-    imageUrl: "src/assets/Screenshot 2025-05-14 114759.png"
+    color: "bg-blue-700",
+    textColor: "text-blue-200",
+    borderColor: "border-blue-600",
+    gradient: "from-blue-900 to-blue-700",
+    icon: "☮️"
   },
   {
     id: 17,
     title: "Alianzas para lograr los objetivos",
     description: "Revitalizar la Alianza Mundial para el Desarrollo Sostenible.",
     link: "https://www.un.org/sustainabledevelopment/globalpartnerships/",
-    color: "from-violet-800 to-violet-700",
-    hoverColor: "bg-violet-700",
-    iconColor: "text-violet-400",
-    borderColor: "border-violet-500",
-    imageUrl: "https://www.un.org/sustainabledevelopment/es/wp-content/uploads/sites/3/2020/01/S_SDG_action_card_square_17.jpg"
+    color: "bg-violet-700",
+    textColor: "text-violet-200",
+    borderColor: "border-violet-600",
+    gradient: "from-violet-900 to-violet-700",
+    icon: "🤲"
   },
 ];
 
-// Estilos CSS personalizados para el efecto de volteo
-const flipCardStyles = `
-  .flip-card-container {
-    perspective: 1000px;
-  }
-  
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-  }
-  
-  .flip-card-container:hover .flip-card-inner,
-  .flip-card-container.flipped .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .flip-card-front,
-  .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 0.75rem;
-  }
-  
-  .flip-card-back {
-    transform: rotateY(180deg);
-  }
-`;
+const ObjetivosDesarrolloSostenible = () => {
+  const [selectedObjective, setSelectedObjective] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [filter, setFilter] = useState("todos");
+  const [currentPage, setCurrentPage] = useState(1);
+  const objectivesPerPage = 6;
 
-const Onu = () => {
+  // Calcular el índice inicial y final de los objetivos a mostrar
+  const indexOfLastObjective = currentPage * objectivesPerPage;
+  const indexOfFirstObjective = indexOfLastObjective - objectivesPerPage;
+  const currentObjectives = objectives.slice(indexOfFirstObjective, indexOfLastObjective);
+  
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(objectives.length / objectivesPerPage);
+
+  const openModal = (objective) => {
+    setSelectedObjective(objective);
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
+  const handleExternalLink = (e, url) => {
+    e.stopPropagation();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-800 to-slate-900 text-gray-100 py-12 px-4">
-      {/* Estilos personalizados */}
-      <style>{flipCardStyles}</style>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white py-12 px-4 relative overflow-x-hidden">
+      {/* Partículas de fondo (simuladas con elementos fijos) */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute rounded-full bg-white opacity-10"
+            style={{
+              width: Math.random() * 6 + 2 + "px",
+              height: Math.random() * 6 + 2 + "px",
+              top: Math.random() * 100 + "%",
+              left: Math.random() * 100 + "%",
+              animation: `float ${Math.random() * 10 + 15}s infinite ease-in-out`
+            }}
+          />
+        ))}
+      </div>
       
-      <div className="container mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <Globe className="h-16 w-16 text-teal-400" />
+      {/* Encabezado */}
+      <div className="container mx-auto z-10 relative">
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-6">
+            <div className="p-4 rounded-full bg-gradient-to-br from-teal-500 to-blue-600 shadow-lg">
+              <Globe className="h-12 w-12 text-white" />
+            </div>
           </div>
-          <h1 className="text-4xl font-bold text-teal-300 mb-4">Objetivos de Desarrollo Sostenible</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Los 17 Objetivos de Desarrollo Sostenible de la ONU son nuestro plan para crear un mundo mejor y más sostenible para todos.
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-blue-500 mb-6">
+            Objetivos de Desarrollo Sostenible
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Los 17 Objetivos de Desarrollo Sostenible (ODS) de la ONU representan un llamado universal 
+            a la acción para poner fin a la pobreza, proteger el planeta y mejorar las vidas 
+            y las perspectivas de las personas en todo el mundo.
           </p>
         </div>
 
-        {/* Filter Section */}
-        <div className="mb-10">
-          <div className="flex flex-wrap justify-center gap-2">
-            <button className="bg-teal-700 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition">
-              Todos los ODS
-            </button>
-          </div>
+        {/* Filtros (versión simplificada) */}
+        <div className="mb-12 flex justify-center">
+          <button 
+            className={`px-6 py-3 rounded-full transition-all duration-300 font-medium mx-2 
+            ${filter === "todos" ? "bg-teal-600 text-white shadow-lg" : "bg-gray-700 hover:bg-gray-600 text-gray-300"}`}
+            onClick={() => setFilter("todos")}
+          >
+            Todos los ODS
+          </button>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {objectives.map((obj) => (
-            <FlippingCard key={obj.id} objective={obj} />
+        {/* Tarjetas de objetivos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {currentObjectives.map((objective) => (
+            <div 
+              key={objective.id}
+              onClick={() => openModal(objective)}
+              className={`rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer bg-gradient-to-br ${objective.gradient} border-2 ${objective.borderColor}`}
+            >
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="text-3xl mr-3">{objective.icon}</div>
+                  <h3 className="text-xl font-bold">
+                    Objetivo {objective.id}
+                  </h3>
+                </div>
+                
+                <h4 className="text-lg font-semibold mb-3">{objective.title}</h4>
+                <p className="text-sm opacity-90 mb-6 line-clamp-3">{objective.description}</p>
+                
+                <div className="flex justify-between items-center">
+                  <button 
+                    className="flex items-center text-sm font-medium bg-white/20 hover:bg-white/30 px-3 py-2 rounded-lg transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(objective);
+                    }}
+                  >
+                    <Info className="w-4 h-4 mr-1" />
+                    Más información
+                  </button>
+                  
+                  <button
+                    className="flex items-center text-sm font-medium bg-white/10 hover:bg-white/20 px-3 py-2 rounded-lg transition-colors"
+                    onClick={(e) => handleExternalLink(e, objective.link)}
+                  >
+                    <ExternalLink className="w-4 h-4 mr-1" />
+                    Sitio web
+                  </button>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-16 text-center">
-          <h2 className="text-2xl font-bold text-teal-300 mb-4">¿Cómo puedes contribuir?</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-            Cada acción cuenta. Descubre cómo puedes participar activamente en la consecución de estos objetivos desde tu comunidad.
-          </p>
-          <a 
-            href="https://www.un.org/sustainabledevelopment/es/take-action/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 px-6 rounded-lg transition"
+        
+        {/* Paginación */}
+        <div className="flex justify-center mt-12 space-x-2">
+          <button 
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-lg ${currentPage === 1 ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600 text-white'}`}
           >
-            Tomar acción
-            <ExternalLink className="ml-2 h-4 w-4" />
-          </a>
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          
+          <div className="flex items-center bg-gray-800 px-4 py-2 rounded-lg">
+            <span className="text-gray-300">{currentPage}</span>
+            <span className="mx-2 text-gray-500">/</span>
+            <span className="text-gray-300">{totalPages}</span>
+          </div>
+          
+          <button 
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? 'bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-gray-700 hover:bg-gray-600 text-white'}`}
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
+
+        {/* Llamada a la acción */}
       </div>
-    </div>
-  );
-};
-
-const FlippingCard = ({ objective }) => {
-  const [flipped, setFlipped] = useState(false);
-
-  return (
-    <div
-      className={`h-72 flip-card-container cursor-pointer ${flipped ? "flipped" : ""}`}
-      onClick={() => setFlipped(!flipped)}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
-    >
-      <div className="flip-card-inner h-full w-full shadow-xl">
-        {/* Front */}
-        <div className="flip-card-front relative h-full w-full rounded-xl overflow-hidden">
-  {/* Imagen de fondo */}
-  <img
-  src={objective.imageUrl}
-  alt={`ODS ${objective.id}`}
-  className="absolute inset-0 w-full h-full object-cover object-top"
-/>
-
-  {/* Gradiente oscuro para legibilidad */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-
-  {/* Contenido textual */}
-  <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-10">
-    <h3 className="text-lg font-bold">Objetivo {objective.id}: {objective.title}</h3>
-    <p className="text-sm mt-1 line-clamp-3">{objective.description}</p>
-  </div>
-</div>
-
-
-        {/* Back */}
-        <div className={`flip-card-back p-6 ${objective.hoverColor} text-white`}>
-          <div className="flex flex-col h-full justify-between">
-            <div>
-              <h3 className="text-lg font-bold mb-3">Objetivo {objective.id}</h3>
-              <p className="text-sm mb-4">
-                Este objetivo busca crear un impacto positivo en nuestra sociedad y planeta a través de acciones concretas y medibles.
+       {/* Footer */}
+      <footer  className="bg-slate-900/80 border-t border-slate-800 py-10 mt-16">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent mb-2">
+                EcoSoluciones ODS
+              </h3>
+              <p className="text-gray-400 max-w-md">
+                Promoviendo prácticas sostenibles para alcanzar los Objetivos de Desarrollo Sostenible 2030.
               </p>
             </div>
+          </div>
+          
+          <div className="text-center text-gray-500 text-sm border-t border-slate-800 pt-6">
+            <p>© {new Date().getFullYear()} EcoSoluciones. Todos los derechos reservados.</p>
+            <p className="mt-1">
+              Desarrollado con 💚 para un futuro más sostenible
+            </p>
+          </div>
+        </div>
+      </footer>
 
-            <div className="space-y-3">
-              <a 
-                href={objective.link} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex items-center bg-white text-slate-800 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition w-full justify-center"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Sitio oficial
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-
-              <button 
-                className="inline-flex items-center justify-center w-full bg-black bg-opacity-30 hover:bg-opacity-40 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Ver recursos
-              </button>
+      {/* Modal detallado */}
+      {modalOpen && selectedObjective && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+          <div 
+            className={`bg-gradient-to-br ${selectedObjective.gradient} max-w-2xl w-full rounded-xl shadow-2xl overflow-hidden relative animate-fadeIn`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className="absolute top-4 right-4 bg-black bg-opacity-30 hover:bg-opacity-50 rounded-full p-2 transition-colors"
+              onClick={closeModal}
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+            
+            <div className="p-8">
+              <div className="flex items-center mb-6">
+                <span className="text-5xl mr-4">{selectedObjective.icon}</span>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">
+                    Objetivo {selectedObjective.id}: {selectedObjective.title}
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-lg mb-8 text-white/90">{selectedObjective.description}</p>
+              
+              <div className="bg-black bg-opacity-20 p-5 rounded-lg mb-8">
+                <h4 className="font-semibold mb-3 text-white">Metas importantes:</h4>
+                <ul className="space-y-2 text-white/90">
+                  <li className="flex items-start">
+                    <span className="mr-2 mt-1">•</span>
+                    <span>Implementar medidas específicas para {selectedObjective.id < 10 ? "abordar" : "promover"} este objetivo a nivel nacional.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 mt-1">•</span>
+                    <span>Desarrollar políticas coherentes para el desarrollo sostenible.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 mt-1">•</span>
+                    <span>Asegurar la movilización de recursos desde múltiples fuentes.</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href={selectedObjective.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-white text-gray-800 hover:bg-gray-100 font-medium py-3 px-6 rounded-lg text-center flex items-center justify-center transition-colors"
+                  onClick={(e) => handleExternalLink(e, selectedObjective.link)}
+                >
+                  Sitio oficial ONU
+                  <ExternalLink className="ml-2 h-5 w-5" />
+                </a>
+                
+                <button 
+                  className="flex-1 bg-black bg-opacity-30 hover:bg-opacity-40 text-white py-3 px-6 rounded-lg text-center flex items-center justify-center transition-colors"
+                  onClick={closeModal}
+                >
+                  Cerrar
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Estilos adicionales */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 };
 
-
-export default Onu;
+export default ObjetivosDesarrolloSostenible;

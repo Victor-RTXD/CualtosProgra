@@ -450,6 +450,27 @@ export default function WeatherApp() {
               ))}
             </div>
           </div>
+          <footer  className="bg-slate-900/80 border-t border-slate-800 py-10 mt-16">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent mb-2">
+                EcoSoluciones ODS
+              </h3>
+              <p className="text-gray-400 max-w-md">
+                Promoviendo prácticas sostenibles para alcanzar los Objetivos de Desarrollo Sostenible 2030.
+              </p>
+            </div>
+          </div>
+          
+          <div className="text-center text-gray-500 text-sm border-t border-slate-800 pt-6">
+            <p>© {new Date().getFullYear()} EcoSoluciones. Todos los derechos reservados.</p>
+            <p className="mt-1">
+              Desarrollado con 💚 para un futuro más sostenible
+            </p>
+          </div>
+        </div>
+      </footer>
         </div>
       )}
     </div>

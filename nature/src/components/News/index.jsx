@@ -146,28 +146,27 @@ export default function News() {
                 )}
 
                 {/* Newsletter Subscription */}
-                {!loading && news.length > 0 && (
-                    <div className="mt-16 bg-gradient-to-r from-amber-900 via-amber-800 to-amber-900 bg-opacity-30 rounded-xl p-8 max-w-4xl mx-auto">
-                        <div className="flex flex-col md:flex-row items-center justify-between">
-                            <div className="mb-6 md:mb-0 md:mr-8">
-                                <h3 className="text-2xl font-bold text-amber-300 mb-2">Mantente informado</h3>
-                                <p className="text-gray-300">Suscríbete para recibir las últimas noticias sobre cambio climático y sostenibilidad.</p>
-                            </div>
-                            <div className="w-full md:w-auto">
-                                <div className="flex">
-                                    <input 
-                                        type="email" 
-                                        placeholder="Tu correo electrónico" 
-                                        className="bg-slate-700 text-gray-100 px-4 py-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-amber-500 flex-grow"
-                                    />
-                                    <button className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-3 rounded-r-lg transition">
-                                        Suscribirse
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                <footer  className="bg-slate-900/80 border-t border-slate-800 py-10 mt-16">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10">
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent mb-2">
+                EcoSoluciones ODS
+              </h3>
+              <p className="text-gray-400 max-w-md">
+                Promoviendo prácticas sostenibles para alcanzar los Objetivos de Desarrollo Sostenible 2030.
+              </p>
+            </div>
+          </div>
+          
+          <div className="text-center text-gray-500 text-sm border-t border-slate-800 pt-6">
+            <p>© {new Date().getFullYear()} EcoSoluciones. Todos los derechos reservados.</p>
+            <p className="mt-1">
+              Desarrollado con 💚 para un futuro más sostenible
+            </p>
+          </div>
+        </div>
+      </footer>
             </div>
         </div>
     );

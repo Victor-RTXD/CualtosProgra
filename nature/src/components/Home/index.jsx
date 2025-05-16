@@ -146,9 +146,6 @@ export default function Home() {
           <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-8">
             Cada pequeña acción cuenta. Comienza hoy tu propio huerto casero y forma parte del cambio que nuestro planeta necesita.
           </p>
-          <a href="#comenzar" className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg inline-block transition">
-            Comenzar Ahora
-          </a>
         </div>
       </div>
     </div>
