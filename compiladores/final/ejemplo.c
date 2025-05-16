@@ -1,13 +1,14 @@
+// Función para calcular el factorial de un número
+int factorial(int n) {
+    if (n <= 1)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
 int main() {
-    int a = 10;
-    float b = 3.14;
-    char c = 'x';
-    
-    // Errores semánticos a detectar:
-    z = a + b;      // Variable no declarada
-    a = b + c;      // Tipos incompatibles
-    c = a + b;      // Tipos incompatibles
-    x = funcion_no_declarada();  // Función no declarada
+    int a = 20000000000000000000000000000000000000000;
+    z = a;
     
     return 0;
 }

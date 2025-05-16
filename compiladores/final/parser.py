@@ -210,7 +210,10 @@ class Parser:
         while not self.is_at_end():
             try:
                 # Verificar si es una declaración global o una función
-                if self.match(TokenType.INT, TokenType.CHAR, TokenType.FLOAT, TokenType.VOID):
+                if self.check(TokenType.HASH):
+                    self.preprocessor_directive()
+                    continue
+                elif self.match(TokenType.INT, TokenType.CHAR, TokenType.FLOAT, TokenType.VOID):
                     self.backup()  # Retroceder para procesar correctamente
                     
                     # Guardar la posición para retroceder si es necesario
@@ -273,6 +276,21 @@ class Parser:
         body = self.compound_statement()
         
         return Function(return_type, name, params, body)
+    
+    def preprocessor_directive(self):
+        """preprocessor_directive -> HASH IDENTIFIER (preprocessor_arg)* NEWLINE"""
+        hash_token = self.consume(TokenType.HASH, "Se esperaba '#'")
+        directive = self.consume(TokenType.IDENTIFIER, "Se esperaba un identificador después de '#'").value
+        
+        args = []
+        while not self.check(TokenType.NEWLINE) and not self.is_at_end():
+            args.append(self.advance().value)
+        
+        if self.check(TokenType.NEWLINE):
+            self.advance()
+    
+        # Aquí podrías devolver un nodo AST para la directiva si lo necesitas
+        return None  # O devolver un nodo especial
     
     def parameters(self):
         """parameters -> parameter (',' parameter)*"""
